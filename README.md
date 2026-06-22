@@ -49,7 +49,7 @@ pnpm install
 pnpm build
 ```
 
-Run a specific server (once published):
+Run a specific server:
 
 ```json
 {
@@ -64,6 +64,8 @@ Run a specific server (once published):
   }
 }
 ```
+
+Published on npm as [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana).
 
 ## Adding a new server
 

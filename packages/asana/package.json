@@ -3,19 +3,40 @@
   "version": "0.1.0",
   "description": "MCP server for Asana — tasks, projects, comments via the Asana REST API.",
   "type": "module",
+  "main": "./dist/index.js",
   "bin": {
     "mcp-wormhole-asana": "./dist/index.js"
   },
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist/index.js",
+    "dist/index.js.map",
+    "dist/chunk-*.js",
+    "dist/chunk-*.js.map",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "start": "node dist/index.js",
-    "verify": "node --env-file=.env dist/verify.js"
+    "verify": "node --env-file=.env dist/verify.js",
+    "prepublishOnly": "npm run build"
   },
-  "keywords": ["mcp", "asana", "tasks", "project-management"],
+  "keywords": ["mcp", "asana", "tasks", "project-management", "model-context-protocol"],
   "license": "MIT",
+  "author": "Ayush Kumar <ayushknj3@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ayush7614/mcp-wormhole.git",
+    "directory": "packages/asana"
+  },
+  "homepage": "https://github.com/Ayush7614/mcp-wormhole/tree/master/packages/asana#readme",
+  "bugs": {
+    "url": "https://github.com/Ayush7614/mcp-wormhole/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=18"
   },
