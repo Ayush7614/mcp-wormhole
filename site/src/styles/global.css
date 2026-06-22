@@ -2564,6 +2564,128 @@ select {
   margin-bottom: 8px;
 }
 
+.blog-article-body ol {
+  margin: 0 0 20px;
+  padding-left: 20px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.blog-tldr {
+  margin: 0 0 32px;
+  padding: 20px 22px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 120, 40, 0.35);
+  background: linear-gradient(135deg, rgba(255, 120, 40, 0.08), rgba(255, 80, 20, 0.03));
+}
+
+.blog-tldr-label {
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.blog-tldr ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.blog-tldr li {
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.blog-diagram {
+  margin: 0 0 28px;
+}
+
+.blog-diagram figcaption {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.blog-diagram-code {
+  margin: 0;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  overflow-x: auto;
+}
+
+.blog-diagram-code code {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--text);
+  white-space: pre;
+}
+
+.blog-figure {
+  margin: 0 0 28px;
+}
+
+.blog-figure-frame {
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+}
+
+.blog-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.blog-figure figcaption {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.blog-callout {
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+}
+
+.blog-callout-info {
+  border-left-color: #5b9cf5;
+}
+
+.blog-callout-tip {
+  border-left-color: #4ade80;
+}
+
+.blog-callout-warn {
+  border-left-color: #fbbf24;
+}
+
+.blog-callout-title {
+  margin: 0 0 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.blog-callout p:last-child {
+  margin: 0;
+}
+
 .blog-code {
   margin: 0 0 20px;
   padding: 16px 18px;
@@ -2594,7 +2716,7 @@ select {
 
 .blog-related-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 
