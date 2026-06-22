@@ -12,7 +12,7 @@ export function HomePage() {
       <Hero />
       <DemoShowcase />
       <ServerGrid />
-      <IntegrationGrid serverId="asana" serverName="Asana" />
+      <IntegrationGrid />
     </>
   );
 }
