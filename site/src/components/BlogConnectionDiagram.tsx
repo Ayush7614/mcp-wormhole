@@ -47,7 +47,7 @@ function FlowDiagram({ connection }: { connection: Extract<BlogPosterConnection,
   return (
     <div className="blog-conn-diagram" aria-hidden="true">
       <div className="blog-conn-row">
-        <div className="blog-conn-tile">
+        <div className="blog-conn-tile blog-conn-tile-brand">
           <img src={asset(clientLogo)} alt="" />
         </div>
         <div className="blog-conn-line">

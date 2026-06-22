@@ -598,17 +598,91 @@ select {
 }
 
 .server-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--surface-hover);
-  border: 1px solid var(--border);
+  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  padding: 9px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.server-card-link:hover .server-icon {
+  transform: translateY(-1px);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .server-icon img {
-  width: 28px;
-  height: 28px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  display: block;
+}
+
+.server-icon--asana {
+  background: linear-gradient(145deg, #ffffff 0%, #fff4ed 100%);
+  border-color: rgba(246, 88, 30, 0.2);
+}
+
+.server-icon--vercel {
+  background: linear-gradient(145deg, #ffffff 0%, #f4f4f5 100%);
+  border-color: rgba(0, 0, 0, 0.14);
+}
+
+.server-icon--slack {
+  background: linear-gradient(145deg, #ffffff 0%, #f5f0ff 100%);
+  border-color: rgba(74, 21, 117, 0.15);
+}
+
+.server-icon--sentry {
+  background: linear-gradient(145deg, #ffffff 0%, #fff5f5 100%);
+  border-color: rgba(224, 64, 64, 0.15);
+}
+
+.server-icon--linear {
+  background: linear-gradient(145deg, #ffffff 0%, #f0f0ff 100%);
+  border-color: rgba(94, 106, 210, 0.18);
+}
+
+.server-icon--airtable {
+  background: linear-gradient(145deg, #ffffff 0%, #fffbeb 100%);
+  border-color: rgba(251, 191, 36, 0.2);
+}
+
+.server-icon--stripe {
+  background: linear-gradient(145deg, #ffffff 0%, #eef2ff 100%);
+  border-color: rgba(99, 102, 241, 0.18);
+}
+
+.server-icon--cloudflare {
+  background: linear-gradient(145deg, #ffffff 0%, #fff7ed 100%);
+  border-color: rgba(249, 115, 22, 0.18);
+}
+
+.server-icon--github-actions {
+  background: linear-gradient(145deg, #ffffff 0%, #f4f4f5 100%);
+  border-color: rgba(24, 24, 27, 0.14);
+}
+
+.server-icon--pagerduty {
+  background: linear-gradient(145deg, #ffffff 0%, #ecfdf5 100%);
+  border-color: rgba(6, 182, 212, 0.18);
+}
+
+.server-icon--google-calendar {
+  background: linear-gradient(145deg, #ffffff 0%, #eff6ff 100%);
+  border-color: rgba(59, 130, 246, 0.18);
 }
 
 .demo-stat {
@@ -2084,22 +2158,6 @@ select {
   object-position: top;
 }
 
-.server-icon {
-  display: inline-flex;
-  width: 36px;
-  height: 36px;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.server-icon img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  display: block;
-}
-
 /* ── Guide intro (before steps) ── */
 .guide-intro {
   padding-bottom: 48px;
@@ -2744,6 +2802,18 @@ select {
 }
 
 .blog-conn-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.blog-conn-tile-brand {
+  background: #fff;
+  padding: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.blog-conn-tile-brand img {
   width: 100%;
   height: 100%;
   object-fit: contain;

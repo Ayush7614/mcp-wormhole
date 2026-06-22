@@ -7,7 +7,7 @@ interface ServerIconProps {
 
 export function ServerIcon({ serverId, name }: ServerIconProps) {
   return (
-    <span className="brand-icon server-icon">
+    <span className={`brand-icon server-icon server-icon--${serverId}`}>
       <img src={serverLogoUrl(serverId)} alt={`${name} logo`} loading="lazy" decoding="async" />
     </span>
   );
