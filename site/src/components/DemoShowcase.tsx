@@ -1,5 +1,8 @@
+import { getServer } from "../data/servers";
+
 export function DemoShowcase() {
   const demoSrc = `${import.meta.env.BASE_URL}demo/asana-verify.gif`;
+  const asana = getServer("asana");
 
   return (
     <section className="section demo-showcase" id="demo">
@@ -32,16 +35,16 @@ export function DemoShowcase() {
 
           <div className="demo-stats">
             <div className="demo-stat">
-              <strong>9</strong>
+              <strong>{asana?.tools.length ?? 66}</strong>
               <span>Asana tools</span>
+            </div>
+            <div className="demo-stat">
+              <strong>{asana?.promptCount ?? 18}</strong>
+              <span>Prompt workflows</span>
             </div>
             <div className="demo-stat">
               <strong>20</strong>
               <span>Client integrations</span>
-            </div>
-            <div className="demo-stat">
-              <strong>11</strong>
-              <span>Servers planned</span>
             </div>
           </div>
         </div>

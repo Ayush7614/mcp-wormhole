@@ -65,6 +65,8 @@ Add this to your MCP client config (Cursor: `~/.cursor/mcp.json`, Claude Desktop
 
 Restart your client, then ask: *"List my open Asana tasks"*.
 
+**Published:** [`@mcp-wormhole/asana@0.2.0`](https://www.npmjs.com/package/@mcp-wormhole/asana) — 66 tools · 18 prompt workflows · browsable `asana://` resources
+
 Get a token: [Asana developer console](https://app.asana.com/0/my-apps)
 
 ### Clone for development
@@ -176,13 +178,17 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full checklist, tool naming con
 
 Packages publish under the [`@mcp-wormhole`](https://www.npmjs.com/org/mcp-wormhole) npm org.
 
+| Package | Latest | npm |
+|---------|--------|-----|
+| Asana | **0.2.0** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) |
+
 ```bash
 pnpm --filter @mcp-wormhole/asana build
 cd packages/asana
-npm publish --access public
+npm publish --access public --otp=YOUR_CODE
 ```
 
-Or use **GitHub Actions → Publish npm packages → Run workflow**.
+Or use **GitHub Actions → Publish npm packages → Run workflow** (requires `NPM_TOKEN` secret).
 
 Details: [CONTRIBUTING.md § Publishing](./CONTRIBUTING.md#publishing)
 
