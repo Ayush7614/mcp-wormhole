@@ -1,3 +1,5 @@
+import { SectionLink } from "./SectionLink";
+
 export function Hero() {
   const demoSrc = `${import.meta.env.BASE_URL}demo/asana-verify.gif`;
 
@@ -25,12 +27,12 @@ export function Hero() {
             with copy-paste configs. Each integration wraps the vendor&apos;s official API.
           </p>
           <div className="hero-actions">
-            <a className="button primary glow" href="#integrations">
+            <SectionLink sectionId="integrations" className="button primary glow">
               Connect your client
-            </a>
-            <a className="button secondary" href="#demo">
+            </SectionLink>
+            <SectionLink sectionId="demo" className="button secondary">
               Watch live demo
-            </a>
+            </SectionLink>
             <a
               className="button ghost"
               href="https://github.com/Ayush7614/mcp-wormhole"
