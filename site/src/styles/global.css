@@ -566,6 +566,11 @@ select {
   font-size: 32px;
 }
 
+.server-grid-stats .demo-stat strong.demo-stat-infinity {
+  font-size: 36px;
+  letter-spacing: -0.05em;
+}
+
 .server-grid-stats .demo-stat span {
   line-height: 1.4;
   font-size: 13px;
@@ -601,8 +606,9 @@ select {
 }
 
 .server-icon img {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
 }
 
 .demo-stat {
