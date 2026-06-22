@@ -1,7 +1,7 @@
 {
   "name": "@mcp-wormhole/asana",
-  "version": "0.1.0",
-  "description": "MCP server for Asana — tasks, projects, comments via the Asana REST API.",
+  "version": "0.2.0",
+  "description": "MCP server for Asana — 66 tools, 18 prompt workflows, and browsable resources via the Asana REST API.",
   "type": "module",
   "main": "./dist/index.js",
   "bin": {

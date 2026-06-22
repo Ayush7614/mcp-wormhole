@@ -140,15 +140,54 @@ npm i ${server.npmPackage}`,
       prompts: asanaPrompts(),
     },
     {
-      id: "tools",
+      id: "mcp-prompts",
       number: 7,
+      title: "MCP prompt workflows",
+      description: `The server ships ${server.promptCount ?? 18} built-in MCP prompt templates — multi-step workflows your client can invoke directly (not just chat suggestions):`,
+      bullets: [
+        "`daily_focus_plan` — prioritized plan from your open tasks",
+        "`project_health_scan` — overdue, unassigned, and stale task signals",
+        "`stakeholder_brief` — executive-ready project update",
+        "`overdue_rescue` — triage late work (reschedule, reassign, drop)",
+        "`subtask_architect` — break a task into scoped subtasks",
+        "`standup_builder` — yesterday / today / blockers",
+        "`time_log_assistant` — retro time logging on a task",
+        "…and 11 more (`workspace_pulse`, `risk_radar`, `sprint_closeout`, etc.)",
+      ],
+    },
+    {
+      id: "tools",
+      number: 8,
       title: "Available tools",
-      description: "The Asana MCP server exposes 9 tools your agent can call:",
-      bullets: server.tools.map((tool) => `\`${tool}\``),
+      description: `The Asana MCP server exposes ${server.tools.length} tools across tasks, projects, sections, tags, portfolios, goals, time tracking, and more:`,
+      bullets: [
+        "**Users & workspaces** — get_me, list_workspaces, list_workspace_users",
+        "**Projects & sections** — CRUD projects, sections, move tasks between columns",
+        "**Tasks** — search, batch get, subtasks, dependencies, duplicate, multi-project",
+        "**Tags & custom fields** — full tag CRUD, custom field definitions",
+        "**Stories & attachments** — comments (plain + HTML), external URL attachments",
+        "**Portfolios & goals** — portfolio items, goal CRUD",
+        "**Time tracking** — log and manage time entries",
+        "**Typeahead** — fuzzy search tasks, projects, users, tags, teams",
+      ],
+    },
+    {
+      id: "resources",
+      number: 9,
+      title: "Browsable resources",
+      description:
+        "Browse your Asana hierarchy without guessing GIDs. Resources use the asana:// URI scheme:",
+      bullets: [
+        "`asana://catalog` — tool, prompt, and resource index",
+        "`asana://workspaces` — all accessible workspaces",
+        "`asana://workspace/{gid}/projects` — project list",
+        "`asana://project/{gid}/tasks` — tasks in a project",
+        "`asana://task/{gid}` — task snapshot with subtasks and stories",
+      ],
     },
     {
       id: "verify",
-      number: 8,
+      number: 10,
       title: "Verify the integration",
       description:
         "Run the verification script locally to confirm your token works and all API calls succeed.",
@@ -182,10 +221,10 @@ function buildAsanaIntro(server: McpServer): GuideIntro {
       "This guide walks through prerequisites, token creation, npm install, client configuration, and verification. When you're finished, use Connect your client below to wire up Cursor, Claude Desktop, VS Code, and 17 other frameworks.",
     ],
     highlights: [
-      `${server.tools.length} MCP tools — tasks, search, comments, and updates`,
-      `Published on npm as ${server.npmPackage}`,
-      "Runs locally via stdio (npx — no repo clone required)",
-      "Authenticates with an Asana Personal Access Token (PAT)",
+      `${server.tools.length} MCP tools — tasks, projects, tags, portfolios, goals, time tracking`,
+      `${server.promptCount ?? 18} MCP prompt workflows (daily plan, health scan, standup, …)`,
+      `${server.resourceTemplateCount ?? 7} browsable resource templates (asana:// URIs)`,
+      `Published on npm as ${server.npmPackage}@0.2.0`,
     ],
   };
 }
@@ -207,14 +246,19 @@ function buildPlannedIntro(server: McpServer): GuideIntro {
 
 function buildServerPoster(server: McpServer): GuidePoster {
   const npmShort = server.npmPackage.replace("@mcp-wormhole/", "");
+  const stats: GuidePoster["stats"] = [
+    { value: String(server.tools.length), label: "Tools" },
+    { value: String(server.promptCount ?? 0), label: "Prompts" },
+    { value: String(server.resourceTemplateCount ?? 0), label: "Resources" },
+    { value: npmShort, label: "npm" },
+  ];
+  if (!server.promptCount) {
+    stats.splice(1, 2);
+  }
   return {
     demoAsset: server.demoAsset ?? "demo/asana-verify.gif",
     demoCaption: `${server.name} MCP — live verification`,
-    stats: [
-      { value: String(server.tools.length), label: "Tools" },
-      { value: server.env[0]?.key.includes("TOKEN") ? "PAT" : "API key", label: "Auth" },
-      { value: npmShort, label: "npm" },
-    ],
+    stats,
   };
 }
 
