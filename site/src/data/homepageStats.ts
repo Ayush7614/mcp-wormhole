@@ -1,14 +1,12 @@
-import { integrations } from "../data/integrations";
-import { servers } from "../data/servers";
+import { ASANA_TOOL_COUNT } from "./asanaCatalog";
 
 export function getHomepageStats() {
-  const liveServers = servers.filter((s) => s.status === "available").length;
-  const totalServers = servers.length;
-  const clientIntegrations = integrations.length;
-
   return {
-    liveServers,
-    totalServers,
-    clientIntegrations,
+    /** Live tool count from the shipped Asana MCP server */
+    toolsLive: ASANA_TOOL_COUNT,
+    /** Roadmap — wormhole to every tool */
+    infiniteServers: "∞",
+    /** AI clients with copy-paste setup guides */
+    clientIntegrations: "30+",
   };
 }

@@ -16,7 +16,7 @@ interface ServerGridProps {
 }
 
 export function ServerGrid({ selectedId }: ServerGridProps) {
-  const { liveServers, totalServers, clientIntegrations } = getHomepageStats();
+  const stats = getHomepageStats();
 
   return (
     <section className="section" id="servers">
@@ -28,15 +28,15 @@ export function ServerGrid({ selectedId }: ServerGridProps) {
 
         <div className="demo-stats server-grid-stats">
           <div className="demo-stat">
-            <strong>{liveServers}</strong>
-            <span>Live server{liveServers === 1 ? "" : "s"}</span>
+            <strong>{stats.toolsLive}</strong>
+            <span>Tools live</span>
           </div>
           <div className="demo-stat">
-            <strong>{totalServers}</strong>
-            <span>MCP servers</span>
+            <strong className="demo-stat-infinity">{stats.infiniteServers}</strong>
+            <span>Infinite servers</span>
           </div>
           <div className="demo-stat">
-            <strong>{clientIntegrations}</strong>
+            <strong>{stats.clientIntegrations}</strong>
             <span>Client integrations</span>
           </div>
         </div>
