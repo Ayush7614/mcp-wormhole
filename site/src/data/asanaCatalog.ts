@@ -70,3 +70,14 @@ export const ASANA_TOOL_NAMES = [
 
 export const ASANA_PROMPT_COUNT = 18;
 export const ASANA_RESOURCE_TEMPLATE_COUNT = 7;
+
+export const ASANA_TOOL_COUNT = ASANA_TOOL_NAMES.length;
+
+/** Single source of truth for Asana server copy across the site. */
+export function asanaServerDescription(): string {
+  return `Full-stack Asana MCP — ${ASANA_TOOL_COUNT} tools, ${ASANA_PROMPT_COUNT} prompt workflows, and ${ASANA_RESOURCE_TEMPLATE_COUNT} browsable resources.`;
+}
+
+export function asanaToolSummary(): string {
+  return `${ASANA_TOOL_COUNT} tools · ${ASANA_PROMPT_COUNT} prompts · ${ASANA_RESOURCE_TEMPLATE_COUNT} resources`;
+}

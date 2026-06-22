@@ -546,6 +546,11 @@ select {
   margin-top: 20px;
 }
 
+.server-grid-stats {
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
 .demo-stat {
   padding: 18px;
   border-radius: 14px;
