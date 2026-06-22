@@ -24,6 +24,16 @@ export const integrationLogos: Record<string, string> = {
 
 export const serverLogos: Record<string, string> = {
   asana: "logos/asana.svg",
+  slack: "logos/slack.svg",
+  sentry: "logos/sentry.svg",
+  vercel: "logos/vercel.svg",
+  "google-calendar": "logos/google.svg",
+  airtable: "logos/airtable.svg",
+  stripe: "logos/stripe.svg",
+  cloudflare: "logos/cloudflare.svg",
+  "github-actions": "logos/github.svg",
+  pagerduty: "logos/pagerduty.svg",
+  linear: "logos/linear.svg",
 };
 
 export function logoUrl(integrationId: string): string {
