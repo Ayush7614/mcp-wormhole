@@ -12,7 +12,7 @@ export function BlogPostPage() {
 
   const related = getBlogPostsSorted()
     .filter((item) => item.slug !== post.slug)
-    .slice(0, 2);
+    .slice(0, 3);
 
   return (
     <main className="blog-post-page">
