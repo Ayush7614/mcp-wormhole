@@ -43,7 +43,7 @@ export const vercelCursorFlow: BlogPosterConnection = {
       { label: "NPX", variant: "npx" },
     ],
     cardStats: [
-      { value: "11", label: "TOOLS" },
+      { value: "18", label: "TOOLS" },
       { value: "5 min", label: "SETUP" },
     ],
   },
@@ -83,6 +83,25 @@ export const asanaDeepFlow: BlogPosterConnection = {
     cardStats: [
       { value: "66", label: "TOOLS" },
       { value: "18", label: "PROMPTS" },
+    ],
+  },
+};
+
+/** Vercel deep dive — agent through wormhole to full Vercel MCP */
+export const vercelDeepFlow: BlogPosterConnection = {
+  layout: "flow",
+  clientLogo: "logos/anthropic.svg",
+  end: {
+    toolName: "Vercel MCP",
+    toolLogo: "logos/vercel.png",
+    toolDesc: "18 tools, 8 prompts, 5 vercel:// resources — deployments, logs, env vars, rollback.",
+    authBadges: [
+      { label: "API", variant: "pat" },
+      { label: "LIVE", variant: "live" },
+    ],
+    cardStats: [
+      { value: "18", label: "TOOLS" },
+      { value: "8", label: "PROMPTS" },
     ],
   },
 };

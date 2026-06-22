@@ -221,6 +221,75 @@ export class VercelClient {
       { method: "PATCH" },
     );
   }
+
+  async getTeam(teamId: string): Promise<Record<string, unknown>> {
+    await this.ensureTeamScope();
+    return this.request(`/v2/teams/${encodeURIComponent(teamId)}${this.buildQuery()}`);
+  }
+
+  async listEnvVars(projectIdOrName: string): Promise<Record<string, unknown>[]> {
+    await this.ensureTeamScope();
+    const result = await this.request<{ envs?: Record<string, unknown>[] }>(
+      `/v10/projects/${encodeURIComponent(projectIdOrName)}/env${this.buildQuery()}`,
+    );
+    return result.envs ?? [];
+  }
+
+  async createEnvVar(
+    projectIdOrName: string,
+    input: {
+      key: string;
+      value: string;
+      target?: string[];
+      type?: "encrypted" | "plain" | "secret" | "system";
+    },
+  ): Promise<Record<string, unknown>> {
+    await this.ensureTeamScope();
+    return this.request(
+      `/v10/projects/${encodeURIComponent(projectIdOrName)}/env${this.buildQuery()}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          key: input.key,
+          value: input.value,
+          target: input.target ?? ["production", "preview", "development"],
+          type: input.type ?? "encrypted",
+        }),
+      },
+    );
+  }
+
+  async updateEnvVar(
+    projectIdOrName: string,
+    envId: string,
+    input: { value?: string; target?: string[] },
+  ): Promise<Record<string, unknown>> {
+    await this.ensureTeamScope();
+    return this.request(
+      `/v10/projects/${encodeURIComponent(projectIdOrName)}/env/${encodeURIComponent(envId)}${this.buildQuery()}`,
+      { method: "PATCH", body: JSON.stringify(input) },
+    );
+  }
+
+  async deleteEnvVar(projectIdOrName: string, envId: string): Promise<Record<string, unknown>> {
+    await this.ensureTeamScope();
+    return this.request(
+      `/v10/projects/${encodeURIComponent(projectIdOrName)}/env/${encodeURIComponent(envId)}${this.buildQuery()}`,
+      { method: "DELETE" },
+    );
+  }
+
+  async getLatestProductionDeployment(
+    projectId: string,
+  ): Promise<VercelDeploymentSummary | null> {
+    const deployments = await this.listDeployments({
+      projectId,
+      limit: 1,
+      target: "production",
+      state: "READY",
+    });
+    return deployments[0] ?? null;
+  }
 }
 
 export function createClientFromEnv(): VercelClient {

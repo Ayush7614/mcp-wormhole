@@ -1,12 +1,14 @@
 # @mcp-wormhole/vercel
 
-**Vercel MCP server** — 11 tools for deployments, build logs, promote, rollback, and project status via the official REST API.
+**Full-stack Vercel MCP server** — 18 tools, 8 prompt workflows, and browsable `vercel://` resources via the official REST API.
 
 ## Highlights
 
 | | |
 |---|---|
-| **Tools** | 11 across projects, deployments, logs, domains, promote, rollback |
+| **Tools** | 18 across projects, deployments, logs, domains, env vars, promote, rollback |
+| **Prompts** | 8 MCP workflow templates (`failed_deploy_triage`, `production_rollback_plan`, …) |
+| **Resources** | Browse projects → deployments at `vercel://` URIs |
 | **Auth** | Vercel API token (`VERCEL_TOKEN`) + optional `VERCEL_TEAM_ID` |
 | **Transport** | stdio (npx) |
 | **npm** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) |
@@ -34,41 +36,38 @@ npx -y @mcp-wormhole/vercel
 
 Create a token: [vercel.com/account/tokens](https://vercel.com/account/tokens)
 
-For team-scoped projects, add `VERCEL_TEAM_ID` (from your Vercel team settings or `vercel_get_user` → `defaultTeamId`).
+## MCP prompt workflows
+
+| Prompt | Purpose |
+|--------|---------|
+| `deployment_health_check` | Latest production deployment health |
+| `failed_deploy_triage` | ERROR deploys + build log extraction |
+| `production_rollback_plan` | Rollback candidates (no auto-execute) |
+| `project_status_snapshot` | Executive project summary |
+| `build_log_analysis` | Parse build events for root cause |
+| `rollback_candidate_review` | Compare rollback-eligible deploys |
+| `release_readiness_check` | Pre-promote go/no-go checklist |
+| `domain_audit` | Domain verification review |
+
+## Browsable resources
+
+| URI | Content |
+|-----|---------|
+| `vercel://catalog` | Tool/prompt/resource index |
+| `vercel://projects` | All projects |
+| `vercel://project/{id}` | Project detail |
+| `vercel://project/{id}/deployments` | Recent deployments |
+| `vercel://deployment/{id}` | Deployment record |
 
 ## Tool categories
 
-- **Account** (2) — `vercel_get_user`, `vercel_list_teams`
-- **Projects** (2) — list, get details, framework, repo link
-- **Deployments** (3) — list with filters, get record, build event logs
-- **Domains** (1) — list project domains
-- **Ops** (3) — promote, rollback, cancel in-flight builds
+- **Account & teams** (3)
+- **Projects & domains** (3)
+- **Deployments & logs** (5)
+- **Environment variables** (4)
+- **Production ops** (3)
 
-Run `src/mcp/catalog.ts` for the canonical tool name list.
-
-## Tools
-
-| Tool | Description |
-|------|-------------|
-| `vercel_get_user` | Authenticated user profile |
-| `vercel_list_teams` | Teams for the token |
-| `vercel_list_projects` | List/search projects |
-| `vercel_get_project` | Project details |
-| `vercel_list_deployments` | Filter by project, target, state, branch |
-| `vercel_get_deployment` | Single deployment record |
-| `vercel_get_deployment_events` | Build/deploy log events |
-| `vercel_list_project_domains` | Project domains |
-| `vercel_promote` | Promote deployment to production |
-| `vercel_rollback` | Instant rollback to a prior deployment |
-| `vercel_cancel_deployment` | Cancel in-flight build |
-
-## Example prompts (Cursor / Claude)
-
-- "List my Vercel projects"
-- "Show the last 5 production deployments for project X"
-- "Get build logs for deployment dpl_…"
-- "Which deployments are rollback candidates for project X?"
-- "Roll back project X to deployment dpl_…"
+See `src/mcp/catalog.ts` for the full tool name list.
 
 ## Development
 
@@ -82,8 +81,8 @@ pnpm verify
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `VERCEL_TOKEN` | Yes | Vercel API token from account settings |
-| `VERCEL_TEAM_ID` | No | Scope requests to a team (auto-detected from default team when omitted) |
+| `VERCEL_TOKEN` | Yes | Vercel API token |
+| `VERCEL_TEAM_ID` | No | Team scope (auto-detected from default team when omitted) |
 
 ## API docs
 
@@ -94,6 +93,7 @@ https://vercel.com/docs/rest-api
 - [Vercel server page](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel)
 - [Vercel integration guide](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel/guide)
 - [Connect Vercel to Cursor](https://ayush7614.github.io/mcp-wormhole/#/blog/connect-vercel-to-cursor)
+- [Inside @mcp-wormhole/vercel](https://ayush7614.github.io/mcp-wormhole/#/blog/inside-vercel-mcp-server)
 
 ## License
 

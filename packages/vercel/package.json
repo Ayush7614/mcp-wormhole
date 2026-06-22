@@ -1,7 +1,7 @@
 {
   "name": "@mcp-wormhole/vercel",
-  "version": "0.1.0",
-  "description": "MCP server for Vercel — deployments, build logs, promote, rollback, and project status via the Vercel REST API.",
+  "version": "0.2.0",
+  "description": "MCP server for Vercel — 18 tools, 8 prompt workflows, and browsable vercel:// resources via the Vercel REST API.",
   "type": "module",
   "main": "./dist/index.js",
   "bin": {

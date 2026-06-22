@@ -19,6 +19,8 @@ const WORMHOLE_TIPS: Record<string, string> = {
     "Start with read tools before write tools — agents explore before they mutate.",
   "inside-asana-mcp-server":
     "Invoke daily_focus_plan or project_health_scan for multi-step agent workflows.",
+  "inside-vercel-mcp-server":
+    "Use failed_deploy_triage or production_rollback_plan before touching production.",
 };
 
 export function BlogSidebar({ post, progress }: BlogSidebarProps) {

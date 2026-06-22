@@ -73,7 +73,7 @@ Restart your client, then ask: *"List my open Asana tasks"* or *"List my Vercel 
 | Package | Version | Tools |
 |---------|---------|-------|
 | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) | 0.2.0 | 66 tools · 18 prompts · `asana://` resources |
-| [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) | 0.1.0 | 11 tools · deployments · logs · rollback |
+| [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) | 0.2.0 | 18 tools · 8 prompts · resources |
 
 **Asana** — get a token: [Asana developer console](https://app.asana.com/0/my-apps)
 
@@ -111,7 +111,7 @@ pnpm build
 | Server | npm package | Status | Auth | Tools |
 |--------|-------------|--------|------|-------|
 | **Asana** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) | **Available** | PAT | 66 tools · 18 prompts · resources |
-| **Vercel** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) | **Available** | API token | 11 tools |
+| **Vercel** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) | **Available** | API token | 18 tools · 8 prompts · resources |
 | Slack | `@mcp-wormhole/slack` | Planned | Bot token | — |
 | Sentry | `@mcp-wormhole/sentry` | Planned | Auth token | — |
 | Google Calendar | `@mcp-wormhole/google-calendar` | Planned | OAuth | — |
@@ -217,7 +217,7 @@ Packages publish under the [`@mcp-wormhole`](https://www.npmjs.com/org/mcp-wormh
 | Package | Latest | npm |
 |---------|--------|-----|
 | Asana | **0.2.0** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) |
-| Vercel | **0.1.0** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) |
+| Vercel | **0.2.0** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) |
 
 ```bash
 pnpm --filter @mcp-wormhole/asana build
@@ -274,6 +274,7 @@ Tutorials and release notes on the docs site:
 - [Connect Vercel to Cursor in 5 minutes](https://ayush7614.github.io/mcp-wormhole/#/blog/connect-vercel-to-cursor)
 - [Building your first MCP server](https://ayush7614.github.io/mcp-wormhole/#/blog/building-an-mcp-server)
 - [Inside @mcp-wormhole/asana](https://ayush7614.github.io/mcp-wormhole/#/blog/inside-asana-mcp-server)
+- [Inside @mcp-wormhole/vercel](https://ayush7614.github.io/mcp-wormhole/#/blog/inside-vercel-mcp-server)
 
 ---
 

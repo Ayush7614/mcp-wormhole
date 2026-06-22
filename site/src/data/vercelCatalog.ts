@@ -2,23 +2,33 @@
 export const VERCEL_TOOL_NAMES = [
   "vercel_get_user",
   "vercel_list_teams",
+  "vercel_get_team",
   "vercel_list_projects",
   "vercel_get_project",
   "vercel_list_deployments",
+  "vercel_list_failed_deployments",
+  "vercel_get_latest_production_deployment",
   "vercel_get_deployment",
   "vercel_get_deployment_events",
   "vercel_list_project_domains",
+  "vercel_list_env_vars",
+  "vercel_create_env_var",
+  "vercel_update_env_var",
+  "vercel_delete_env_var",
   "vercel_promote",
   "vercel_rollback",
   "vercel_cancel_deployment",
 ] as const;
 
+export const VERCEL_PROMPT_COUNT = 8;
+export const VERCEL_RESOURCE_TEMPLATE_COUNT = 5;
+
 export const VERCEL_TOOL_COUNT = VERCEL_TOOL_NAMES.length;
 
 export function vercelServerDescription(): string {
-  return `Vercel MCP — ${VERCEL_TOOL_COUNT} tools for deployments, build logs, promote, rollback, and project status.`;
+  return `Full-stack Vercel MCP — ${VERCEL_TOOL_COUNT} tools, ${VERCEL_PROMPT_COUNT} prompt workflows, and ${VERCEL_RESOURCE_TEMPLATE_COUNT} browsable resources.`;
 }
 
 export function vercelToolSummary(): string {
-  return `${VERCEL_TOOL_COUNT} tools`;
+  return `${VERCEL_TOOL_COUNT} tools · ${VERCEL_PROMPT_COUNT} prompts · ${VERCEL_RESOURCE_TEMPLATE_COUNT} resources`;
 }
