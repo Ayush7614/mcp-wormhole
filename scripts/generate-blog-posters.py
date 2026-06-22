@@ -408,6 +408,20 @@ POSTERS = [
         "auth_badges": [("PAT", (34, 197, 94)), ("LIVE", (34, 197, 94))],
         "card_stats": [("66", "TOOLS"), ("18", "PROMPTS")],
     },
+    {
+        "layout": "flow",
+        "filename": "poster-inside-vercel-mcp.gif",
+        "eyebrow": "BLOG / DEEP DIVE",
+        "headline": "Inside Vercel\nMCP Server",
+        "tagline": "18 tools, 8 prompt workflows, and browsable vercel:// resources — deployments, logs, rollback.",
+        "badge": "v0.2.0 LIVE",
+        "client_logo": "site/public/logos/anthropic.svg",
+        "tool_name": "Vercel MCP",
+        "tool_logo": "site/public/logos/vercel.png",
+        "tool_desc": "Projects, deployments, build logs, env vars, promote, rollback — all exposed as MCP tools.",
+        "auth_badges": [("API", (34, 197, 94)), ("LIVE", (34, 197, 94))],
+        "card_stats": [("18", "TOOLS"), ("8", "PROMPTS")],
+    },
 ]
 
 

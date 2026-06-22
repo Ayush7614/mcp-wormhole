@@ -20,7 +20,7 @@ export const connectVercelToCursor: BlogPost = {
     connection: vercelCursorFlow,
     stats: [
       { value: "5 min", label: "Setup" },
-      { value: "11", label: "Tools" },
+      { value: "18", label: "Tools" },
       { value: "Cursor", label: "Client" },
     ],
   },

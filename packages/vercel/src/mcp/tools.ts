@@ -45,6 +45,22 @@ export function registerVercelTools(server: McpServer, client: VercelClient) {
   );
 
   server.registerTool(
+    "vercel_get_team",
+    {
+      title: "Get team",
+      description: "Team details by ID.",
+      inputSchema: { team_id: z.string().describe("Vercel team ID.") },
+    },
+    async ({ team_id }) => {
+      try {
+        return json(await client.getTeam(team_id));
+      } catch (error) {
+        return toolError(error);
+      }
+    },
+  );
+
+  server.registerTool(
     "vercel_list_projects",
     {
       title: "List projects",
@@ -116,6 +132,48 @@ export function registerVercelTools(server: McpServer, client: VercelClient) {
   );
 
   server.registerTool(
+    "vercel_list_failed_deployments",
+    {
+      title: "List failed deployments",
+      description: "Deployments in ERROR state for a project.",
+      inputSchema: {
+        project_id: projectId,
+        limit: limit.describe("Max deployments (default 10)."),
+      },
+    },
+    async ({ project_id, limit: depLimit }) => {
+      try {
+        return json({
+          deployments: await client.listDeployments({
+            projectId: project_id,
+            limit: depLimit ?? 10,
+            state: "ERROR",
+          }),
+        });
+      } catch (error) {
+        return toolError(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "vercel_get_latest_production_deployment",
+    {
+      title: "Get latest production deployment",
+      description: "Most recent READY production deployment for a project.",
+      inputSchema: { project_id: projectId },
+    },
+    async ({ project_id }) => {
+      try {
+        const deployment = await client.getLatestProductionDeployment(project_id);
+        return json({ deployment });
+      } catch (error) {
+        return toolError(error);
+      }
+    },
+  );
+
+  server.registerTool(
     "vercel_get_deployment",
     {
       title: "Get deployment",
@@ -161,6 +219,87 @@ export function registerVercelTools(server: McpServer, client: VercelClient) {
     async ({ project_id }) => {
       try {
         return json({ domains: await client.listProjectDomains(project_id) });
+      } catch (error) {
+        return toolError(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "vercel_list_env_vars",
+    {
+      title: "List environment variables",
+      description: "Env vars for a project (keys and metadata; values may be redacted).",
+      inputSchema: { project_id: projectId },
+    },
+    async ({ project_id }) => {
+      try {
+        return json({ envs: await client.listEnvVars(project_id) });
+      } catch (error) {
+        return toolError(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "vercel_create_env_var",
+    {
+      title: "Create environment variable",
+      description: "Add an env var to a project.",
+      inputSchema: {
+        project_id: projectId,
+        key: z.string(),
+        value: z.string(),
+        target: z
+          .array(z.enum(["production", "preview", "development"]))
+          .optional()
+          .describe("Deploy targets (default: all three)."),
+        type: z.enum(["encrypted", "plain", "secret", "system"]).optional(),
+      },
+    },
+    async ({ project_id, key, value, target, type }) => {
+      try {
+        return json(await client.createEnvVar(project_id, { key, value, target, type }));
+      } catch (error) {
+        return toolError(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "vercel_update_env_var",
+    {
+      title: "Update environment variable",
+      description: "Update value or targets for an existing env var.",
+      inputSchema: {
+        project_id: projectId,
+        env_id: z.string().describe("Environment variable ID."),
+        value: z.string().optional(),
+        target: z.array(z.enum(["production", "preview", "development"])).optional(),
+      },
+    },
+    async ({ project_id, env_id, value, target }) => {
+      try {
+        return json(await client.updateEnvVar(project_id, env_id, { value, target }));
+      } catch (error) {
+        return toolError(error);
+      }
+    },
+  );
+
+  server.registerTool(
+    "vercel_delete_env_var",
+    {
+      title: "Delete environment variable",
+      description: "Remove an env var from a project.",
+      inputSchema: {
+        project_id: projectId,
+        env_id: z.string().describe("Environment variable ID."),
+      },
+    },
+    async ({ project_id, env_id }) => {
+      try {
+        return json(await client.deleteEnvVar(project_id, env_id));
       } catch (error) {
         return toolError(error);
       }

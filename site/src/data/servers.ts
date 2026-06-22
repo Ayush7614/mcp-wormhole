@@ -6,7 +6,7 @@ import {
   ASANA_TOOL_NAMES,
   asanaServerDescription,
 } from "./asanaCatalog";
-import { VERCEL_TOOL_NAMES, vercelServerDescription } from "./vercelCatalog";
+import { VERCEL_TOOL_NAMES, VERCEL_PROMPT_COUNT, VERCEL_RESOURCE_TEMPLATE_COUNT, vercelServerDescription } from "./vercelCatalog";
 
 export interface EnvVar {
   key: string;
@@ -89,6 +89,8 @@ export const servers: McpServer[] = [
       },
     ],
     tools: [...VERCEL_TOOL_NAMES],
+    promptCount: VERCEL_PROMPT_COUNT,
+    resourceTemplateCount: VERCEL_RESOURCE_TEMPLATE_COUNT,
     docsUrl: "https://vercel.com/docs/rest-api",
     demoAsset: "demo/vercel-verify.gif",
   },
