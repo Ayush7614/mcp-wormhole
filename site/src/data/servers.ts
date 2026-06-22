@@ -90,6 +90,7 @@ export const servers: McpServer[] = [
     ],
     tools: [...VERCEL_TOOL_NAMES],
     docsUrl: "https://vercel.com/docs/rest-api",
+    demoAsset: "demo/vercel-verify.gif",
   },
   {
     id: "google-calendar",

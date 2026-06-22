@@ -87,7 +87,7 @@ pnpm build
 | Server | npm package | Status | Auth | Tools |
 |--------|-------------|--------|------|-------|
 | **Asana** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) | **Available** | PAT | 66 tools · 18 prompts · resources |
-| **Vercel** | `@mcp-wormhole/vercel` | **Available** | API token | 11 tools |
+| **Vercel** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) | **Available** | API token | 11 tools |
 | Slack | `@mcp-wormhole/slack` | Planned | Bot token | — |
 | Sentry | `@mcp-wormhole/sentry` | Planned | Auth token | — |
 | Google Calendar | `@mcp-wormhole/google-calendar` | Planned | OAuth | — |
@@ -184,7 +184,7 @@ Packages publish under the [`@mcp-wormhole`](https://www.npmjs.com/org/mcp-wormh
 | Package | Latest | npm |
 |---------|--------|-----|
 | Asana | **0.2.0** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) |
-| Vercel | **0.1.0** | `@mcp-wormhole/vercel` |
+| Vercel | **0.1.0** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) |
 
 ```bash
 pnpm --filter @mcp-wormhole/asana build

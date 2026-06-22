@@ -1,8 +1,9 @@
 export interface VercelUser {
   id: string;
   email?: string;
-  name?: string;
+  name?: string | null;
   username?: string;
+  defaultTeamId?: string;
 }
 
 export interface VercelTeam {
@@ -53,13 +54,27 @@ type QueryValue = string | number | boolean | undefined;
 
 export class VercelClient {
   private readonly baseUrl = "https://api.vercel.com";
+  private teamIdResolved = false;
 
   constructor(
     private readonly token: string,
-    private readonly teamId?: string,
+    private teamId?: string,
   ) {
     if (!token.trim()) {
       throw new Error("VERCEL_TOKEN is required");
+    }
+  }
+
+  private async ensureTeamScope(): Promise<void> {
+    if (this.teamId || this.teamIdResolved) return;
+    this.teamIdResolved = true;
+    try {
+      const result = await this.request<{ user: { defaultTeamId?: string } }>(`/v2/user`);
+      if (result.user?.defaultTeamId) {
+        this.teamId = result.user.defaultTeamId;
+      }
+    } catch {
+      // Personal account or token without user scope — proceed without teamId.
     }
   }
 
@@ -96,17 +111,27 @@ export class VercelClient {
   }
 
   async getUser(): Promise<VercelUser> {
-    return this.request<VercelUser>(`/v2/user${this.buildQuery()}`);
+    const result = await this.request<{ user: VercelUser }>(`/v2/user${this.buildQuery()}`);
+    return result.user;
   }
 
   async listTeams(limit = 20): Promise<VercelTeam[]> {
-    const result = await this.request<{ teams: VercelTeam[] }>(
-      `/v2/teams${this.buildQuery({ limit })}`,
-    );
-    return result.teams ?? [];
+    await this.ensureTeamScope();
+    try {
+      const result = await this.request<{ teams: VercelTeam[] }>(
+        `/v2/teams${this.buildQuery({ limit })}`,
+      );
+      return result.teams ?? [];
+    } catch (error) {
+      if (error instanceof VercelError && error.status === 403) {
+        return [];
+      }
+      throw error;
+    }
   }
 
   async listProjects(options?: { limit?: number; search?: string }): Promise<VercelProjectSummary[]> {
+    await this.ensureTeamScope();
     const result = await this.request<{ projects: VercelProjectSummary[] }>(
       `/v10/projects${this.buildQuery({
         limit: options?.limit ?? 20,
@@ -117,6 +142,7 @@ export class VercelClient {
   }
 
   async getProject(idOrName: string): Promise<VercelProjectSummary & Record<string, unknown>> {
+    await this.ensureTeamScope();
     return this.request(`/v9/projects/${encodeURIComponent(idOrName)}${this.buildQuery()}`);
   }
 
@@ -128,6 +154,7 @@ export class VercelClient {
     branch?: string;
     rollbackCandidate?: boolean;
   }): Promise<VercelDeploymentSummary[]> {
+    await this.ensureTeamScope();
     const result = await this.request<{ deployments: VercelDeploymentSummary[] }>(
       `/v6/deployments${this.buildQuery({
         projectId: options?.projectId,
@@ -142,6 +169,7 @@ export class VercelClient {
   }
 
   async getDeployment(idOrUrl: string): Promise<Record<string, unknown>> {
+    await this.ensureTeamScope();
     return this.request(
       `/v13/deployments/${encodeURIComponent(idOrUrl)}${this.buildQuery()}`,
     );
@@ -151,6 +179,7 @@ export class VercelClient {
     idOrUrl: string,
     limit = 100,
   ): Promise<VercelDeploymentEvent[]> {
+    await this.ensureTeamScope();
     const result = await this.request<VercelDeploymentEvent[] | { events?: VercelDeploymentEvent[] }>(
       `/v3/deployments/${encodeURIComponent(idOrUrl)}/events${this.buildQuery({ limit })}`,
     );
@@ -158,6 +187,7 @@ export class VercelClient {
   }
 
   async listProjectDomains(projectIdOrName: string): Promise<Record<string, unknown>[]> {
+    await this.ensureTeamScope();
     const result = await this.request<{ domains?: Record<string, unknown>[] }>(
       `/v9/projects/${encodeURIComponent(projectIdOrName)}/domains${this.buildQuery()}`,
     );
@@ -165,6 +195,7 @@ export class VercelClient {
   }
 
   async promote(projectId: string, deploymentId: string): Promise<Record<string, unknown>> {
+    await this.ensureTeamScope();
     return this.request(
       `/v10/projects/${encodeURIComponent(projectId)}/promote/${encodeURIComponent(deploymentId)}${this.buildQuery()}`,
       { method: "POST" },
@@ -176,6 +207,7 @@ export class VercelClient {
     deploymentId: string,
     description?: string,
   ): Promise<Record<string, unknown>> {
+    await this.ensureTeamScope();
     return this.request(
       `/v1/projects/${encodeURIComponent(projectId)}/rollback/${encodeURIComponent(deploymentId)}${this.buildQuery({ description })}`,
       { method: "POST" },
@@ -183,6 +215,7 @@ export class VercelClient {
   }
 
   async cancelDeployment(deploymentId: string): Promise<Record<string, unknown>> {
+    await this.ensureTeamScope();
     return this.request(
       `/v12/deployments/${encodeURIComponent(deploymentId)}/cancel${this.buildQuery()}`,
       { method: "PATCH" },
