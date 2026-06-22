@@ -11,6 +11,8 @@
 
 [Documentation](https://ayush7614.github.io/mcp-wormhole/) · [Blog](https://ayush7614.github.io/mcp-wormhole/#/blog) · [Contributing](./CONTRIBUTING.md) · [GitHub](https://github.com/Ayush7614/mcp-wormhole)
 
+![mcp-wormhole server catalog — orange CLI demo](./demo/mcp-wormhole-catalog.gif)
+
 </div>
 
 ---
