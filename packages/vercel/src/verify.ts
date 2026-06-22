@@ -16,7 +16,7 @@ async function main() {
   section("Teams");
   const teams = await client.listTeams(10);
   if (teams.length === 0) {
-    console.log("  (personal account — no teams)");
+    console.log("  (none listed — using default team scope if available)");
   } else {
     for (const team of teams) {
       console.log(`  - ${team.name} (${team.slug}) id=${team.id}`);
