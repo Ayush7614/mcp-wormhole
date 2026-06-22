@@ -1,55 +1,53 @@
+<div align="center">
+
 # mcp-wormhole
 
-A monorepo of **Model Context Protocol (MCP) servers** — one directory per integration. Each server wraps a third-party API so AI agents (Cursor, Claude Desktop, etc.) can read and act on your tools.
+**Open-source MCP servers that connect AI agents to the tools you already use.**
+
+[![Website](https://img.shields.io/badge/docs-ayush7614.github.io%2Fmcp--wormhole-8b93ff?style=for-the-badge)](https://ayush7614.github.io/mcp-wormhole/)
+[![npm @mcp-wormhole/asana](https://img.shields.io/npm/v/@mcp-wormhole/asana?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/@mcp-wormhole/asana)
+[![License: MIT](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](LICENSE)
+[![MCP](https://img.shields.io/badge/Model_Context_Protocol-6366f1?style=for-the-badge)](https://modelcontextprotocol.io)
+
+[Documentation](https://ayush7614.github.io/mcp-wormhole/) · [Blog](https://ayush7614.github.io/mcp-wormhole/#/blog) · [Contributing](./CONTRIBUTING.md) · [GitHub](https://github.com/Ayush7614/mcp-wormhole)
+
+</div>
+
+---
+
+## What is this?
+
+**mcp-wormhole** is a monorepo of [Model Context Protocol (MCP)](https://modelcontextprotocol.io) servers — one package per integration. Each server wraps a third-party vendor API so AI clients (Cursor, Claude Desktop, VS Code Copilot, Windsurf, and 16 others) can read and act on your tools through natural language.
+
+No new backends. No proprietary proxies. Just stdio MCP servers published to npm.
+
+```
+You  →  AI Client (Cursor, Claude, …)  →  MCP Server (npx)  →  Vendor API (Asana, Slack, …)
+```
 
 **Owner:** [@Ayush7614](https://github.com/Ayush7614)
 
-**Website:** [ayush7614.github.io/mcp-wormhole](https://ayush7614.github.io/mcp-wormhole/) — integration guides, server catalog, copy-paste configs for Cursor, Claude, VS Code, and more.
+---
 
-## Structure
+## Table of contents
 
-```
-mcp-wormhole/
-├── packages/
-│   ├── asana/          # one MCP server per directory
-│   ├── slack/
-│   ├── sentry/
-│   └── ...
-├── site/               # GitHub Pages docs + integration gallery
-├── package.json
-└── pnpm-workspace.yaml
-```
+- [Quick start](#quick-start)
+- [Available servers](#available-servers)
+- [Connect your client](#connect-your-client)
+- [Repository structure](#repository-structure)
+- [Development](#development)
+- [Adding a new server](#adding-a-new-server)
+- [Publishing to npm](#publishing-to-npm)
+- [Guidelines](#guidelines)
+- [License](#license)
 
-Each package is a standalone MCP server with its own `package.json`, tools, resources, and README.
+---
 
-## Planned servers
+## Quick start
 
-| Server | Status | Auth |
-|--------|--------|------|
-| Asana | available | PAT |
-| Slack | planned | Bot token |
-| Sentry | planned | Auth token |
-| Vercel | planned | API token |
-| Google Calendar | planned | OAuth |
-| Airtable | planned | PAT |
-| Stripe | planned | Secret key |
-| Cloudflare | planned | API token |
-| GitHub Actions | planned | PAT |
-| PagerDuty | planned | API key |
-| Linear | planned | API key |
+### Use a published server (no clone required)
 
-> Each server calls the **vendor's existing API** — we don't host new backends.
-
-## Quick start (development)
-
-```bash
-git clone https://github.com/Ayush7614/mcp-wormhole.git
-cd mcp-wormhole
-pnpm install
-pnpm build
-```
-
-Run a specific server:
+Add this to your MCP client config (Cursor: `~/.cursor/mcp.json`, Claude Desktop: `claude_desktop_config.json`, VS Code: `.vscode/mcp.json`):
 
 ```json
 {
@@ -65,16 +63,183 @@ Run a specific server:
 }
 ```
 
-Published on npm as [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana).
+Restart your client, then ask: *"List my open Asana tasks"*.
+
+Get a token: [Asana developer console](https://app.asana.com/0/my-apps)
+
+### Clone for development
+
+```bash
+git clone https://github.com/Ayush7614/mcp-wormhole.git
+cd mcp-wormhole
+pnpm install
+pnpm build
+```
+
+---
+
+## Available servers
+
+| Server | npm package | Status | Auth | Tools |
+|--------|-------------|--------|------|-------|
+| **Asana** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) | **Available** | PAT | 9 |
+| Slack | `@mcp-wormhole/slack` | Planned | Bot token | — |
+| Sentry | `@mcp-wormhole/sentry` | Planned | Auth token | — |
+| Vercel | `@mcp-wormhole/vercel` | Planned | API token | — |
+| Google Calendar | `@mcp-wormhole/google-calendar` | Planned | OAuth | — |
+| Airtable | `@mcp-wormhole/airtable` | Planned | PAT | — |
+| Stripe | `@mcp-wormhole/stripe` | Planned | Secret key | — |
+| Cloudflare | `@mcp-wormhole/cloudflare` | Planned | API token | — |
+| GitHub Actions | `@mcp-wormhole/github-actions` | Planned | PAT | — |
+| PagerDuty | `@mcp-wormhole/pagerduty` | Planned | API key | — |
+| Linear | `@mcp-wormhole/linear` | Planned | API key | — |
+
+> Each server calls the **vendor's existing REST API** — we don't host new backends.
+
+---
+
+## Connect your client
+
+Step-by-step guides with copy-paste configs for **20 AI clients**:
+
+| Client | Guide |
+|--------|-------|
+| Cursor | [Cursor + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/cursor/asana) |
+| VS Code | [VS Code + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/vscode/asana) |
+| Claude Desktop | [Claude Desktop + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-desktop/asana) |
+| Claude Code | [Claude Code + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-code/asana) |
+| …and 16 more | [All integrations](https://ayush7614.github.io/mcp-wormhole/#/integrations) |
+
+Full server walkthrough: [Asana MCP server guide](https://ayush7614.github.io/mcp-wormhole/#/servers/asana/guide)
+
+---
+
+## Repository structure
+
+```
+mcp-wormhole/
+├── packages/
+│   ├── asana/              # @mcp-wormhole/asana — live on npm
+│   ├── _template/          # Copy this to start a new server
+│   ├── slack/              # planned
+│   └── …
+├── site/                   # Docs site (Vite + React, GitHub Pages)
+│   ├── src/data/           # Servers, integrations, guides, blog
+│   └── public/demo/        # Verification GIFs
+├── package.json            # pnpm workspace root
+├── pnpm-workspace.yaml
+├── CONTRIBUTING.md
+└── README.md
+```
+
+Each package is a standalone MCP server with its own `package.json`, tools, verify script, and README.
+
+---
+
+## Development
+
+```bash
+# Install all workspace dependencies
+pnpm install
+
+# Build everything
+pnpm build
+
+# Build one package
+pnpm --filter @mcp-wormhole/asana build
+
+# Verify Asana server against real API
+cd packages/asana
+cp .env.example .env   # add ASANA_ACCESS_TOKEN
+pnpm verify
+
+# Run docs site locally
+cd site && npm run dev
+# → http://localhost:5173
+```
+
+---
 
 ## Adding a new server
 
-1. Copy `packages/_template` to `packages/<name>`
-2. Implement tools against the vendor API
-3. Open a PR — one server per PR
+1. **Copy** `packages/_template` → `packages/<name>`
+2. **Implement** tools against the vendor's official API (Zod validation, MCP SDK)
+3. **Document** env vars in README + `.env.example`
+4. **Add** entry in `site/src/data/servers.ts` for the docs catalog
+5. **Open a PR** — one server per PR
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full checklist, tool naming conventions, and publishing workflow.
+
+---
+
+## Publishing to npm
+
+Packages publish under the [`@mcp-wormhole`](https://www.npmjs.com/org/mcp-wormhole) npm org.
+
+```bash
+pnpm --filter @mcp-wormhole/asana build
+cd packages/asana
+npm publish --access public
+```
+
+Or use **GitHub Actions → Publish npm packages → Run workflow**.
+
+Details: [CONTRIBUTING.md § Publishing](./CONTRIBUTING.md#publishing)
+
+---
+
+## Guidelines
+
+### For contributors
+
+| Rule | Detail |
+|------|--------|
+| **One server per PR** | Keep reviews focused |
+| **Vendor API only** | No scraping, no unofficial endpoints |
+| **Read tools first** | `list_`, `get_`, `search_` before `create_`, `update_`, `delete_` |
+| **Zod everywhere** | Validate all tool inputs |
+| **No secrets** | Never commit tokens; use `.env.example` |
+| **Verify script** | Hit the real API — no mocks in `pnpm verify` |
+| **Update docs** | Add server to `site/src/data/servers.ts` + root README table |
+
+### For users
+
+| Rule | Detail |
+|------|--------|
+| **Keep tokens local** | MCP config env vars stay on your machine |
+| **Restart after config** | MCP clients load servers at startup |
+| **Use npx** | No repo clone needed for published packages |
+| **Report issues** | [GitHub Issues](https://github.com/Ayush7614/mcp-wormhole/issues) |
+
+### Stack
+
+- **Runtime:** Node.js 18+
+- **Language:** TypeScript
+- **MCP SDK:** `@modelcontextprotocol/sdk`
+- **Validation:** Zod
+- **Build:** tsup
+- **Transport:** stdio (local process via npx)
+
+---
+
+## Blog
+
+Tutorials and release notes on the docs site:
+
+- [Introducing mcp-wormhole](https://ayush7614.github.io/mcp-wormhole/#/blog/introducing-mcp-wormhole)
+- [Connect Asana to Cursor in 5 minutes](https://ayush7614.github.io/mcp-wormhole/#/blog/connect-asana-to-cursor)
+- [Building your first MCP server](https://ayush7614.github.io/mcp-wormhole/#/blog/building-an-mcp-server)
+
+---
 
 ## License
 
 MIT — see [LICENSE](./LICENSE).
+
+---
+
+<div align="center">
+
+Built by [@Ayush7614](https://github.com/Ayush7614)
+
+</div>
