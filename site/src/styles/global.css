@@ -272,28 +272,18 @@ select {
 
 .brand-icon {
   display: inline-flex;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .brand-icon img {
-  width: 24px;
-  height: 24px;
-}
-
-.brand-fallback {
   width: 28px;
   height: 28px;
-  border-radius: 8px;
-  background: var(--accent-soft);
-  color: var(--accent);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
+  object-fit: contain;
+  display: block;
 }
 
 .detail-panel {
