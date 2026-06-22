@@ -1,6 +1,7 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { SectionLink } from "../components/SectionLink";
 import { GuideStepSection } from "../components/GuideStepSection";
+import { FrameworkPicker } from "../components/FrameworkPicker";
 import { buildServerGuide } from "../data/serverGuides";
 import { getServer } from "../data/servers";
 
@@ -62,12 +63,17 @@ export function ServerGuidePage() {
                   <a href={`#${step.id}`}>{step.title}</a>
                 </li>
               ))}
+              {!disabled && (
+                <li>
+                  <a href="#frameworks">Connect your client</a>
+                </li>
+              )}
             </ol>
           </aside>
 
           <div className="tutorial-steps">
             {guide.steps.map((step) => (
-              <GuideStepSection key={step.id} step={step} serverId={server.id} />
+              <GuideStepSection key={step.id} step={step} />
             ))}
 
             <footer className="tutorial-footer">
@@ -85,6 +91,8 @@ export function ServerGuidePage() {
           </div>
         </div>
       </div>
+
+      {!disabled && <FrameworkPicker serverId={server.id} serverName={server.name} />}
     </main>
   );
 }

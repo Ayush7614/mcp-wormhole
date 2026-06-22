@@ -1,13 +1,9 @@
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
 import { ConfigBlock } from "./ConfigBlock";
-import { BrandIcon } from "./BrandIcon";
-import { integrations } from "../data/integrations";
 import type { GuideStep } from "../data/serverGuides";
 
 interface GuideStepSectionProps {
   step: GuideStep;
-  serverId: string;
 }
 
 function DemoTerminal({ title, asset }: { title: string; asset: string }) {
@@ -31,7 +27,7 @@ function DemoTerminal({ title, asset }: { title: string; asset: string }) {
   );
 }
 
-export function GuideStepSection({ step, serverId }: GuideStepSectionProps) {
+export function GuideStepSection({ step }: GuideStepSectionProps) {
   return (
     <section className="tutorial-step" id={step.id}>
       <div className="tutorial-step-marker">
@@ -71,23 +67,6 @@ export function GuideStepSection({ step, serverId }: GuideStepSectionProps) {
           </ul>
         )}
 
-        {step.showClientLinks && (
-          <div className="client-guide-grid">
-            {integrations.map((integration) => (
-              <Link
-                key={integration.id}
-                to={`/guides/${integration.id}/${serverId}`}
-                className="client-guide-card"
-              >
-                <BrandIcon integrationId={integration.id} alt={integration.name} />
-                <span>{integration.name}</span>
-                <span className="external-hint" aria-hidden="true">
-                  ↗
-                </span>
-              </Link>
-            ))}
-          </div>
-        )}
       </div>
     </section>
   );

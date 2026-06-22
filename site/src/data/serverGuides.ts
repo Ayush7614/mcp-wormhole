@@ -21,7 +21,6 @@ export interface GuideStep {
   code?: GuideCodeBlock[];
   demo?: GuideDemo;
   prompts?: string[];
-  showClientLinks?: boolean;
   notice?: string;
 }
 
@@ -172,14 +171,6 @@ npx -y ${server.npmPackage}   # Ctrl+C to exit`,
         title: "Live API verification (pnpm verify)",
         asset: server.demoAsset ?? "demo/asana-verify.gif",
       },
-    },
-    {
-      id: "clients",
-      number: 9,
-      title: "Per-client setup guides",
-      description:
-        "Need client-specific instructions? Each guide below has copy-paste config tailored for that tool.",
-      showClientLinks: true,
     },
   ];
 }
