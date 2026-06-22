@@ -19,7 +19,7 @@ export const introducingMcpWormhole: BlogPost = {
     badge: "OPEN SOURCE",
     connection: wormholeHubConnection,
     stats: [
-      { value: "66", label: "Tools live" },
+      { value: "77", label: "Tools live" },
       { value: "∞", label: "Infinite servers" },
       { value: "30+", label: "Client integrations" },
     ],

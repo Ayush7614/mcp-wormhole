@@ -4,6 +4,7 @@ import { getHomepageStats } from "../data/homepageStats";
 import type { McpServer } from "../data/servers";
 import { servers } from "../data/servers";
 import { asanaToolSummary } from "../data/asanaCatalog";
+import { vercelToolSummary } from "../data/vercelCatalog";
 
 const statusLabel = {
   available: "Available",
@@ -59,7 +60,9 @@ export function ServerGrid({ selectedId }: ServerGridProps) {
                 <span className="card-meta">
                   {server.status === "available" && server.id === "asana"
                     ? asanaToolSummary()
-                    : server.auth}
+                    : server.status === "available" && server.id === "vercel"
+                      ? vercelToolSummary()
+                      : server.auth}
                 </span>
               </Link>
               {server.status === "available" && (
