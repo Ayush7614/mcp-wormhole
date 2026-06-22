@@ -12,6 +12,8 @@ Set Padding 24
 Hide
 Type "cd /Users/ayushkumar/Projects/mcp-wormhole"
 Enter
+Type "setopt interactivecomments"
+Enter
 Sleep 400ms
 Show
 
@@ -23,6 +25,6 @@ Type "bash demo/show-catalog.sh"
 Enter
 Sleep 14s
 
-Type "# Asana live on npm — Slack, Sentry, Linear, and more coming soon"
+Type "# Asana & Vercel live on npm — Slack, Sentry, Linear, and more coming soon"
 Enter
 Sleep 2s

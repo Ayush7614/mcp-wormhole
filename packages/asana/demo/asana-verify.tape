@@ -1,6 +1,6 @@
 # Asana MCP verification demo
 # Records build + live API verification (token loaded from .env, never shown)
-Output demo/asana-verify.gif
+Output packages/asana/demo/asana-verify.gif
 
 Set Shell "zsh"
 Set FontSize 16
@@ -11,6 +11,8 @@ Set TypingSpeed 50ms
 
 Hide
 Type "cd /Users/ayushkumar/Projects/mcp-wormhole/packages/asana"
+Enter
+Type "setopt interactivecomments"
 Enter
 Sleep 500ms
 Show

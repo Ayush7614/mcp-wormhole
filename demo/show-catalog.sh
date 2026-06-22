@@ -30,6 +30,10 @@ pause 0.3
 printf '%s  │%s    ● Asana       %s@mcp-wormhole/asana@0.2.0%s\n' "$ORANGE" "$NC" "$GREEN" "$NC"
 pause 0.25
 printf '%s  │%s      66 tools · 18 prompts · browsable resources\n' "$ORANGE" "$NC"
+pause 0.3
+printf '%s  │%s    ● Vercel      %s@mcp-wormhole/vercel@0.2.0%s\n' "$ORANGE" "$NC" "$GREEN" "$NC"
+pause 0.25
+printf '%s  │%s      18 tools · 8 prompts · browsable resources\n' "$ORANGE" "$NC"
 pause 0.35
 printf '%s  │%s\n' "$ORANGE" "$NC"
 pause 0.2
@@ -39,7 +43,6 @@ pause 0.3
 servers=(
   "Slack|@mcp-wormhole/slack"
   "Sentry|@mcp-wormhole/sentry"
-  "Vercel|@mcp-wormhole/vercel"
   "Google Calendar|@mcp-wormhole/google-calendar"
   "Airtable|@mcp-wormhole/airtable"
   "Stripe|@mcp-wormhole/stripe"
@@ -65,6 +68,6 @@ pause 0.25
 printf '%s  └──────────────────────────────────────────────────────────┘%s\n' "$ORANGE" "$NC"
 pause 0.4
 printf '\n'
-printf '%s  %snpx -y @mcp-wormhole/asana%s  %s# connect any MCP client%s\n' "$DIM" "$ORANGE" "$NC" "$DIM" "$NC"
+printf '%s  %snpx -y @mcp-wormhole/asana%s  %s# or @mcp-wormhole/vercel — connect any MCP client%s\n' "$DIM" "$ORANGE" "$NC" "$DIM" "$NC"
 pause 0.5
 printf '\n'

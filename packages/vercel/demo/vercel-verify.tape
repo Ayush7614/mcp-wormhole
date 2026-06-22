@@ -1,6 +1,6 @@
 # Vercel MCP verification demo
 # Records build + live API verification (token loaded from .env, never shown)
-Output demo/vercel-verify.gif
+Output packages/vercel/demo/vercel-verify.gif
 
 Set Shell "zsh"
 Set FontSize 16
@@ -11,6 +11,8 @@ Set TypingSpeed 50ms
 
 Hide
 Type "cd /Users/ayushkumar/Projects/mcp-wormhole/packages/vercel"
+Enter
+Type "setopt interactivecomments"
 Enter
 Sleep 500ms
 Show
