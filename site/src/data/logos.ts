@@ -22,7 +22,16 @@ export const integrationLogos: Record<string, string> = {
   openclaw: "logos/openclaw.svg",
 };
 
+export const serverLogos: Record<string, string> = {
+  asana: "logos/asana.svg",
+};
+
 export function logoUrl(integrationId: string): string {
   const path = integrationLogos[integrationId] ?? "logos/modelcontextprotocol.svg";
+  return `${import.meta.env.BASE_URL}${path}`;
+}
+
+export function serverLogoUrl(serverId: string): string {
+  const path = serverLogos[serverId] ?? "logos/modelcontextprotocol.svg";
   return `${import.meta.env.BASE_URL}${path}`;
 }

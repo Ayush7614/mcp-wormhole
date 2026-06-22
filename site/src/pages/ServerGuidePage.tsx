@@ -1,6 +1,8 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { SectionLink } from "../components/SectionLink";
 import { GuideStepSection } from "../components/GuideStepSection";
+import { GuideHeroPoster } from "../components/GuideHeroPoster";
+import { GuideIntroSection } from "../components/GuideIntroSection";
 import { FrameworkPicker } from "../components/FrameworkPicker";
 import { TocLink } from "../components/TocLink";
 import { buildServerGuide } from "../data/serverGuides";
@@ -32,35 +34,43 @@ export function ServerGuidePage() {
           <span>Guide</span>
         </nav>
 
-        <header className="tutorial-hero">
-          <span className="guide-server-badge">{server.name}</span>
-          <h1>{guide.title}</h1>
-          <p className="tutorial-hero-lead">{guide.subtitle}</p>
-          <div className="guide-header-actions">
-            <span className={`status-pill ${server.status}`}>
-              {disabled ? "Server planned" : "Ready to use"}
-            </span>
-            <span className="tutorial-meta">
-              {guide.steps.length} steps · {server.tools.length} tools ·{" "}
-              <code>{server.npmPackage}</code>
-            </span>
-          </div>
-          <div className="tutorial-hero-actions">
-            <Link to={`/servers/${server.id}`} className="button secondary">
-              ← Back to {server.name}
-            </Link>
-            {server.docsUrl && (
-              <a href={server.docsUrl} target="_blank" rel="noreferrer" className="button secondary">
-                {server.name} API docs ↗
-              </a>
-            )}
-          </div>
-        </header>
+        <GuideHeroPoster
+          title={guide.title}
+          subtitle={guide.subtitle}
+          poster={guide.poster}
+          serverId={server.id}
+          serverName={server.name}
+          status={
+            <>
+              <span className={`status-pill ${server.status}`}>
+                {disabled ? "Server planned" : "Ready to use"}
+              </span>
+              <span className="tutorial-meta">
+                {guide.steps.length} steps · {server.tools.length} tools ·{" "}
+                <code>{server.npmPackage}</code>
+              </span>
+            </>
+          }
+        />
+
+        <div className="tutorial-hero-actions">
+          <Link to={`/servers/${server.id}`} className="button secondary">
+            ← Back to {server.name}
+          </Link>
+          {server.docsUrl && (
+            <a href={server.docsUrl} target="_blank" rel="noreferrer" className="button secondary">
+              {server.name} API docs ↗
+            </a>
+          )}
+        </div>
 
         <div className="tutorial-layout">
           <aside className="tutorial-toc" aria-label="Guide contents">
             <p className="tutorial-toc-label">On this page</p>
             <ol>
+              <li className="tutorial-toc-overview">
+                <TocLink targetId="intro">{guide.intro.title}</TocLink>
+              </li>
               {guide.steps.map((step) => (
                 <li key={step.id}>
                   <TocLink targetId={step.id}>{step.title}</TocLink>
@@ -75,6 +85,7 @@ export function ServerGuidePage() {
           </aside>
 
           <div className="tutorial-steps">
+            <GuideIntroSection intro={guide.intro} />
             {guide.steps.map((step) => (
               <GuideStepSection key={step.id} step={step} />
             ))}

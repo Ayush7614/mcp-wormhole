@@ -1,6 +1,7 @@
 import type { Integration } from "./integrations";
 import type { McpServer } from "./servers";
 import type { GuideStep } from "./serverGuides";
+import type { GuideIntro, GuidePoster } from "./guideTypes";
 import { getConfigForIntegration } from "./config";
 
 export interface GuideReference {
@@ -14,6 +15,8 @@ export interface ProviderGuide {
   subtitle: string;
   integration: Integration;
   server: McpServer;
+  intro: GuideIntro;
+  poster: GuidePoster;
   steps: GuideStep[];
   references: GuideReference[];
 }
@@ -74,6 +77,82 @@ function buildReferences(integration: Integration, server: McpServer): GuideRefe
   }
 
   return refs;
+}
+
+const clientIntroNotes: Record<string, string> = {
+  cursor:
+    "Cursor loads MCP servers from mcp.json at startup — tools appear in Agent, Composer, and inline chat.",
+  vscode:
+    "GitHub Copilot in VS Code discovers MCP tools from .vscode/mcp.json in your workspace root.",
+  "claude-desktop":
+    "Claude Desktop reads mcpServers from its config file and exposes tools in every new conversation.",
+  "claude-code":
+    "Claude Code connects via CLI (claude mcp add) or project MCP config — verify with claude mcp list.",
+  "claude-agents-sdk":
+    "Wire stdio MCP servers into your agent initialization — tools are discovered via tools/list automatically.",
+  chatgpt: "OpenAI's MCP connector runs remote or stdio servers depending on your deployment setup.",
+  codex: "Codex CLI reads MCP config from your project and exposes tools during agent sessions.",
+  "openai-agents-sdk": "Register stdio MCP servers in your Agents SDK setup before starting the agent loop.",
+  windsurf: "Windsurf Cascade loads MCP tools from its settings panel — restart after saving config.",
+  opencode: "OpenCode discovers MCP servers from its config and surfaces tools in the coding agent.",
+  zed: "Zed's assistant connects to MCP servers configured in your settings or project context.",
+  cli: "Use the MCP Inspector CLI to test stdio servers before wiring them into a full client.",
+  langchain: "Attach stdio MCP tools to LangChain agents via the MCP adapter in your chain setup.",
+  llamaindex: "Connect MCP tools to LlamaIndex agents through the MCP tool integration layer.",
+  crewai: "CrewAI agents can call MCP tools when you register the server in your crew configuration.",
+  mastra: "Mastra agents discover MCP tools from your server config during initialization.",
+  "ai-sdk": "Vercel AI SDK supports MCP tool calling when you connect stdio servers in your route handler.",
+  "google-adk": "Google's Agent Development Kit accepts MCP servers in your agent tool configuration.",
+  kimi: "Moonshot Kimi loads MCP tools from its integration settings after you add the server block.",
+  openclaw: "OpenClaw agents call MCP tools registered in your project's server configuration.",
+};
+
+function buildClientIntro(integration: Integration, server: McpServer): GuideIntro {
+  const note =
+    clientIntroNotes[integration.id] ??
+    `${integration.name} connects to MCP servers through its standard config — tools become available once the server is running.`;
+
+  return {
+    title: "Overview",
+    paragraphs: [
+      `This guide connects ${server.name} to ${integration.name} so your AI assistant can manage tasks, search projects, and update work without switching apps. ${note}`,
+      `Follow the steps below for credentials, the exact config path, restart instructions, example prompts, and the full ${server.name} tool reference.`,
+    ],
+    highlights: [
+      `${server.tools.length} ${server.name} tools in ${integration.name}`,
+      `Config file: ${integration.configPath}`,
+      integration.transport === "stdio" ? "Local stdio server via npx" : `${integration.transport} transport`,
+      `npm: ${server.npmPackage}`,
+    ],
+  };
+}
+
+function buildPlannedClientIntro(integration: Integration, server: McpServer): GuideIntro {
+  return {
+    title: "Preview",
+    paragraphs: [
+      `${server.name} is not published yet. This page shows the MCP configuration you'll use with ${integration.name} once the server ships.`,
+      `When available, you'll add the config block below to ${integration.configPath}, set your credentials, and restart ${integration.name}.`,
+    ],
+    highlights: [
+      `${server.tools.length} tools planned for ${server.name}`,
+      `Target config: ${integration.configPath}`,
+      `Package: ${server.npmPackage}`,
+    ],
+  };
+}
+
+function buildClientPoster(integration: Integration, server: McpServer): GuidePoster {
+  const npmShort = server.npmPackage.replace("@mcp-wormhole/", "");
+  return {
+    demoAsset: server.demoAsset ?? "demo/asana-verify.gif",
+    demoCaption: `${integration.name} + ${server.name} — live demo`,
+    stats: [
+      { value: String(server.tools.length), label: "Tools" },
+      { value: integration.name, label: "Client" },
+      { value: npmShort, label: "npm" },
+    ],
+  };
 }
 
 function buildPlannedSteps(integration: Integration, server: McpServer): GuideStep[] {
@@ -179,19 +258,6 @@ function buildActiveSteps(integration: Integration, server: McpServer): GuideSte
     },
   ];
 
-  if (server.demoAsset) {
-    steps.push({
-      id: "demo",
-      number: 8,
-      title: "See it working",
-      description: `Live verification of the ${server.name} MCP server against the real API.`,
-      demo: {
-        title: `${server.name} MCP verification`,
-        asset: server.demoAsset,
-      },
-    });
-  }
-
   return steps;
 }
 
@@ -201,12 +267,14 @@ export function buildProviderGuide(integration: Integration, server: McpServer):
   return {
     title: disabled
       ? `How to integrate ${server.name} MCP with ${integration.name} (preview)`
-      : `How to integrate ${server.name} MCP with ${integration.name}`,
+      : `${integration.name} + ${server.name} MCP`,
     subtitle: disabled
       ? `${server.name} is coming soon — preview the ${integration.name} setup below`
-      : `Step-by-step setup to connect ${server.name} to ${integration.name} using ${server.npmPackage}`,
+      : `Give ${integration.name} direct access to ${server.name} — tasks, search, and updates from your agent`,
     integration,
     server,
+    intro: disabled ? buildPlannedClientIntro(integration, server) : buildClientIntro(integration, server),
+    poster: buildClientPoster(integration, server),
     steps: disabled ? buildPlannedSteps(integration, server) : buildActiveSteps(integration, server),
     references: buildReferences(integration, server),
   };

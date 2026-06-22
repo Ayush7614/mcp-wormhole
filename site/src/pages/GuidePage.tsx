@@ -1,7 +1,8 @@
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import { BrandIcon } from "../components/BrandIcon";
 import { GuideStepSection } from "../components/GuideStepSection";
 import { GuideReferences } from "../components/GuideReferences";
+import { GuideHeroPoster } from "../components/GuideHeroPoster";
+import { GuideIntroSection } from "../components/GuideIntroSection";
 import { TocLink } from "../components/TocLink";
 import { buildProviderGuide } from "../data/guides";
 import { getIntegration } from "../data/integrations";
@@ -40,31 +41,34 @@ export function GuidePage() {
           <span>{integration.name}</span>
         </nav>
 
-        <header className="tutorial-hero">
-          <div className="guide-header-logos">
-            <BrandIcon integrationId={integration.id} alt={integration.name} />
-            <span className="guide-plus">+</span>
-            <span className="guide-server-badge">{server.name}</span>
-          </div>
-          <h1>{guide.title}</h1>
-          <p className="tutorial-hero-lead">{guide.subtitle}</p>
-          <div className="guide-header-actions">
-            <span className={`status-pill ${server.status}`}>
-              {disabled ? "Server planned" : "Ready to use"}
-            </span>
-            <span className="tutorial-meta">
-              {guide.steps.length} steps · <code>{server.npmPackage}</code>
-            </span>
-          </div>
-          <div className="tutorial-hero-actions">
-            <Link to={`/servers/${server.id}/guide`} className="button secondary">
-              ← {server.name} guide
-            </Link>
-            <a href={integration.docsUrl} target="_blank" rel="noreferrer" className="button secondary">
-              {integration.name} docs ↗
-            </a>
-          </div>
-        </header>
+        <GuideHeroPoster
+          title={guide.title}
+          subtitle={guide.subtitle}
+          poster={guide.poster}
+          clientId={integration.id}
+          clientName={integration.name}
+          serverId={server.id}
+          serverName={server.name}
+          status={
+            <>
+              <span className={`status-pill ${server.status}`}>
+                {disabled ? "Server planned" : "Ready to use"}
+              </span>
+              <span className="tutorial-meta">
+                {guide.steps.length} steps · <code>{server.npmPackage}</code>
+              </span>
+            </>
+          }
+        />
+
+        <div className="tutorial-hero-actions">
+          <Link to={`/servers/${server.id}/guide`} className="button secondary">
+            ← {server.name} guide
+          </Link>
+          <a href={integration.docsUrl} target="_blank" rel="noreferrer" className="button secondary">
+            {integration.name} docs ↗
+          </a>
+        </div>
 
         <div className="guide-toolbar">
           <label htmlFor="guide-server">MCP server</label>
@@ -88,6 +92,9 @@ export function GuidePage() {
           <aside className="tutorial-toc" aria-label="Guide contents">
             <p className="tutorial-toc-label">On this page</p>
             <ol>
+              <li className="tutorial-toc-overview">
+                <TocLink targetId="intro">{guide.intro.title}</TocLink>
+              </li>
               {guide.steps.map((step) => (
                 <li key={step.id}>
                   <TocLink targetId={step.id}>{step.title}</TocLink>
@@ -100,6 +107,7 @@ export function GuidePage() {
           </aside>
 
           <div className="tutorial-steps">
+            <GuideIntroSection intro={guide.intro} />
             {guide.steps.map((step) => (
               <GuideStepSection key={step.id} step={step} />
             ))}
