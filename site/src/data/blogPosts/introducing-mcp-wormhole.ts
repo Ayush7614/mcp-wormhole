@@ -1,4 +1,5 @@
 import type { BlogPost } from "../blogTypes";
+import { asanaConnection } from "../blogPosterConnections";
 
 export const introducingMcpWormhole: BlogPost = {
   slug: "introducing-mcp-wormhole",
@@ -11,9 +12,12 @@ export const introducingMcpWormhole: BlogPost = {
   readTime: "12 min",
   poster: {
     posterAsset: "demo/posters/poster-introducing-mcp-wormhole.gif",
-    headline: "MCP Wormhole",
-    tagline: "Every tool. One protocol.",
-    badge: "Announcement",
+    eyebrow: "BLOG / ANNOUNCEMENT",
+    headline: "MCP Wormhole for AI Agents",
+    tagline:
+      "Connect Cursor, Claude, ChatGPT and 20+ clients to Asana, Slack, Sentry and more via stdio MCP.",
+    badge: "OPEN SOURCE",
+    connection: asanaConnection,
     stats: [
       { value: "1", label: "Live server" },
       { value: "20+", label: "AI clients" },

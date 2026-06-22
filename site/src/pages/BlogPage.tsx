@@ -28,25 +28,16 @@ export function BlogPage() {
 
       <section className="section">
         <div className="container">
-          <div className="blog-grid">
+          <div className="blog-grid blog-grid-composio">
             {posts.map((post) => (
-              <Link key={post.slug} to={`/blog/${post.slug}`} className="blog-card">
+              <Link key={post.slug} to={`/blog/${post.slug}`} className="blog-card blog-card-composio">
                 <div className="blog-card-poster">
                   <img
                     src={asset(post.poster.posterAsset)}
-                    alt=""
+                    alt={`${post.poster.headline} — MCP tools connected`}
                     className="blog-card-gif"
                     loading="lazy"
-                    aria-hidden="true"
                   />
-                  <div className="blog-card-poster-overlay" aria-hidden="true" />
-                  <div className="blog-card-poster-text">
-                    {post.poster.badge && (
-                      <span className="blog-card-badge">{post.poster.badge}</span>
-                    )}
-                    <p className="blog-card-headline">{post.poster.headline}</p>
-                    <p className="blog-card-tagline">{post.poster.tagline}</p>
-                  </div>
                 </div>
 
                 <div className="blog-card-body">

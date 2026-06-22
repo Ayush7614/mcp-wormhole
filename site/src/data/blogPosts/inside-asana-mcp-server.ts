@@ -1,4 +1,5 @@
 import type { BlogPost } from "../blogTypes";
+import { asanaDeepConnection } from "../blogPosterConnections";
 
 export const insideAsanaMcpServer: BlogPost = {
   slug: "inside-asana-mcp-server",
@@ -11,9 +12,11 @@ export const insideAsanaMcpServer: BlogPost = {
   readTime: "16 min",
   poster: {
     posterAsset: "demo/posters/poster-inside-asana-mcp.gif",
-    headline: "66 Tools Live",
-    tagline: "18 prompts · 7 resources",
-    badge: "Deep dive",
+    eyebrow: "BLOG / DEEP DIVE",
+    headline: "Inside Asana MCP Server",
+    tagline: "66 tools, 18 prompt workflows, and browsable asana:// resources — full API coverage.",
+    badge: "v0.2.0 LIVE",
+    connection: asanaDeepConnection,
     stats: [
       { value: "66", label: "Tools" },
       { value: "18", label: "Prompts" },

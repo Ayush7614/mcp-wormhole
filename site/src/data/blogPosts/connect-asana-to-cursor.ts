@@ -1,4 +1,5 @@
 import type { BlogPost } from "../blogTypes";
+import { asanaCursorConnection } from "../blogPosterConnections";
 
 export const connectAsanaToCursor: BlogPost = {
   slug: "connect-asana-to-cursor",
@@ -11,9 +12,12 @@ export const connectAsanaToCursor: BlogPost = {
   readTime: "10 min",
   poster: {
     posterAsset: "demo/posters/poster-connect-asana-cursor.gif",
-    headline: "Asana × Cursor",
-    tagline: "Connected in 5 minutes",
-    badge: "Tutorial",
+    eyebrow: "BLOG / TUTORIAL",
+    headline: "Asana MCP for Cursor",
+    tagline:
+      "Paste one JSON block into mcp.json and ask Cursor to list tasks, create work, and search projects.",
+    badge: "5 MIN SETUP",
+    connection: asanaCursorConnection,
     stats: [
       { value: "5 min", label: "Setup" },
       { value: "66", label: "Tools" },

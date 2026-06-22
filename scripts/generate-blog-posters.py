@@ -1,21 +1,39 @@
 #!/usr/bin/env python3
-"""Generate animated blog poster GIFs — pure posters with text + connected tools."""
+"""Composio-style blog poster GIFs: client → mcp-wormhole → tool card."""
 
 from __future__ import annotations
 
+import io
 import math
 import os
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
+
+try:
+    import cairosvg
+
+    HAS_CAIRO = True
+except ImportError:
+    HAS_CAIRO = False
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "site" / "public" / "demo" / "posters"
+LOGOS = ROOT / "site" / "public" / "logos"
+WORMHOLE_LOGO = ROOT / "site" / "public" / "logo.svg"
 OUT.mkdir(parents=True, exist_ok=True)
 
-W, H = 960, 540
-FRAMES = 36
-DURATION_MS = 80
+W, H = 1200, 630
+FRAMES = 40
+DURATION_MS = 90
+
+BG = (250, 250, 252)
+CARD = (255, 255, 255)
+TEXT = (15, 15, 20)
+MUTED = (110, 110, 120)
+LINE = (220, 222, 228)
+ACCENT = (255, 120, 64)
+SHADOW = (0, 0, 0, 18)
 
 
 def load_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
@@ -30,193 +48,272 @@ def load_font(size: int, bold: bool = False) -> ImageFont.FreeTypeFont | ImageFo
     return ImageFont.load_default()
 
 
-FONT_XL = load_font(52, bold=True)
-FONT_LG = load_font(28, bold=True)
-FONT_MD = load_font(18)
-FONT_SM = load_font(14)
+FONT_HERO = load_font(46, bold=True)
+FONT_SUB = load_font(20)
+FONT_CARD_TITLE = load_font(22, bold=True)
+FONT_CARD_BODY = load_font(15)
+FONT_BADGE = load_font(11, bold=True)
+FONT_STAT = load_font(12, bold=True)
+FONT_STAT_L = load_font(11)
+FONT_EYEBROW = load_font(12, bold=True)
 
 
-def lerp(a: float, b: float, t: float) -> float:
-    return a + (b - a) * t
+def load_logo(path: Path, size: int) -> Image.Image:
+    if path.exists() and HAS_CAIRO and path.suffix == ".svg":
+        png = cairosvg.svg2png(url=str(path), output_width=size * 2, output_height=size * 2)
+        img = Image.open(io.BytesIO(png)).convert("RGBA")
+    elif path.exists() and path.suffix != ".svg":
+        img = Image.open(path).convert("RGBA")
+    else:
+        img = Image.new("RGBA", (size * 2, size * 2), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        d.rounded_rectangle([8, 8, size * 2 - 8, size * 2 - 8], radius=24, fill=ACCENT)
+        letter = path.stem[0].upper() if path.stem else "?"
+        bbox = d.textbbox((0, 0), letter, font=load_font(size, bold=True))
+        tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
+        d.text((size - tw // 2, size - th // 2 - 4), letter, fill=(255, 255, 255), font=load_font(size, bold=True))
+    return img.resize((size, size), Image.Resampling.LANCZOS)
 
 
-def draw_gradient_bg(draw: ImageDraw.ImageDraw, frame: int) -> None:
-    pulse = 0.5 + 0.5 * math.sin(frame / FRAMES * math.pi * 2)
-    for y in range(H):
-        t = y / H
-        r = int(lerp(8, 18, t) + pulse * 6)
-        g = int(lerp(6, 10, t) + pulse * 3)
-        b = int(lerp(14, 22, t) + pulse * 8)
-        draw.line([(0, y), (W, y)], fill=(r, g, b))
-
-
-def draw_orb(draw: ImageDraw.ImageDraw, cx: int, cy: int, r: int, color: tuple, alpha: float) -> None:
-    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    od = ImageDraw.Draw(overlay)
-    c = (*color, int(255 * alpha))
-    od.ellipse([cx - r, cy - r, cx + r, cy + r], fill=c)
-    return overlay
-
-
-def draw_wormhole(draw: ImageDraw.ImageDraw, cx: int, cy: int, frame: int) -> None:
-    angle = frame / FRAMES * math.pi * 2
-    for i in range(3):
-        a = angle + i * (math.pi * 2 / 3)
-        rx = 70 + i * 8
-        ry = 22 + i * 4
-        points = []
-        for step in range(64):
-            t = step / 64 * math.pi * 2
-            x = cx + math.cos(t + a) * rx
-            y = cy + math.sin(t + a) * ry
-            points.append((x, y))
-        color = [(255, 120, 64), (240, 106, 106), (129, 140, 248)][i]
-        draw.line(points + [points[0]], fill=color, width=2)
-    draw.ellipse([cx - 28, cy - 28, cx + 28, cy + 28], outline=(255, 120, 64), width=3)
-    draw.ellipse([cx - 12, cy - 12, cx + 12, cy + 12], fill=(255, 120, 64))
-
-
-def draw_tool_node(
+def rounded_rect(
     draw: ImageDraw.ImageDraw,
-    x: int,
-    y: int,
-    label: str,
-    color: tuple,
-    pulse: float,
+    xy: tuple[int, int, int, int],
+    radius: int,
+    fill: tuple,
+    outline: tuple | None = None,
+    width: int = 1,
 ) -> None:
-    r = int(28 + pulse * 6)
-    draw.ellipse([x - r, y - r, x + r, y + r], fill=(color[0] // 4, color[1] // 4, color[2] // 4))
-    draw.ellipse([x - 22, y - 22, x + 22, y + 22], fill=color, outline=(255, 255, 255), width=2)
-    bbox = draw.textbbox((0, 0), label, font=FONT_SM)
-    tw = bbox[2] - bbox[0]
-    draw.text((x - tw // 2, y - 8), label, fill=(255, 255, 255), font=FONT_SM)
+    draw.rounded_rectangle(xy, radius=radius, fill=fill, outline=outline, width=width)
 
 
-def draw_connection(
+def draw_shadow_card(base: Image.Image, box: tuple[int, int, int, int], radius: int, lift: float = 0) -> None:
+    x1, y1, x2, y2 = box
+    pad = 12
+    shadow = Image.new("RGBA", base.size, (0, 0, 0, 0))
+    sd = ImageDraw.Draw(shadow)
+    sy = int(6 + lift * 4)
+    sd.rounded_rectangle(
+        [x1 + 2, y1 + sy, x2 + 2, y2 + sy],
+        radius=radius,
+        fill=(0, 0, 0, 28 + int(lift * 12)),
+    )
+    shadow = shadow.filter(ImageFilter.GaussianBlur(8))
+    base.alpha_composite(shadow)
+    layer = Image.new("RGBA", base.size, (0, 0, 0, 0))
+    ld = ImageDraw.Draw(layer)
+    ld.rounded_rectangle(box, radius=radius, fill=CARD + (255,), outline=LINE + (255,), width=1)
+    base.alpha_composite(layer)
+
+
+def draw_icon_tile(base: Image.Image, x: int, y: int, logo: Image.Image, size: int = 72) -> None:
+    box = (x, y, x + size, y + size)
+    draw_shadow_card(base, box, 18, lift=0.2)
+    px = x + (size - logo.width) // 2
+    py = y + (size - logo.height) // 2
+    base.alpha_composite(logo, (px, py))
+
+
+def draw_connector(
     draw: ImageDraw.ImageDraw,
     x1: int,
     y1: int,
     x2: int,
     y2: int,
     progress: float,
-    color: tuple,
 ) -> None:
-    mx = (x1 + x2) // 2
-    my = (y1 + y2) // 2 - 40
-    steps = 24
-    points = []
-    for i in range(steps + 1):
-        t = i / steps
-        px = (1 - t) ** 2 * x1 + 2 * (1 - t) * t * mx + t**2 * x2
-        py = (1 - t) ** 2 * y1 + 2 * (1 - t) * t * my + t**2 * y2
-        points.append((px, py))
-    draw.line(points, fill=(color[0] // 2, color[1] // 2, color[2] // 2), width=2)
-    idx = int(progress * steps)
-    if idx > 0:
-        draw.line(points[: idx + 1], fill=color, width=3)
-    dot = points[min(idx, steps)]
-    draw.ellipse([dot[0] - 5, dot[1] - 5, dot[0] + 5, dot[1] + 5], fill=(255, 255, 255))
+    draw.line([(x1, y1), (x2, y2)], fill=LINE, width=2)
+    t = progress % 1.0
+    px = x1 + (x2 - x1) * t
+    py = y1 + (y2 - y1) * t
+    draw.ellipse([px - 5, py - 5, px + 5, py + 5], fill=ACCENT)
+    draw.ellipse([px - 8, py - 8, px + 8, py + 8], outline=(*ACCENT, 120), width=2)
 
 
-def render_poster(
-    filename: str,
-    headline: str,
-    tagline: str,
-    badge: str,
-    tools: list[tuple[str, tuple[int, int], tuple[int, int, int]]],
-    hub: tuple[int, int] = (720, 270),
-) -> None:
+def wrap_text(text: str, font: ImageFont.ImageFont, max_width: int) -> list[str]:
+    words = text.split()
+    lines: list[str] = []
+    current = ""
+    for word in words:
+        trial = f"{current} {word}".strip()
+        if draw_text_width(trial, font) <= max_width:
+            current = trial
+        else:
+            if current:
+                lines.append(current)
+            current = word
+    if current:
+        lines.append(current)
+    return lines[:3]
+
+
+def draw_text_width(text: str, font: ImageFont.ImageFont) -> int:
+    bbox = ImageDraw.Draw(Image.new("RGB", (1, 1))).textbbox((0, 0), text, font=font)
+    return bbox[2] - bbox[0]
+
+
+def render_poster(spec: dict) -> None:
+    client_logo = load_logo(ROOT / spec["client_logo"], 44)
+    wormhole_logo = load_logo(WORMHOLE_LOGO, 44)
+    tool_logo = load_logo(ROOT / spec["tool_logo"], 36)
+
+    card_x, card_y = 760, 130
+    card_w, card_h = 380, 370
+    client_x, client_y = 560, 280
+    wormhole_x, wormhole_y = 660, 280
+    tile = 72
+
     frames: list[Image.Image] = []
 
     for f in range(FRAMES):
-        base = Image.new("RGB", (W, H))
+        base = Image.new("RGBA", (W, H), BG + (255,))
         draw = ImageDraw.Draw(base)
-        draw_gradient_bg(draw, f)
 
-        for orb in [(120, 80, 90, (255, 120, 64)), (840, 420, 110, (129, 140, 248)), (480, 480, 70, (240, 106, 106))]:
-            overlay = draw_orb(draw, orb[0], orb[1], orb[2], orb[3], 0.12 + 0.06 * math.sin(f / 8))
-            base = Image.alpha_composite(base.convert("RGBA"), overlay).convert("RGB")
-            draw = ImageDraw.Draw(base)
+        # subtle grid dots
+        for gx in range(0, W, 40):
+            for gy in range(0, H, 40):
+                draw.ellipse([gx, gy, gx + 2, gy + 2], fill=(230, 232, 238))
 
-        progress = (f / FRAMES) % 1.0
         pulse = 0.5 + 0.5 * math.sin(f / FRAMES * math.pi * 2)
+        progress = (f / FRAMES) % 1.0
 
-        draw_wormhole(draw, hub[0], hub[1], f)
+        # Left copy block (Composio-style)
+        draw.text((64, 56), spec["eyebrow"], fill=MUTED, font=FONT_EYEBROW)
 
-        for label, pos, color in tools:
-            draw_connection(draw, hub[0], hub[1], pos[0], pos[1], progress, color)
-            draw_tool_node(draw, pos[0], pos[1], label, color, pulse)
+        y = 96
+        for line in spec["headline"].split("\n"):
+            draw.text((64, y), line, fill=TEXT, font=FONT_HERO)
+            y += 54
 
-        draw.rounded_rectangle([36, 36, 36 + len(badge) * 11 + 28, 68], radius=14, fill=(255, 120, 64))
-        draw.text((50, 44), badge.upper(), fill=(255, 255, 255), font=FONT_SM)
+        ty = y + 8
+        for line in wrap_text(spec["tagline"], FONT_SUB, 520):
+            draw.text((64, ty), line, fill=MUTED, font=FONT_SUB)
+            ty += 28
 
-        draw.text((48, 100), headline, fill=(255, 255, 255), font=FONT_XL)
-        draw.text((48, 168), tagline, fill=(180, 180, 195), font=FONT_LG)
+        # Badge pill
+        badge = spec["badge"]
+        bw = draw_text_width(badge, FONT_BADGE) + 24
+        rounded_rect(draw, (64, ty + 20, 64 + bw, ty + 48), 14, fill=(255, 244, 236), outline=(255, 210, 180))
+        draw.text((76, ty + 26), badge, fill=ACCENT, font=FONT_BADGE)
 
-        draw.text((48, H - 48), "mcp-wormhole · tools connected via MCP", fill=(120, 120, 140), font=FONT_MD)
+        # Connection icons
+        draw_icon_tile(base, client_x, client_y, client_logo, tile)
+        draw_icon_tile(base, wormhole_x, wormhole_y, wormhole_logo, tile)
 
-        frames.append(base)
+        cx1 = client_x + tile
+        cy = client_y + tile // 2
+        cx2 = wormhole_x
+        draw_connector(draw, cx1, cy, cx2, cy, progress)
 
-    out_path = OUT / filename
-    frames[0].save(
-        out_path,
-        save_all=True,
-        append_images=frames[1:],
-        duration=DURATION_MS,
-        loop=0,
-        optimize=True,
-    )
-    print(f"Wrote {out_path} ({len(frames)} frames)")
+        wx2 = wormhole_x + tile
+        card_mid_y = card_y + card_h // 2
+        draw_connector(draw, wx2, wormhole_y + tile // 2, card_x, card_mid_y, (progress + 0.35) % 1.0)
+
+        # Tool card
+        draw_shadow_card(base, (card_x, card_y, card_x + card_w, card_y + card_h), 24, lift=pulse * 0.5)
+        cd = ImageDraw.Draw(base)
+
+        cd.text((card_x + 68, card_y + 26), spec["tool_name"], fill=TEXT, font=FONT_CARD_TITLE)
+        base.alpha_composite(tool_logo, (card_x + 24, card_y + 22))
+
+        bx = card_x + 68
+        for label, color in spec["auth_badges"]:
+            lw = draw_text_width(label, FONT_BADGE) + 16
+            rounded_rect(cd, (bx, card_y + 28, bx + lw, card_y + 48), 8, fill=color)
+            cd.text((bx + 8, card_y + 32), label, fill=(255, 255, 255), font=FONT_BADGE)
+            bx += lw + 8
+
+        desc_y = card_y + 78
+        for line in wrap_text(spec["tool_desc"], FONT_CARD_BODY, card_w - 48):
+            cd.text((card_x + 24, desc_y), line, fill=MUTED, font=FONT_CARD_BODY)
+            desc_y += 22
+
+        # Stats row
+        stat_y = card_y + card_h - 64
+        cd.line([(card_x + 24, stat_y - 12), (card_x + card_w - 24, stat_y - 12)], fill=LINE, width=1)
+        sx = card_x + 24
+        for val, label in spec["card_stats"]:
+            cd.text((sx, stat_y), val, fill=TEXT, font=FONT_STAT)
+            vw = draw_text_width(val, FONT_STAT)
+            cd.text((sx + vw + 6, stat_y + 2), label, fill=MUTED, font=FONT_STAT_L)
+            sx += vw + draw_text_width(label, FONT_STAT_L) + 36
+
+        # Animated glow on card when pulse peaks
+        if pulse > 0.85:
+            glow = Image.new("RGBA", base.size, (0, 0, 0, 0))
+            gd = ImageDraw.Draw(glow)
+            gd.rounded_rectangle(
+                (card_x - 2, card_y - 2, card_x + card_w + 2, card_y + card_h + 2),
+                radius=26,
+                outline=(*ACCENT, 60),
+                width=3,
+            )
+            base = Image.alpha_composite(base, glow)
+
+        frames.append(base.convert("RGB"))
+
+    out = OUT / spec["filename"]
+    frames[0].save(out, save_all=True, append_images=frames[1:], duration=DURATION_MS, loop=0, optimize=True)
+    print(f"Wrote {out}")
 
 
 POSTERS = [
     {
         "filename": "poster-introducing-mcp-wormhole.gif",
-        "headline": "MCP Wormhole",
-        "tagline": "Every tool. One protocol.",
-        "badge": "Announcement",
-        "tools": [
-            ("Cursor", (560, 120), (255, 120, 64)),
-            ("Claude", (560, 420), (240, 106, 106)),
-            ("Asana", (880, 270), (129, 140, 248)),
-        ],
+        "eyebrow": "BLOG / ANNOUNCEMENT",
+        "headline": "MCP Wormhole\nfor AI Agents",
+        "tagline": "Connect Cursor, Claude, ChatGPT and 20+ clients to Asana, Slack, Sentry and more via stdio MCP.",
+        "badge": "OPEN SOURCE",
+        "client_logo": "site/public/logos/cursor.svg",
+        "tool_name": "Asana",
+        "tool_logo": "site/public/logos/asana.svg",
+        "tool_desc": "Work management for fast-moving teams. Create tasks, manage projects, and track goals through natural language.",
+        "auth_badges": [("PAT", (34, 197, 94)), ("STDIO", (59, 130, 246))],
+        "card_stats": [("66", "TOOLS"), ("18", "PROMPTS")],
     },
     {
         "filename": "poster-connect-asana-cursor.gif",
-        "headline": "Asana × Cursor",
-        "tagline": "Connected in 5 minutes",
-        "badge": "Tutorial",
-        "tools": [
-            ("Cursor", (560, 150), (255, 120, 64)),
-            ("MCP", (560, 390), (240, 106, 106)),
-            ("Asana", (880, 270), (129, 140, 248)),
-        ],
+        "eyebrow": "BLOG / TUTORIAL",
+        "headline": "Asana MCP\nfor Cursor",
+        "tagline": "Paste one JSON block into mcp.json and ask Cursor to list tasks, create work, and search projects.",
+        "badge": "5 MIN SETUP",
+        "client_logo": "site/public/logos/cursor.svg",
+        "tool_name": "Asana",
+        "tool_logo": "site/public/logos/asana.svg",
+        "tool_desc": "Securely connect Cursor to Asana with @mcp-wormhole/asana — 66 tools, zero proxy, runs locally.",
+        "auth_badges": [("PAT", (34, 197, 94)), ("NPX", (255, 120, 64))],
+        "card_stats": [("66", "TOOLS"), ("18", "PROMPTS")],
     },
     {
         "filename": "poster-building-mcp-server.gif",
-        "headline": "Build MCP Servers",
-        "tagline": "Template → npm → PR",
-        "badge": "Contributor",
-        "tools": [
-            ("TypeScript", (540, 130), (255, 120, 64)),
-            ("Zod", (540, 410), (129, 140, 248)),
-            ("npm", (880, 270), (240, 106, 106)),
-        ],
+        "eyebrow": "BLOG / CONTRIBUTOR",
+        "headline": "Build MCP\nServers",
+        "tagline": "Copy the template, wrap a vendor REST API, verify against live endpoints, and ship to npm.",
+        "badge": "CONTRIBUTING",
+        "client_logo": "site/public/logos/cli.svg",
+        "tool_name": "npm",
+        "tool_logo": "site/public/logos/modelcontextprotocol.svg",
+        "tool_desc": "TypeScript + Zod + MCP SDK. One package per server under @mcp-wormhole on npm.",
+        "auth_badges": [("ZOD", (129, 140, 248)), ("STDIO", (59, 130, 246))],
+        "card_stats": [("1", "TEMPLATE"), ("66", "REFERENCE")],
     },
     {
         "filename": "poster-inside-asana-mcp.gif",
-        "headline": "66 Tools Live",
-        "tagline": "18 prompts · 7 resources",
-        "badge": "Deep dive",
-        "tools": [
-            ("Tasks", (540, 120), (255, 120, 64)),
-            ("Projects", (540, 420), (240, 106, 106)),
-            ("Goals", (880, 270), (129, 140, 248)),
-        ],
+        "eyebrow": "BLOG / DEEP DIVE",
+        "headline": "Inside Asana\nMCP Server",
+        "tagline": "66 tools, 18 prompt workflows, and browsable asana:// resources — full API coverage.",
+        "badge": "v0.2.0 LIVE",
+        "client_logo": "site/public/logos/anthropic.svg",
+        "tool_name": "Asana",
+        "tool_logo": "site/public/logos/asana.svg",
+        "tool_desc": "Tasks, projects, portfolios, goals, dependencies, tags, time tracking — all exposed as MCP tools.",
+        "auth_badges": [("PAT", (34, 197, 94)), ("LIVE API", (34, 197, 94))],
+        "card_stats": [("66", "TOOLS"), ("7", "RESOURCES")],
     },
 ]
 
 
 if __name__ == "__main__":
+    if not HAS_CAIRO:
+        print("Warning: cairosvg not installed — using fallback icons. pip install cairosvg")
     for spec in POSTERS:
-        render_poster(**spec)
+        render_poster(spec)
