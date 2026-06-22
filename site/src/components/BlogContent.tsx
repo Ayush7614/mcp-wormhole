@@ -1,13 +1,10 @@
 import { useMemo } from "react";
 import type { BlogBlock } from "../data/blogTypes";
 import { buildHeadingIds } from "../utils/blogHeadings";
+import { publicAsset } from "../lib/assets";
 
 interface BlogContentProps {
   blocks: BlogBlock[];
-}
-
-function asset(path: string) {
-  return `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
 }
 
 export function BlogContent({ blocks }: BlogContentProps) {
@@ -77,7 +74,7 @@ export function BlogContent({ blocks }: BlogContentProps) {
             return (
               <figure key={index} className="blog-figure">
                 <div className="blog-figure-frame">
-                  <img src={asset(block.src)} alt={block.alt} loading="lazy" />
+                  <img src={publicAsset(block.src)} alt={block.alt} loading="lazy" />
                 </div>
                 {block.caption && <figcaption>{block.caption}</figcaption>}
               </figure>

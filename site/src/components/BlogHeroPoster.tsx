@@ -1,5 +1,6 @@
 import type { BlogPoster } from "../data/blogTypes";
 import { BlogConnectionDiagram } from "./BlogConnectionDiagram";
+import { publicAsset } from "../lib/assets";
 
 interface BlogHeroPosterProps {
   title: string;
@@ -7,10 +8,6 @@ interface BlogHeroPosterProps {
   poster: BlogPoster;
   readTime: string;
   date: string;
-}
-
-function asset(path: string) {
-  return `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
 }
 
 export function BlogHeroPoster({ title, excerpt, poster, readTime, date }: BlogHeroPosterProps) {
@@ -29,7 +26,7 @@ export function BlogHeroPoster({ title, excerpt, poster, readTime, date }: BlogH
             <BlogConnectionDiagram poster={poster} />
           ) : (
             <img
-              src={asset(poster.posterAsset)}
+              src={publicAsset(poster.posterAsset)}
               alt=""
               className="blog-poster-gif-composio"
               loading="eager"

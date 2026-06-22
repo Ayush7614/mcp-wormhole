@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { BrandIcon } from "./BrandIcon";
 import { ServerIcon } from "./ServerIcon";
 import type { GuidePoster } from "../data/guideTypes";
+import { publicAsset } from "../lib/assets";
 
 interface GuideHeroPosterProps {
   title: string;
@@ -71,7 +72,7 @@ export function GuideHeroPoster({
               <span className="terminal-title">{poster.demoCaption}</span>
             </div>
             <img
-              src={`${import.meta.env.BASE_URL}${poster.demoAsset}`}
+              src={publicAsset(poster.demoAsset)}
               alt={poster.demoCaption}
               className="demo-gif guide-poster-gif"
               loading="eager"

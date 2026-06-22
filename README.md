@@ -61,27 +61,7 @@ Add this to your MCP client config (Cursor: `~/.cursor/mcp.json`, Claude Desktop
       "env": {
         "ASANA_ACCESS_TOKEN": "your_token_here"
       }
-    }
-  }
-}
-```
-
-Restart your client, then ask: *"List my open Asana tasks"* or *"List my Vercel projects"*.
-
-**Published:**
-
-| Package | Version | Tools |
-|---------|---------|-------|
-| [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) | 0.2.0 | 66 tools · 18 prompts · `asana://` resources |
-| [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) | 0.2.0 | 18 tools · 8 prompts · resources |
-
-**Asana** — get a token: [Asana developer console](https://app.asana.com/0/my-apps)
-
-**Vercel** — get a token: [vercel.com/account/tokens](https://vercel.com/account/tokens)
-
-```json
-{
-  "mcpServers": {
+    },
     "vercel": {
       "command": "npx",
       "args": ["-y", "@mcp-wormhole/vercel"],
@@ -93,7 +73,15 @@ Restart your client, then ask: *"List my open Asana tasks"* or *"List my Vercel 
 }
 ```
 
-For team-scoped Vercel projects, add `"VERCEL_TEAM_ID": "team_…"` to the env block.
+For team-scoped Vercel projects, add `"VERCEL_TEAM_ID": "team_…"` to the `vercel` env block.
+
+Restart your client, then ask: *"List my open Asana tasks"* or *"List my Vercel projects"*.
+
+**Published on npm:** [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) (0.2.0 · 66 tools · 18 prompts) · [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) (0.2.0 · 18 tools · 8 prompts)
+
+**Get tokens:** [Asana developer console](https://app.asana.com/0/my-apps) · [Vercel account tokens](https://vercel.com/account/tokens)
+
+**Server guides:** [Asana MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/asana/guide) · [Vercel MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel/guide) · [All integrations](https://ayush7614.github.io/mcp-wormhole/#/integrations)
 
 ### Clone for development
 
@@ -107,6 +95,8 @@ pnpm build
 ---
 
 ## Available servers
+
+**Browse all:** [Asana](https://ayush7614.github.io/mcp-wormhole/#/servers/asana) · [Vercel](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel) · [Slack](https://ayush7614.github.io/mcp-wormhole/#/servers/slack) · [Sentry](https://ayush7614.github.io/mcp-wormhole/#/servers/sentry) · [Google Calendar](https://ayush7614.github.io/mcp-wormhole/#/servers/google-calendar) · [Airtable](https://ayush7614.github.io/mcp-wormhole/#/servers/airtable) · [Stripe](https://ayush7614.github.io/mcp-wormhole/#/servers/stripe) · [Cloudflare](https://ayush7614.github.io/mcp-wormhole/#/servers/cloudflare) · [GitHub Actions](https://ayush7614.github.io/mcp-wormhole/#/servers/github-actions) · [PagerDuty](https://ayush7614.github.io/mcp-wormhole/#/servers/pagerduty) · [Linear](https://ayush7614.github.io/mcp-wormhole/#/servers/linear)
 
 | Server | npm package | Status | Auth | Tools |
 |--------|-------------|--------|------|-------|

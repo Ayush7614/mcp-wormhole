@@ -1,5 +1,7 @@
+import { publicAsset } from "../lib/assets";
+
 export function CatalogCliShowcase() {
-  const demoSrc = `${import.meta.env.BASE_URL}demo/mcp-wormhole-catalog.gif`;
+  const demoSrc = publicAsset("demo/mcp-wormhole-catalog.gif");
 
   return (
     <section className="section catalog-cli-showcase" id="catalog">

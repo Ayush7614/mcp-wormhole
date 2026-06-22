@@ -13,12 +13,10 @@ Type "cd /Users/ayushkumar/Projects/mcp-wormhole/packages/asana"
 Enter
 Type "set -a && source .env && set +a"
 Enter
-Type "setopt interactivecomments"
-Enter
 Sleep 500ms
 Show
 
-Type "# Install @mcp-wormhole/asana from npm"
+Type "echo '# Install @mcp-wormhole/asana from npm'"
 Enter
 Sleep 800ms
 
@@ -26,6 +24,6 @@ Type "bash demo/run-npm-smoke.sh"
 Enter
 Sleep 28s
 
-Type "# Published package works — MCP tools respond over stdio"
+Type "echo '# Published package works — MCP tools respond over stdio'"
 Enter
 Sleep 2s

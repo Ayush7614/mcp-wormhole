@@ -1,7 +1,8 @@
 import { SectionLink } from "./SectionLink";
+import { publicAsset } from "../lib/assets";
 
 export function Hero() {
-  const demoSrc = `${import.meta.env.BASE_URL}demo/asana-verify.gif`;
+  const demoSrc = publicAsset("demo/asana-verify.gif");
 
   return (
     <section className="hero" id="top">

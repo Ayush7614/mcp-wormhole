@@ -12,12 +12,10 @@ Set TypingSpeed 50ms
 Hide
 Type "cd /Users/ayushkumar/Projects/mcp-wormhole/packages/asana"
 Enter
-Type "setopt interactivecomments"
-Enter
 Sleep 500ms
 Show
 
-Type "# mcp-wormhole — Asana MCP server"
+Type "echo '# mcp-wormhole — Asana MCP server'"
 Enter
 Sleep 800ms
 
@@ -29,6 +27,6 @@ Type "pnpm verify"
 Enter
 Sleep 12s
 
-Type "# Open the printed Asana URL in your browser to see the task in the UI"
+Type "echo '# Open the printed Asana URL in your browser to see the task in the UI'"
 Enter
 Sleep 2s
