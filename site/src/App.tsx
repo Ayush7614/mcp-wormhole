@@ -1,5 +1,6 @@
 import { HashRouter, Route, Routes } from "react-router-dom";
 import { SectionRedirect } from "./components/SectionRedirect";
+import { LegacyAnchorRedirect } from "./components/LegacyAnchorRedirect";
 import { Layout } from "./components/Layout";
 import { HomePage } from "./pages/HomePage";
 import { GuidePage } from "./pages/GuidePage";
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/servers" element={<SectionRedirect sectionId="servers" />} />
           <Route path="/integrations" element={<SectionRedirect sectionId="integrations" />} />
           <Route path="/demo" element={<SectionRedirect sectionId="demo" />} />
+          <Route path="/:anchorId" element={<LegacyAnchorRedirect />} />
         </Routes>
       </Layout>
     </HashRouter>
