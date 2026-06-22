@@ -6,6 +6,8 @@ import { HomePage } from "./pages/HomePage";
 import { GuidePage } from "./pages/GuidePage";
 import { ServerPage } from "./pages/ServerPage";
 import { ServerGuidePage } from "./pages/ServerGuidePage";
+import { BlogPage } from "./pages/BlogPage";
+import { BlogPostPage } from "./pages/BlogPostPage";
 import { useTheme } from "./hooks/useTheme";
 
 export default function App() {
@@ -19,6 +21,8 @@ export default function App() {
           <Route path="/servers/:serverId" element={<ServerPage />} />
           <Route path="/servers/:serverId/guide" element={<ServerGuidePage />} />
           <Route path="/guides/:clientId/:serverId?" element={<GuidePage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/servers" element={<SectionRedirect sectionId="servers" />} />
           <Route path="/integrations" element={<SectionRedirect sectionId="integrations" />} />
           <Route path="/demo" element={<SectionRedirect sectionId="demo" />} />

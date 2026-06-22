@@ -20,6 +20,7 @@ export function Header({ theme, onToggleTheme }: HeaderProps) {
           <SectionLink sectionId="servers">Servers</SectionLink>
           <SectionLink sectionId="integrations">Integrations</SectionLink>
           <SectionLink sectionId="demo">Demo</SectionLink>
+          <Link to="/blog">Blog</Link>
           <a
             href="https://github.com/Ayush7614/mcp-wormhole"
             target="_blank"
