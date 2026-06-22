@@ -1,0 +1,30 @@
+{
+  "name": "@mcp-wormhole/template",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Starter template for new MCP servers in mcp-wormhole. Copy to packages/<name> and implement.",
+  "type": "module",
+  "bin": {
+    "mcp-wormhole-template": "./dist/index.js"
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/index.js"
+  },
+  "keywords": ["mcp", "template"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "mcp-wormhole",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A monorepo of Model Context Protocol servers — one directory per integration.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "clean": "pnpm -r exec rm -rf dist"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "llm",
+    "monorepo"
+  ],
+  "license": "MIT",
+  "author": "Ayush Kumar <ayushknj3@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ayush7614/mcp-wormhole.git"
+  },
+  "homepage": "https://github.com/Ayush7614/mcp-wormhole#readme",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}
