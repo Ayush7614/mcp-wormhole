@@ -1,5 +1,6 @@
 import type { McpServer } from "./servers";
 import { buildStdioConfig } from "./config";
+import type { GuideIntro, GuidePoster } from "./guideTypes";
 
 export interface GuideCodeBlock {
   label: string;
@@ -28,6 +29,8 @@ export interface ServerGuide {
   title: string;
   subtitle: string;
   server: McpServer;
+  intro: GuideIntro;
+  poster: GuidePoster;
   steps: GuideStep[];
 }
 
@@ -167,12 +170,52 @@ export ${tokenKey}=your_token_here
 npx -y ${server.npmPackage}   # Ctrl+C to exit`,
         },
       ],
-      demo: {
-        title: "Live API verification (pnpm verify)",
-        asset: server.demoAsset ?? "demo/asana-verify.gif",
-      },
     },
   ];
+}
+
+function buildAsanaIntro(server: McpServer): GuideIntro {
+  return {
+    title: "What you'll set up",
+    paragraphs: [
+      `The ${server.name} MCP server wraps Asana's official REST API as MCP tools your AI client can call. Install from npm, add one JSON block to your MCP config, and your agent can list tasks, create work, search projects, and post comments — no custom integration code.`,
+      "This guide walks through prerequisites, token creation, npm install, client configuration, and verification. When you're finished, use Connect your client below to wire up Cursor, Claude Desktop, VS Code, and 17 other frameworks.",
+    ],
+    highlights: [
+      `${server.tools.length} MCP tools — tasks, search, comments, and updates`,
+      `Published on npm as ${server.npmPackage}`,
+      "Runs locally via stdio (npx — no repo clone required)",
+      "Authenticates with an Asana Personal Access Token (PAT)",
+    ],
+  };
+}
+
+function buildPlannedIntro(server: McpServer): GuideIntro {
+  return {
+    title: "What's coming",
+    paragraphs: [
+      `${server.name} is on the mcp-wormhole roadmap. This page previews the MCP config shape, authentication requirements, and planned tools so you can plan your integration early.`,
+      "When the server ships, this guide will expand into the same step-by-step format as Asana — install, configure, verify, and connect your client.",
+    ],
+    highlights: [
+      `${server.tools.length} tools planned`,
+      `Package name: ${server.npmPackage}`,
+      server.env.map((e) => e.key).join(", ") + " authentication",
+    ],
+  };
+}
+
+function buildServerPoster(server: McpServer): GuidePoster {
+  const npmShort = server.npmPackage.replace("@mcp-wormhole/", "");
+  return {
+    demoAsset: server.demoAsset ?? "demo/asana-verify.gif",
+    demoCaption: `${server.name} MCP — live verification`,
+    stats: [
+      { value: String(server.tools.length), label: "Tools" },
+      { value: server.env[0]?.key.includes("TOKEN") ? "PAT" : "API key", label: "Auth" },
+      { value: npmShort, label: "npm" },
+    ],
+  };
 }
 
 function buildPlannedSteps(server: McpServer): GuideStep[] {
@@ -223,8 +266,10 @@ export function buildServerGuide(server: McpServer): ServerGuide {
     title: `${server.name} MCP Server`,
     subtitle: disabled
       ? `${server.name} is on the roadmap — preview the integration below`
-      : `Complete step-by-step guide to connect ${server.name} to any MCP client`,
+      : `Connect ${server.name} to any MCP client — install, configure, and verify in minutes`,
     server,
+    intro: !disabled && server.id === "asana" ? buildAsanaIntro(server) : buildPlannedIntro(server),
+    poster: buildServerPoster(server),
     steps,
   };
 }
