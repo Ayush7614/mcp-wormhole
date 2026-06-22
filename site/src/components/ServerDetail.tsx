@@ -64,11 +64,20 @@ export function ServerDetail({ server }: ServerDetailProps) {
             {server.demoAsset && !disabled && (
               <figure className="demo-figure">
                 <figcaption>Live verification demo</figcaption>
-                <img
-                  src={`${import.meta.env.BASE_URL}${server.demoAsset}`}
-                  alt={`${server.name} MCP verification terminal demo`}
-                  loading="lazy"
-                />
+                <div className="terminal-window">
+                  <div className="terminal-chrome">
+                    <span className="terminal-dot red" />
+                    <span className="terminal-dot yellow" />
+                    <span className="terminal-dot green" />
+                    <span className="terminal-title">pnpm verify</span>
+                  </div>
+                  <img
+                    src={`${import.meta.env.BASE_URL}${server.demoAsset}`}
+                    alt={`${server.name} MCP verification terminal demo`}
+                    className="demo-gif"
+                    loading="lazy"
+                  />
+                </div>
               </figure>
             )}
           </div>
