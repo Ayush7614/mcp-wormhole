@@ -1,14 +1,19 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { createClientFromEnv } from "./client.js";
-import { registerAsanaTools } from "./tools.js";
+import { registerAsanaPrompts } from "./mcp/prompts.js";
+import { registerAsanaResources } from "./mcp/resources.js";
+import { registerAsanaTools } from "./mcp/tools.js";
 
 const server = new McpServer({
   name: "mcp-wormhole-asana",
-  version: "0.1.0",
+  version: "0.2.0",
 });
 
-registerAsanaTools(server, createClientFromEnv());
+const client = createClientFromEnv();
+registerAsanaTools(server, client);
+registerAsanaPrompts(server, client);
+registerAsanaResources(server, client);
 
 async function main() {
   const transport = new StdioServerTransport();

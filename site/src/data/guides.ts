@@ -119,10 +119,10 @@ function buildClientIntro(integration: Integration, server: McpServer): GuideInt
       `Follow the steps below for credentials, the exact config path, restart instructions, example prompts, and the full ${server.name} tool reference.`,
     ],
     highlights: [
-      `${server.tools.length} ${server.name} tools in ${integration.name}`,
+      `${server.tools.length} ${server.name} tools · ${server.promptCount ?? 0} MCP prompts · browsable resources`,
       `Config file: ${integration.configPath}`,
       integration.transport === "stdio" ? "Local stdio server via npx" : `${integration.transport} transport`,
-      `npm: ${server.npmPackage}`,
+      `npm: ${server.npmPackage}@0.2.0`,
     ],
   };
 }
@@ -144,14 +144,18 @@ function buildPlannedClientIntro(integration: Integration, server: McpServer): G
 
 function buildClientPoster(integration: Integration, server: McpServer): GuidePoster {
   const npmShort = server.npmPackage.replace("@mcp-wormhole/", "");
+  const stats: GuidePoster["stats"] = [
+    { value: String(server.tools.length), label: "Tools" },
+    { value: String(server.promptCount ?? 0), label: "Prompts" },
+    { value: integration.name, label: "Client" },
+  ];
+  if (!server.promptCount) {
+    stats.splice(1, 1);
+  }
   return {
     demoAsset: server.demoAsset ?? "demo/asana-verify.gif",
     demoCaption: `${integration.name} + ${server.name} — live demo`,
-    stats: [
-      { value: String(server.tools.length), label: "Tools" },
-      { value: integration.name, label: "Client" },
-      { value: npmShort, label: "npm" },
-    ],
+    stats,
   };
 }
 

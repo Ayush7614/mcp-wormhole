@@ -1,5 +1,11 @@
 export type ServerStatus = "available" | "in-progress" | "planned";
 
+import {
+  ASANA_PROMPT_COUNT,
+  ASANA_RESOURCE_TEMPLATE_COUNT,
+  ASANA_TOOL_NAMES,
+} from "./asanaCatalog";
+
 export interface EnvVar {
   key: string;
   description: string;
@@ -15,6 +21,8 @@ export interface McpServer {
   auth: string;
   env: EnvVar[];
   tools: string[];
+  promptCount?: number;
+  resourceTemplateCount?: number;
   docsUrl?: string;
   demoAsset?: string;
 }
@@ -23,7 +31,8 @@ export const servers: McpServer[] = [
   {
     id: "asana",
     name: "Asana",
-    description: "Tasks, projects, comments — full project management from your agent.",
+    description:
+      "Full-stack Asana MCP — 66 tools, 18 prompt workflows, and browsable workspace/project/task resources.",
     status: "available",
     npmPackage: "@mcp-wormhole/asana",
     auth: "Personal Access Token",
@@ -34,17 +43,9 @@ export const servers: McpServer[] = [
         docsUrl: "https://app.asana.com/0/my-apps",
       },
     ],
-    tools: [
-      "asana_get_me",
-      "asana_list_workspaces",
-      "asana_list_projects",
-      "asana_list_my_tasks",
-      "asana_search_tasks",
-      "asana_get_task",
-      "asana_create_task",
-      "asana_update_task",
-      "asana_add_comment",
-    ],
+    tools: [...ASANA_TOOL_NAMES],
+    promptCount: ASANA_PROMPT_COUNT,
+    resourceTemplateCount: ASANA_RESOURCE_TEMPLATE_COUNT,
     docsUrl: "https://developers.asana.com/reference/rest-api-reference",
     demoAsset: "demo/asana-verify.gif",
   },

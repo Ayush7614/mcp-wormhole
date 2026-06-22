@@ -82,7 +82,7 @@ pnpm build
 
 | Server | npm package | Status | Auth | Tools |
 |--------|-------------|--------|------|-------|
-| **Asana** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) | **Available** | PAT | 9 |
+| **Asana** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) | **Available** | PAT | 66 tools · 18 prompts · resources |
 | Slack | `@mcp-wormhole/slack` | Planned | Bot token | — |
 | Sentry | `@mcp-wormhole/sentry` | Planned | Auth token | — |
 | Vercel | `@mcp-wormhole/vercel` | Planned | API token | — |
