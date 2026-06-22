@@ -68,10 +68,10 @@ export const buildServerFlow: BlogPosterConnection = {
   },
 };
 
-/** Asana deep dive — agent through wormhole to full Asana MCP */
+/** Asana deep dive — Asana through wormhole to full Asana MCP */
 export const asanaDeepFlow: BlogPosterConnection = {
   layout: "flow",
-  clientLogo: "logos/anthropic.svg",
+  clientLogo: "logos/asana.svg",
   end: {
     toolName: "Asana MCP",
     toolLogo: "logos/asana.svg",
@@ -87,10 +87,10 @@ export const asanaDeepFlow: BlogPosterConnection = {
   },
 };
 
-/** Vercel deep dive — agent through wormhole to full Vercel MCP */
+/** Vercel deep dive — Vercel through wormhole to full Vercel MCP */
 export const vercelDeepFlow: BlogPosterConnection = {
   layout: "flow",
-  clientLogo: "logos/anthropic.svg",
+  clientLogo: "logos/vercel.png",
   end: {
     toolName: "Vercel MCP",
     toolLogo: "logos/vercel.png",
