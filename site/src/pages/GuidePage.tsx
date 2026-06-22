@@ -1,4 +1,5 @@
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { SectionLink } from "../components/SectionLink";
 import { BrandIcon } from "../components/BrandIcon";
 import { ConfigBlock } from "../components/ConfigBlock";
 import { buildProviderGuide } from "../data/guides";
@@ -24,7 +25,7 @@ export function GuidePage() {
         <nav className="guide-breadcrumb">
           <Link to="/">Home</Link>
           <span>/</span>
-          <Link to="/#integrations">Integrations</Link>
+          <SectionLink sectionId="integrations">Integrations</SectionLink>
           <span>/</span>
           <span>{integration.name}</span>
           <span>/</span>
