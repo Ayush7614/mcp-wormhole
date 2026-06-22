@@ -1,0 +1,102 @@
+import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { ConfigBlock } from "./ConfigBlock";
+import { BrandIcon } from "./BrandIcon";
+import { integrations } from "../data/integrations";
+import type { GuideStep } from "../data/serverGuides";
+
+interface GuideStepSectionProps {
+  step: GuideStep;
+  serverId: string;
+}
+
+function DemoTerminal({ title, asset }: { title: string; asset: string }) {
+  return (
+    <figure className="tutorial-demo">
+      <div className="terminal-window">
+        <div className="terminal-chrome">
+          <span className="terminal-dot red" />
+          <span className="terminal-dot yellow" />
+          <span className="terminal-dot green" />
+          <span className="terminal-title">{title}</span>
+        </div>
+        <img
+          src={`${import.meta.env.BASE_URL}${asset}`}
+          alt={title}
+          className="demo-gif"
+          loading="lazy"
+        />
+      </div>
+    </figure>
+  );
+}
+
+export function GuideStepSection({ step, serverId }: GuideStepSectionProps) {
+  return (
+    <section className="tutorial-step" id={step.id}>
+      <div className="tutorial-step-marker">
+        <span className="tutorial-step-number">{step.number}</span>
+      </div>
+      <div className="tutorial-step-body">
+        <h2>{step.title}</h2>
+        <p className="tutorial-step-lead">{step.description}</p>
+
+        {step.notice && (
+          <div className="tutorial-notice">
+            <p>{step.notice}</p>
+          </div>
+        )}
+
+        {step.bullets && step.bullets.length > 0 && (
+          <ul className="tutorial-list">
+            {step.bullets.map((item) => (
+              <li key={item}>{formatBullet(item)}</li>
+            ))}
+          </ul>
+        )}
+
+        {step.code?.map((block) => (
+          <ConfigBlock key={block.label} label={block.label} language={block.language} code={block.code} />
+        ))}
+
+        {step.demo && <DemoTerminal title={step.demo.title} asset={step.demo.asset} />}
+
+        {step.prompts && step.prompts.length > 0 && (
+          <ul className="prompt-list tutorial-prompts">
+            {step.prompts.map((prompt) => (
+              <li key={prompt}>
+                <code>&ldquo;{prompt}&rdquo;</code>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {step.showClientLinks && (
+          <div className="client-guide-grid">
+            {integrations.map((integration) => (
+              <Link
+                key={integration.id}
+                to={`/guides/${integration.id}/${serverId}`}
+                className="client-guide-card"
+              >
+                <BrandIcon integrationId={integration.id} alt={integration.name} />
+                <span>{integration.name}</span>
+                <span className="external-hint" aria-hidden="true">
+                  ↗
+                </span>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function formatBullet(text: string): ReactNode {
+  const match = text.match(/^`(.+)`$/);
+  if (match) {
+    return <code>{match[1]}</code>;
+  }
+  return text;
+}
