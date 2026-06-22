@@ -1,5 +1,5 @@
 # npm install + MCP smoke test for published @mcp-wormhole/asana
-Output demo/asana-npm-install.gif
+Output packages/asana/demo/asana-npm-install.gif
 
 Set Shell "zsh"
 Set FontSize 16
@@ -12,6 +12,8 @@ Hide
 Type "cd /Users/ayushkumar/Projects/mcp-wormhole/packages/asana"
 Enter
 Type "set -a && source .env && set +a"
+Enter
+Type "setopt interactivecomments"
 Enter
 Sleep 500ms
 Show
