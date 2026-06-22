@@ -4,6 +4,7 @@ dist/
 .env
 .env.*
 !.env.example
+.pnpm-store/
 .DS_Store
 .turbo/
 coverage/
