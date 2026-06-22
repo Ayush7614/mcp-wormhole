@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { ConfigBlock } from "./ConfigBlock";
 import type { GuideStep } from "../data/serverGuides";
+import { publicAsset } from "../lib/assets";
 
 interface GuideStepSectionProps {
   step: GuideStep;
@@ -17,7 +18,7 @@ function DemoTerminal({ title, asset }: { title: string; asset: string }) {
           <span className="terminal-title">{title}</span>
         </div>
         <img
-          src={`${import.meta.env.BASE_URL}${asset}`}
+          src={publicAsset(asset)}
           alt={title}
           className="demo-gif"
           loading="lazy"

@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
 import { getBlogPostsSorted } from "../data/blogs";
-
-function asset(path: string) {
-  return `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
-}
+import { publicAsset } from "../lib/assets";
 
 export function BlogPage() {
   const posts = getBlogPostsSorted();
@@ -33,7 +30,7 @@ export function BlogPage() {
               <Link key={post.slug} to={`/blog/${post.slug}`} className="blog-card blog-card-composio">
                 <div className="blog-card-poster">
                   <img
-                    src={asset(post.poster.posterAsset)}
+                    src={publicAsset(post.poster.posterAsset)}
                     alt={`${post.poster.headline} — MCP tools connected`}
                     className="blog-card-gif"
                     loading="lazy"

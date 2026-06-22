@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import type { McpServer } from "../data/servers";
 import { buildStdioConfig } from "../data/config";
 import { ConfigBlock } from "./ConfigBlock";
+import { publicAsset } from "../lib/assets";
 
 interface ServerDetailProps {
   server: McpServer;
@@ -81,7 +82,7 @@ export function ServerDetail({ server, showGuideLink = false }: ServerDetailProp
                     <span className="terminal-title">pnpm verify</span>
                   </div>
                   <img
-                    src={`${import.meta.env.BASE_URL}${server.demoAsset}`}
+                    src={publicAsset(server.demoAsset)}
                     alt={`${server.name} MCP verification terminal demo`}
                     className="demo-gif"
                     loading="lazy"

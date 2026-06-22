@@ -1,7 +1,7 @@
-import { getHomepageStats } from "../data/homepageStats";
+import { publicAsset } from "../lib/assets";
 
 export function DemoShowcase() {
-  const demoSrc = `${import.meta.env.BASE_URL}demo/asana-verify.gif`;
+  const demoSrc = publicAsset("demo/asana-verify.gif");
 
   return (
     <section className="section demo-showcase" id="demo">

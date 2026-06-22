@@ -12,12 +12,10 @@ Set TypingSpeed 50ms
 Hide
 Type "cd /Users/ayushkumar/Projects/mcp-wormhole/packages/vercel"
 Enter
-Type "setopt interactivecomments"
-Enter
 Sleep 500ms
 Show
 
-Type "# mcp-wormhole — Vercel MCP server"
+Type "echo '# mcp-wormhole — Vercel MCP server'"
 Enter
 Sleep 800ms
 
@@ -29,6 +27,6 @@ Type "pnpm verify"
 Enter
 Sleep 10s
 
-Type "# Connected to Vercel API — list projects & deployments via MCP tools"
+Type "echo '# Connected to Vercel API — list projects & deployments via MCP tools'"
 Enter
 Sleep 2s
