@@ -1,7 +1,7 @@
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import { SectionLink } from "../components/SectionLink";
 import { BrandIcon } from "../components/BrandIcon";
-import { ConfigBlock } from "../components/ConfigBlock";
+import { GuideStepSection } from "../components/GuideStepSection";
+import { GuideReferences } from "../components/GuideReferences";
 import { buildProviderGuide } from "../data/guides";
 import { getIntegration } from "../data/integrations";
 import { getServer, servers } from "../data/servers";
@@ -20,30 +20,38 @@ export function GuidePage() {
   const disabled = server.status === "planned";
 
   return (
-    <main className="guide-page">
+    <main className="tutorial-page">
       <div className="container">
         <nav className="guide-breadcrumb">
           <Link to="/">Home</Link>
           <span>/</span>
-          <SectionLink sectionId="integrations">Integrations</SectionLink>
+          <Link to={`/servers/${server.id}/guide#frameworks`}>Frameworks</Link>
           <span>/</span>
           <Link to={`/servers/${server.id}`}>{server.name}</Link>
           <span>/</span>
           <span>{integration.name}</span>
         </nav>
 
-        <header className="guide-header">
+        <header className="tutorial-hero">
           <div className="guide-header-logos">
             <BrandIcon integrationId={integration.id} alt={integration.name} />
             <span className="guide-plus">+</span>
             <span className="guide-server-badge">{server.name}</span>
           </div>
           <h1>{guide.title}</h1>
-          <p className="guide-subtitle">{guide.subtitle}</p>
+          <p className="tutorial-hero-lead">{guide.subtitle}</p>
           <div className="guide-header-actions">
             <span className={`status-pill ${server.status}`}>
               {disabled ? "Server planned" : "Ready to use"}
             </span>
+            <span className="tutorial-meta">
+              {guide.steps.length} steps · <code>{server.npmPackage}</code>
+            </span>
+          </div>
+          <div className="tutorial-hero-actions">
+            <Link to={`/servers/${server.id}/guide`} className="button secondary">
+              ← {server.name} guide
+            </Link>
             <a href={integration.docsUrl} target="_blank" rel="noreferrer" className="button secondary">
               {integration.name} docs ↗
             </a>
@@ -68,105 +76,35 @@ export function GuidePage() {
           </select>
         </div>
 
-        <div className="guide-layout">
-          <aside className="guide-sidebar">
-            <section className="guide-panel">
-              <h2>Prerequisites</h2>
-              <ul>
-                {guide.prerequisites.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </section>
-
-            {guide.sections.map((section) => (
-              <section key={section.id} className="guide-panel" id={section.id}>
-                <h2>{section.title}</h2>
-                {section.body && <p className="guide-body">{section.body}</p>}
-                {section.items && (
-                  <ul className={section.id === "tools" ? "tool-list guide-tools" : undefined}>
-                    {section.items.map((item) => (
-                      <li key={item}>
-                        {section.id === "tools" ? <code>{item}</code> : item}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </section>
-            ))}
-
-            {!disabled && guide.examplePrompts.length > 0 && (
-              <section className="guide-panel">
-                <h2>Example prompts</h2>
-                <ul className="prompt-list">
-                  {guide.examplePrompts.map((prompt) => (
-                    <li key={prompt}>
-                      <code>{prompt}</code>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+        <div className="tutorial-layout">
+          <aside className="tutorial-toc" aria-label="Guide contents">
+            <p className="tutorial-toc-label">On this page</p>
+            <ol>
+              {guide.steps.map((step) => (
+                <li key={step.id}>
+                  <a href={`#${step.id}`}>{step.title}</a>
+                </li>
+              ))}
+              <li>
+                <a href="#references">References</a>
+              </li>
+            </ol>
           </aside>
 
-          <div className="guide-main">
-            <section className="guide-panel">
-              <h2>Configuration</h2>
-              <p className="hint">
-                Copy the config for <strong>{integration.name}</strong>, set{" "}
-                <code>{server.env.map((e) => e.key).join(", ")}</code>, then restart your client.
-              </p>
-              <div className="config-stack">
-                {guide.configs.map((block) => (
-                  <ConfigBlock
-                    key={block.label}
-                    label={block.label}
-                    language={block.language}
-                    code={block.code}
-                  />
-                ))}
-              </div>
-            </section>
-
-            {guide.verifyCommand && (
-              <section className="guide-panel">
-                <h2>Verify locally</h2>
-                <ConfigBlock label="Terminal" language="bash" code={guide.verifyCommand} />
-              </section>
-            )}
-
-            {server.demoAsset && !disabled && (
-              <section className="guide-panel">
-                <h2>Live demo</h2>
-                <div className="terminal-window">
-                  <div className="terminal-chrome">
-                    <span className="terminal-dot red" />
-                    <span className="terminal-dot yellow" />
-                    <span className="terminal-dot green" />
-                    <span className="terminal-title">pnpm verify — {server.name}</span>
-                  </div>
-                  <img
-                    src={`${import.meta.env.BASE_URL}${server.demoAsset}`}
-                    alt={`${server.name} verification demo`}
-                    className="demo-gif"
-                    loading="lazy"
-                  />
-                </div>
-              </section>
-            )}
-
-            {disabled && (
-              <section className="guide-panel guide-notice">
-                <h2>Coming soon</h2>
-                <p>
-                  The <strong>{server.name}</strong> MCP server is on the roadmap. This guide shows
-                  the config shape — swap in <strong>Asana</strong> today using the selector above.
-                </p>
-              </section>
-            )}
+          <div className="tutorial-steps">
+            {guide.steps.map((step) => (
+              <GuideStepSection key={step.id} step={step} />
+            ))}
           </div>
         </div>
       </div>
+
+      <GuideReferences
+        references={guide.references}
+        serverId={server.id}
+        serverName={server.name}
+        currentClientId={integration.id}
+      />
     </main>
   );
 }
