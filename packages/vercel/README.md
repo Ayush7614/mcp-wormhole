@@ -1,14 +1,15 @@
 # @mcp-wormhole/vercel
 
-**Vercel MCP server** — deployments, build logs, promote, rollback, and project status via the official REST API.
+**Vercel MCP server** — 11 tools for deployments, build logs, promote, rollback, and project status via the official REST API.
 
 ## Highlights
 
 | | |
 |---|---|
 | **Tools** | 11 across projects, deployments, logs, domains, promote, rollback |
-| **Auth** | Vercel API token (`VERCEL_TOKEN`) |
+| **Auth** | Vercel API token (`VERCEL_TOKEN`) + optional `VERCEL_TEAM_ID` |
 | **Transport** | stdio (npx) |
+| **npm** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) |
 
 ## Quick start
 
@@ -33,7 +34,17 @@ npx -y @mcp-wormhole/vercel
 
 Create a token: [vercel.com/account/tokens](https://vercel.com/account/tokens)
 
-For team-scoped projects, also set `VERCEL_TEAM_ID` (from `vercel_list_teams`).
+For team-scoped projects, add `VERCEL_TEAM_ID` (from your Vercel team settings or `vercel_get_user` → `defaultTeamId`).
+
+## Tool categories
+
+- **Account** (2) — `vercel_get_user`, `vercel_list_teams`
+- **Projects** (2) — list, get details, framework, repo link
+- **Deployments** (3) — list with filters, get record, build event logs
+- **Domains** (1) — list project domains
+- **Ops** (3) — promote, rollback, cancel in-flight builds
+
+Run `src/mcp/catalog.ts` for the canonical tool name list.
 
 ## Tools
 
@@ -56,17 +67,33 @@ For team-scoped projects, also set `VERCEL_TEAM_ID` (from `vercel_list_teams`).
 - "List my Vercel projects"
 - "Show the last 5 production deployments for project X"
 - "Get build logs for deployment dpl_…"
+- "Which deployments are rollback candidates for project X?"
 - "Roll back project X to deployment dpl_…"
 
 ## Development
 
 ```bash
-cd packages/vercel
-cp .env.example .env   # add VERCEL_TOKEN
-pnpm install
-pnpm build
+cp .env.example .env
+pnpm install && pnpm build
 pnpm verify
 ```
+
+## Env vars
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `VERCEL_TOKEN` | Yes | Vercel API token from account settings |
+| `VERCEL_TEAM_ID` | No | Scope requests to a team (auto-detected from default team when omitted) |
+
+## API docs
+
+https://vercel.com/docs/rest-api
+
+## Docs site
+
+- [Vercel server page](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel)
+- [Vercel integration guide](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel/guide)
+- [Connect Vercel to Cursor](https://ayush7614.github.io/mcp-wormhole/#/blog/connect-vercel-to-cursor)
 
 ## License
 

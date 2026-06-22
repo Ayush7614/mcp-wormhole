@@ -6,6 +6,7 @@
 
 [![Website](https://img.shields.io/badge/docs-ayush7614.github.io%2Fmcp--wormhole-8b93ff?style=for-the-badge)](https://ayush7614.github.io/mcp-wormhole/)
 [![npm @mcp-wormhole/asana](https://img.shields.io/npm/v/@mcp-wormhole/asana?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/@mcp-wormhole/asana)
+[![npm @mcp-wormhole/vercel](https://img.shields.io/npm/v/@mcp-wormhole/vercel?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/@mcp-wormhole/vercel)
 [![License: MIT](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](LICENSE)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-6366f1?style=for-the-badge)](https://modelcontextprotocol.io)
 
@@ -65,11 +66,34 @@ Add this to your MCP client config (Cursor: `~/.cursor/mcp.json`, Claude Desktop
 }
 ```
 
-Restart your client, then ask: *"List my open Asana tasks"*.
+Restart your client, then ask: *"List my open Asana tasks"* or *"List my Vercel projects"*.
 
-**Published:** [`@mcp-wormhole/asana@0.2.0`](https://www.npmjs.com/package/@mcp-wormhole/asana) — 66 tools · 18 prompt workflows · browsable `asana://` resources
+**Published:**
 
-Get a token: [Asana developer console](https://app.asana.com/0/my-apps)
+| Package | Version | Tools |
+|---------|---------|-------|
+| [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) | 0.2.0 | 66 tools · 18 prompts · `asana://` resources |
+| [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) | 0.1.0 | 11 tools · deployments · logs · rollback |
+
+**Asana** — get a token: [Asana developer console](https://app.asana.com/0/my-apps)
+
+**Vercel** — get a token: [vercel.com/account/tokens](https://vercel.com/account/tokens)
+
+```json
+{
+  "mcpServers": {
+    "vercel": {
+      "command": "npx",
+      "args": ["-y", "@mcp-wormhole/vercel"],
+      "env": {
+        "VERCEL_TOKEN": "your_token_here"
+      }
+    }
+  }
+}
+```
+
+For team-scoped Vercel projects, add `"VERCEL_TEAM_ID": "team_…"` to the env block.
 
 ### Clone for development
 
@@ -106,15 +130,18 @@ pnpm build
 
 Step-by-step guides with copy-paste configs for **20 AI clients**:
 
-| Client | Guide |
-|--------|-------|
-| Cursor | [Cursor + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/cursor/asana) |
-| VS Code | [VS Code + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/vscode/asana) |
-| Claude Desktop | [Claude Desktop + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-desktop/asana) |
-| Claude Code | [Claude Code + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-code/asana) |
-| …and 16 more | [All integrations](https://ayush7614.github.io/mcp-wormhole/#/integrations) |
+| Client | Asana | Vercel |
+|--------|-------|--------|
+| Cursor | [Cursor + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/cursor/asana) | [Cursor + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/cursor/vercel) |
+| VS Code | [VS Code + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/vscode/asana) | [VS Code + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/vscode/vercel) |
+| Claude Desktop | [Claude + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-desktop/asana) | [Claude + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-desktop/vercel) |
+| Claude Code | [Claude Code + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-code/asana) | [Claude Code + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-code/vercel) |
+| …and 16 more | [All integrations](https://ayush7614.github.io/mcp-wormhole/#/integrations) | same page — pick Vercel server |
 
-Full server walkthrough: [Asana MCP server guide](https://ayush7614.github.io/mcp-wormhole/#/servers/asana/guide)
+Full server walkthroughs:
+
+- [Asana MCP server guide](https://ayush7614.github.io/mcp-wormhole/#/servers/asana/guide)
+- [Vercel MCP server guide](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel/guide)
 
 ---
 
@@ -152,10 +179,16 @@ pnpm build
 
 # Build one package
 pnpm --filter @mcp-wormhole/asana build
+pnpm --filter @mcp-wormhole/vercel build
 
 # Verify Asana server against real API
 cd packages/asana
 cp .env.example .env   # add ASANA_ACCESS_TOKEN
+pnpm verify
+
+# Verify Vercel server against real API
+cd ../vercel
+cp .env.example .env   # add VERCEL_TOKEN
 pnpm verify
 
 # Run docs site locally
@@ -238,6 +271,7 @@ Tutorials and release notes on the docs site:
 
 - [Introducing mcp-wormhole](https://ayush7614.github.io/mcp-wormhole/#/blog/introducing-mcp-wormhole)
 - [Connect Asana to Cursor in 5 minutes](https://ayush7614.github.io/mcp-wormhole/#/blog/connect-asana-to-cursor)
+- [Connect Vercel to Cursor in 5 minutes](https://ayush7614.github.io/mcp-wormhole/#/blog/connect-vercel-to-cursor)
 - [Building your first MCP server](https://ayush7614.github.io/mcp-wormhole/#/blog/building-an-mcp-server)
 - [Inside @mcp-wormhole/asana](https://ayush7614.github.io/mcp-wormhole/#/blog/inside-asana-mcp-server)
 

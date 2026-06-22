@@ -213,6 +213,169 @@ npx -y ${server.npmPackage}   # Ctrl+C to exit`,
   ];
 }
 
+function vercelPrompts(): string[] {
+  return [
+    "List my Vercel projects",
+    "Show the last 5 production deployments for project my-app",
+    "Get build logs for deployment dpl_abc123",
+    "List rollback candidates for project my-app",
+    "Roll back project my-app to deployment dpl_xyz789",
+  ];
+}
+
+function buildVercelSteps(server: McpServer): GuideStep[] {
+  const tokenKey = server.env[0]?.key ?? "VERCEL_TOKEN";
+  const tokenDocs = server.env[0]?.docsUrl ?? "https://vercel.com/account/tokens";
+
+  return [
+    {
+      id: "prerequisites",
+      number: 1,
+      title: "Check prerequisites",
+      description:
+        "Before you start, make sure you have everything needed to run the Vercel MCP server.",
+      bullets: [
+        "Node.js 18 or newer (`node -v` to check)",
+        "An MCP-capable AI client — Cursor, Claude Desktop, VS Code, Windsurf, etc.",
+        "A Vercel account with API token access",
+      ],
+    },
+    {
+      id: "token",
+      number: 2,
+      title: "Create a Vercel API token",
+      description:
+        "The server authenticates with Vercel using an API token from your account settings.",
+      bullets: [
+        `Open ${tokenDocs}`,
+        "Click Create Token → give it a name (e.g. mcp-wormhole)",
+        "Copy the token — paste it into your MCP config as VERCEL_TOKEN",
+        "Optional: add VERCEL_TEAM_ID if your projects live under a team",
+      ],
+      notice: "Never commit your token to git or share it publicly.",
+    },
+    {
+      id: "install",
+      number: 3,
+      title: "Install from npm",
+      description:
+        "The package is published on npm as @mcp-wormhole/vercel. You do not need to clone the repo — npx downloads and runs it automatically.",
+      code: [
+        {
+          label: "Run directly (stdio MCP server)",
+          language: "bash",
+          code: `# Run directly (stdio MCP server)
+export ${tokenKey}=your_token_here
+npx -y ${server.npmPackage}`,
+        },
+        {
+          label: "Or install in a project",
+          language: "bash",
+          code: `npm init -y
+npm i ${server.npmPackage}`,
+        },
+      ],
+      demo: {
+        title: "Build + verify against live API",
+        asset: "demo/vercel-verify.gif",
+      },
+    },
+    {
+      id: "configure",
+      number: 4,
+      title: "Add to your MCP client config",
+      description:
+        "Paste the JSON below into your client's MCP settings file. Replace the token placeholder with your real token, then save.",
+      code: [
+        {
+          label: "MCP config (stdio)",
+          language: "json",
+          code: buildStdioConfig(server),
+        },
+      ],
+      bullets: [
+        "Cursor: ~/.cursor/mcp.json or .cursor/mcp.json in your project",
+        "Claude Desktop: ~/Library/Application Support/Claude/claude_desktop_config.json",
+        "VS Code: .vscode/mcp.json in your workspace",
+      ],
+    },
+    {
+      id: "restart",
+      number: 5,
+      title: "Restart your client",
+      description:
+        "MCP servers load at startup. Fully quit and reopen your AI client (not just reload the window) so it picks up the new Vercel server.",
+      bullets: [
+        "In Cursor: Cmd+Q then reopen, or use MCP settings → refresh",
+        "In Claude Desktop: quit from the menu bar, then reopen",
+        "You should see vercel listed under MCP tools after restart",
+      ],
+    },
+    {
+      id: "prompts",
+      number: 6,
+      title: "Try it — example prompts",
+      description:
+        "Once connected, ask your agent naturally. It will call Vercel tools on your behalf.",
+      prompts: vercelPrompts(),
+    },
+    {
+      id: "tools",
+      number: 7,
+      title: "Available tools",
+      description: `The Vercel MCP server exposes ${server.tools.length} tools for projects, deployments, logs, and production ops:`,
+      bullets: [
+        "**Account** — vercel_get_user, vercel_list_teams",
+        "**Projects** — vercel_list_projects, vercel_get_project",
+        "**Deployments** — list with filters, get record, build event logs",
+        "**Domains** — vercel_list_project_domains",
+        "**Ops** — vercel_promote, vercel_rollback, vercel_cancel_deployment",
+      ],
+    },
+    {
+      id: "verify",
+      number: 8,
+      title: "Verify the integration",
+      description:
+        "Run the verification script locally to confirm your token works and API calls succeed.",
+      code: [
+        {
+          label: "From the monorepo (developers)",
+          language: "bash",
+          code: `git clone https://github.com/Ayush7614/mcp-wormhole.git
+cd mcp-wormhole/packages/vercel
+cp .env.example .env   # add your token
+pnpm install && pnpm build && pnpm verify`,
+        },
+        {
+          label: "Smoke test published package",
+          language: "bash",
+          code: `mkdir /tmp/mcp-vercel-test && cd /tmp/mcp-vercel-test
+npm init -y && npm i ${server.npmPackage} @modelcontextprotocol/sdk
+export ${tokenKey}=your_token_here
+npx -y ${server.npmPackage}   # Ctrl+C to exit`,
+        },
+      ],
+    },
+  ];
+}
+
+function buildVercelIntro(server: McpServer): GuideIntro {
+  return {
+    title: "What you'll set up",
+    paragraphs: [
+      `The ${server.name} MCP server wraps Vercel's official REST API as MCP tools your AI client can call. Install from npm, add one JSON block to your MCP config, and your agent can list deployments, read build logs, promote releases, and roll back production — no custom integration code.`,
+      "This guide walks through prerequisites, token creation, npm install, client configuration, and verification. When you're finished, use Connect your client below to wire up Cursor, Claude Desktop, VS Code, and 17 other frameworks.",
+    ],
+    highlights: [
+      `${server.tools.length} MCP tools — projects, deployments, logs, promote, rollback`,
+      "Auto team scope from defaultTeamId when VERCEL_TEAM_ID is omitted",
+      `Published on npm as ${server.npmPackage}@0.1.0`,
+      "Live verification demo on the docs site",
+    ],
+  };
+}
+
 function buildAsanaIntro(server: McpServer): GuideIntro {
   return {
     title: "What you'll set up",
@@ -303,8 +466,21 @@ function buildPlannedSteps(server: McpServer): GuideStep[] {
 
 export function buildServerGuide(server: McpServer): ServerGuide {
   const disabled = server.status === "planned";
-  const steps =
-    !disabled && server.id === "asana" ? buildAsanaSteps(server) : buildPlannedSteps(server);
+  const steps = !disabled
+    ? server.id === "asana"
+      ? buildAsanaSteps(server)
+      : server.id === "vercel"
+        ? buildVercelSteps(server)
+        : buildPlannedSteps(server)
+    : buildPlannedSteps(server);
+
+  const intro = !disabled
+    ? server.id === "asana"
+      ? buildAsanaIntro(server)
+      : server.id === "vercel"
+        ? buildVercelIntro(server)
+        : buildPlannedIntro(server)
+    : buildPlannedIntro(server);
 
   return {
     title: `${server.name} MCP Server`,
@@ -312,7 +488,7 @@ export function buildServerGuide(server: McpServer): ServerGuide {
       ? `${server.name} is on the roadmap — preview the integration below`
       : `Connect ${server.name} to any MCP client — install, configure, and verify in minutes`,
     server,
-    intro: !disabled && server.id === "asana" ? buildAsanaIntro(server) : buildPlannedIntro(server),
+    intro,
     poster: buildServerPoster(server),
     steps,
   };

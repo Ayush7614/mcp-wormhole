@@ -30,6 +30,25 @@ export const asanaCursorFlow: BlogPosterConnection = {
   },
 };
 
+/** Cursor + Vercel tutorial — client flows through wormhole to Vercel */
+export const vercelCursorFlow: BlogPosterConnection = {
+  layout: "flow",
+  clientLogo: "logos/cursor.svg",
+  end: {
+    toolName: "Vercel",
+    toolLogo: "logos/vercel.png",
+    toolDesc: "Connect Cursor to @mcp-wormhole/vercel — list deployments, read build logs, promote and rollback via MCP.",
+    authBadges: [
+      { label: "API", variant: "pat" },
+      { label: "NPX", variant: "npx" },
+    ],
+    cardStats: [
+      { value: "11", label: "TOOLS" },
+      { value: "5 min", label: "SETUP" },
+    ],
+  },
+};
+
 /** Contributor guide — CLI template through wormhole to npm */
 export const buildServerFlow: BlogPosterConnection = {
   layout: "flow",

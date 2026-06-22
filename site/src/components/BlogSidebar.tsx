@@ -13,6 +13,8 @@ const WORMHOLE_TIPS: Record<string, string> = {
     "Every MCP server in the monorepo runs locally — your credentials never leave your machine.",
   "connect-asana-to-cursor":
     "Cursor loads MCP servers at startup. Fully quit (Cmd+Q) after editing mcp.json.",
+  "connect-vercel-to-cursor":
+    "Add VERCEL_TEAM_ID if your Vercel projects live under a team account.",
   "building-an-mcp-server":
     "Start with read tools before write tools — agents explore before they mutate.",
   "inside-asana-mcp-server":

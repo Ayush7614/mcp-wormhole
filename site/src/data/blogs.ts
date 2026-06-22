@@ -1,12 +1,14 @@
 import type { BlogPost } from "./blogTypes";
 import { introducingMcpWormhole } from "./blogPosts/introducing-mcp-wormhole";
 import { connectAsanaToCursor } from "./blogPosts/connect-asana-to-cursor";
+import { connectVercelToCursor } from "./blogPosts/connect-vercel-to-cursor";
 import { buildingAnMcpServer } from "./blogPosts/building-an-mcp-server";
 import { insideAsanaMcpServer } from "./blogPosts/inside-asana-mcp-server";
 
 export type { BlogBlock, BlogPost } from "./blogTypes";
 
 export const blogPosts: BlogPost[] = [
+  connectVercelToCursor,
   insideAsanaMcpServer,
   buildingAnMcpServer,
   connectAsanaToCursor,
