@@ -12,10 +12,7 @@ export function FrameworkPicker({ serverId, serverName }: FrameworkPickerProps) 
     <section className="framework-picker" id="frameworks">
       <div className="container">
         <header className="framework-picker-head">
-          <p className="framework-picker-eyebrow">
-            <span className="eyebrow-dot" aria-hidden="true" />
-            Frameworks
-          </p>
+          <p className="framework-picker-eyebrow">Frameworks</p>
           <h2>Use {serverName} with any AI Agent Framework</h2>
           <p>Choose a Framework you want to connect {serverName} with</p>
         </header>

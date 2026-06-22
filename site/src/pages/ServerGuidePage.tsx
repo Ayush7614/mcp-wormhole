@@ -75,19 +75,6 @@ export function ServerGuidePage() {
             {guide.steps.map((step) => (
               <GuideStepSection key={step.id} step={step} />
             ))}
-
-            <footer className="tutorial-footer">
-              <p>
-                Need help?{" "}
-                <a
-                  href="https://github.com/Ayush7614/mcp-wormhole/issues"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Open an issue on GitHub
-                </a>
-              </p>
-            </footer>
           </div>
         </div>
       </div>
