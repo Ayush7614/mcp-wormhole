@@ -1,4 +1,6 @@
+import { useMemo } from "react";
 import type { BlogBlock } from "../data/blogTypes";
+import { buildHeadingIds } from "../utils/blogHeadings";
 
 interface BlogContentProps {
   blocks: BlogBlock[];
@@ -9,13 +11,15 @@ function asset(path: string) {
 }
 
 export function BlogContent({ blocks }: BlogContentProps) {
+  const headingIds = useMemo(() => buildHeadingIds(blocks), [blocks]);
+
   return (
     <article className="blog-article-body">
       {blocks.map((block, index) => {
         switch (block.type) {
           case "tldr":
             return (
-              <aside key={index} className="blog-tldr" aria-label="TL;DR">
+              <aside key={index} id="tldr" className="blog-tldr" aria-label="TL;DR">
                 <p className="blog-tldr-label">TL;DR</p>
                 <ul>
                   {block.items.map((item) => (
@@ -25,9 +29,17 @@ export function BlogContent({ blocks }: BlogContentProps) {
               </aside>
             );
           case "h2":
-            return <h2 key={index}>{block.text}</h2>;
+            return (
+              <h2 key={index} id={headingIds.get(index)}>
+                {block.text}
+              </h2>
+            );
           case "h3":
-            return <h3 key={index}>{block.text}</h3>;
+            return (
+              <h3 key={index} id={headingIds.get(index)}>
+                {block.text}
+              </h3>
+            );
           case "p":
             return <p key={index}>{block.text}</p>;
           case "ul":

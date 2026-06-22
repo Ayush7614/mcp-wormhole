@@ -9,6 +9,16 @@ export const buildingAnMcpServer: BlogPost = {
   author: "Ayush Kumar",
   tags: ["contributing", "typescript", "architecture"],
   readTime: "14 min",
+  poster: {
+    demoAsset: "demo/asana-npm-install.gif",
+    demoCaption: "npx smoke test",
+    badge: "Contributor",
+    stats: [
+      { value: "1", label: "Template" },
+      { value: "Zod", label: "Validation" },
+      { value: "stdio", label: "Transport" },
+    ],
+  },
   content: [
     {
       type: "tldr",

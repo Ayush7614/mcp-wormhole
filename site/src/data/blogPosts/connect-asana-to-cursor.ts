@@ -9,6 +9,16 @@ export const connectAsanaToCursor: BlogPost = {
   author: "Ayush Kumar",
   tags: ["asana", "cursor", "tutorial"],
   readTime: "10 min",
+  poster: {
+    demoAsset: "demo/asana-verify.gif",
+    demoCaption: "Asana live verify",
+    badge: "Tutorial",
+    stats: [
+      { value: "5 min", label: "Setup" },
+      { value: "66", label: "Tools" },
+      { value: "Cursor", label: "Client" },
+    ],
+  },
   content: [
     {
       type: "tldr",

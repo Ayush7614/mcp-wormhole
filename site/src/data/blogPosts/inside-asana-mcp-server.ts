@@ -9,6 +9,16 @@ export const insideAsanaMcpServer: BlogPost = {
   author: "Ayush Kumar",
   tags: ["asana", "mcp", "deep-dive"],
   readTime: "16 min",
+  poster: {
+    demoAsset: "demo/asana-verify.gif",
+    demoCaption: "API verification",
+    badge: "Deep dive",
+    stats: [
+      { value: "66", label: "Tools" },
+      { value: "18", label: "Prompts" },
+      { value: "7", label: "Resources" },
+    ],
+  },
   content: [
     {
       type: "tldr",

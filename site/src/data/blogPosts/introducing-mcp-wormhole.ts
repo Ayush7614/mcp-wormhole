@@ -9,6 +9,16 @@ export const introducingMcpWormhole: BlogPost = {
   author: "Ayush Kumar",
   tags: ["announcement", "mcp", "architecture"],
   readTime: "12 min",
+  poster: {
+    demoAsset: "demo/mcp-wormhole-catalog.gif",
+    demoCaption: "mcp-wormhole catalog",
+    badge: "Announcement",
+    stats: [
+      { value: "1", label: "Live server" },
+      { value: "20+", label: "AI clients" },
+      { value: "66", label: "Asana tools" },
+    ],
+  },
   content: [
     {
       type: "tldr",
