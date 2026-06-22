@@ -49,7 +49,7 @@ export const blogPosts: BlogPost[] = [
       { type: "h2", text: "What's live today" },
       {
         type: "p",
-        text: "Asana is the first published server (@mcp-wormhole/asana on npm) with nine tools: list workspaces, search tasks, create tasks, add comments, and more. Slack, Sentry, Linear, and others are on the roadmap.",
+        text: "Asana is the first published server (@mcp-wormhole/asana@0.2.0 on npm) with 66 tools, 18 MCP prompt workflows, and browsable asana:// resources. Slack, Sentry, Linear, and others are on the roadmap.",
       },
       {
         type: "p",
