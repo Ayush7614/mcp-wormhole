@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
+import { DemoShowcase } from "./components/DemoShowcase";
 import { ServerGrid } from "./components/ServerGrid";
 import { IntegrationGrid } from "./components/IntegrationGrid";
 import { IntegrationModal } from "./components/IntegrationModal";
@@ -8,8 +9,10 @@ import { ServerDetail } from "./components/ServerDetail";
 import { Footer } from "./components/Footer";
 import { getIntegration } from "./data/integrations";
 import { getServer } from "./data/servers";
+import { useTheme } from "./hooks/useTheme";
 
 export default function App() {
+  const { theme, toggleTheme } = useTheme();
   const [selectedIntegrationId, setSelectedIntegrationId] = useState<string | null>(null);
   const [selectedServerId, setSelectedServerId] = useState<string>("asana");
 
@@ -21,13 +24,11 @@ export default function App() {
 
   return (
     <div className="app">
-      <Header />
+      <Header theme={theme} onToggleTheme={toggleTheme} />
       <main>
         <Hero />
-        <ServerGrid
-          selectedId={selectedServerId}
-          onSelect={setSelectedServerId}
-        />
+        <DemoShowcase />
+        <ServerGrid selectedId={selectedServerId} onSelect={setSelectedServerId} />
         {server && <ServerDetail server={server} />}
         <IntegrationGrid onSelect={setSelectedIntegrationId} />
       </main>
