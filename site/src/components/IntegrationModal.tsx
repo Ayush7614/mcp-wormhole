@@ -42,7 +42,7 @@ export function IntegrationModal({
         </button>
 
         <div className="modal-head">
-          <BrandIcon name={integration.icon} color={integration.iconColor} />
+          <BrandIcon integrationId={integration.id} alt={`${integration.name} logo`} />
           <div>
             <h2 id="integration-title">{integration.name}</h2>
             <p>{integration.description}</p>

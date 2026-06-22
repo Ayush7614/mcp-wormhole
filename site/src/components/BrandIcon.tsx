@@ -1,27 +1,14 @@
+import { logoUrl } from "../data/logos";
+
 interface BrandIconProps {
-  name: string;
-  color?: string;
+  integrationId: string;
+  alt: string;
 }
 
-export function BrandIcon({ name, color }: BrandIconProps) {
-  const tint = color ? `#${color.replace("#", "")}` : undefined;
-
+export function BrandIcon({ integrationId, alt }: BrandIconProps) {
   return (
-    <span className="brand-icon" style={tint ? { color: tint } : undefined}>
-      <img
-        src={`https://cdn.simpleicons.org/${name}/${color ?? "111827"}`}
-        alt=""
-        loading="lazy"
-        onError={(event) => {
-          const target = event.currentTarget;
-          target.style.display = "none";
-          const fallback = target.nextElementSibling as HTMLElement | null;
-          if (fallback) fallback.hidden = false;
-        }}
-      />
-      <span className="brand-fallback" hidden>
-        {name.slice(0, 2).toUpperCase()}
-      </span>
+    <span className="brand-icon">
+      <img src={logoUrl(integrationId)} alt={alt} loading="lazy" decoding="async" />
     </span>
   );
 }

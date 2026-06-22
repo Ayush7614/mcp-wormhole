@@ -25,7 +25,7 @@ export function IntegrationGrid({ onSelect }: IntegrationGridProps) {
               onClick={() => onSelect(item.id)}
             >
               <div className="card-top">
-                <BrandIcon name={item.icon} color={item.iconColor} />
+                <BrandIcon integrationId={item.id} alt={`${item.name} logo`} />
                 <span className="external-hint" aria-hidden="true">
                   ↗
                 </span>
