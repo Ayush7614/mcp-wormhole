@@ -2,11 +2,14 @@ import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { BrandIcon } from "../components/BrandIcon";
 import { GuideStepSection } from "../components/GuideStepSection";
 import { GuideReferences } from "../components/GuideReferences";
+import { TocLink } from "../components/TocLink";
 import { buildProviderGuide } from "../data/guides";
 import { getIntegration } from "../data/integrations";
 import { getServer, servers } from "../data/servers";
+import { SCROLL_SECTION_KEY, useScrollToAnchorOnMount } from "../hooks/useScrollToSection";
 
 export function GuidePage() {
+  useScrollToAnchorOnMount();
   const { clientId, serverId = "asana" } = useParams();
   const navigate = useNavigate();
   const integration = clientId ? getIntegration(clientId) : undefined;
@@ -25,7 +28,12 @@ export function GuidePage() {
         <nav className="guide-breadcrumb">
           <Link to="/">Home</Link>
           <span>/</span>
-          <Link to={`/servers/${server.id}/guide#frameworks`}>Frameworks</Link>
+          <Link
+            to={`/servers/${server.id}/guide`}
+            onClick={() => sessionStorage.setItem(SCROLL_SECTION_KEY, "frameworks")}
+          >
+            Frameworks
+          </Link>
           <span>/</span>
           <Link to={`/servers/${server.id}`}>{server.name}</Link>
           <span>/</span>
@@ -82,11 +90,11 @@ export function GuidePage() {
             <ol>
               {guide.steps.map((step) => (
                 <li key={step.id}>
-                  <a href={`#${step.id}`}>{step.title}</a>
+                  <TocLink targetId={step.id}>{step.title}</TocLink>
                 </li>
               ))}
               <li>
-                <a href="#references">References</a>
+                <TocLink targetId="references">References</TocLink>
               </li>
             </ol>
           </aside>

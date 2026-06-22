@@ -2,10 +2,13 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { SectionLink } from "../components/SectionLink";
 import { GuideStepSection } from "../components/GuideStepSection";
 import { FrameworkPicker } from "../components/FrameworkPicker";
+import { TocLink } from "../components/TocLink";
 import { buildServerGuide } from "../data/serverGuides";
 import { getServer } from "../data/servers";
+import { useScrollToAnchorOnMount } from "../hooks/useScrollToSection";
 
 export function ServerGuidePage() {
+  useScrollToAnchorOnMount();
   const { serverId } = useParams();
   const server = serverId ? getServer(serverId) : undefined;
 
@@ -60,12 +63,12 @@ export function ServerGuidePage() {
             <ol>
               {guide.steps.map((step) => (
                 <li key={step.id}>
-                  <a href={`#${step.id}`}>{step.title}</a>
+                  <TocLink targetId={step.id}>{step.title}</TocLink>
                 </li>
               ))}
               {!disabled && (
                 <li>
-                  <a href="#frameworks">Connect your client</a>
+                  <TocLink targetId="frameworks">Connect your client</TocLink>
                 </li>
               )}
             </ol>
