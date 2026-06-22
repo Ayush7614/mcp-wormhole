@@ -1,0 +1,22 @@
+{
+  "name": "mcp-wormhole-orange",
+  "background": "#0a0a0e",
+  "foreground": "#e8e8ec",
+  "cursor": "#fb923c",
+  "black": "#1a1a1f",
+  "red": "#f87171",
+  "green": "#4ade80",
+  "yellow": "#fbbf24",
+  "blue": "#818cf8",
+  "magenta": "#c084fc",
+  "cyan": "#22d3ee",
+  "white": "#f4f4f5",
+  "brightBlack": "#71717a",
+  "brightRed": "#fca5a5",
+  "brightGreen": "#86efac",
+  "brightYellow": "#fde68a",
+  "brightBlue": "#a5b4fc",
+  "brightMagenta": "#d8b4fe",
+  "brightCyan": "#67e8f9",
+  "brightWhite": "#fafafa"
+}
