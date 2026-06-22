@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { getHomepageStats } from "../data/homepageStats";
 import type { McpServer } from "../data/servers";
 import { servers } from "../data/servers";
+import { asanaToolSummary } from "../data/asanaCatalog";
 
 const statusLabel = {
   available: "Available",
@@ -13,6 +15,8 @@ interface ServerGridProps {
 }
 
 export function ServerGrid({ selectedId }: ServerGridProps) {
+  const { liveServers, totalServers, clientIntegrations } = getHomepageStats();
+
   return (
     <section className="section" id="servers">
       <div className="container">
@@ -20,6 +24,22 @@ export function ServerGrid({ selectedId }: ServerGridProps) {
           <h2>MCP servers</h2>
           <p>Select a server to view tools, config, and client integrations.</p>
         </div>
+
+        <div className="demo-stats server-grid-stats">
+          <div className="demo-stat">
+            <strong>{liveServers}</strong>
+            <span>Live server{liveServers === 1 ? "" : "s"}</span>
+          </div>
+          <div className="demo-stat">
+            <strong>{totalServers}</strong>
+            <span>MCP servers</span>
+          </div>
+          <div className="demo-stat">
+            <strong>{clientIntegrations}</strong>
+            <span>Client integrations</span>
+          </div>
+        </div>
+
         <div className="card-grid server-grid">
           {servers.map((server: McpServer) => (
             <article
@@ -34,7 +54,11 @@ export function ServerGrid({ selectedId }: ServerGridProps) {
                 </div>
                 <h3>{server.name}</h3>
                 <p>{server.description}</p>
-                <span className="card-meta">{server.auth}</span>
+                <span className="card-meta">
+                  {server.status === "available" && server.id === "asana"
+                    ? asanaToolSummary()
+                    : server.auth}
+                </span>
               </Link>
               {server.status === "available" && (
                 <Link to={`/servers/${server.id}/guide`} className="server-card-guide button ghost">

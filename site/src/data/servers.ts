@@ -4,6 +4,7 @@ import {
   ASANA_PROMPT_COUNT,
   ASANA_RESOURCE_TEMPLATE_COUNT,
   ASANA_TOOL_NAMES,
+  asanaServerDescription,
 } from "./asanaCatalog";
 
 export interface EnvVar {
@@ -31,8 +32,7 @@ export const servers: McpServer[] = [
   {
     id: "asana",
     name: "Asana",
-    description:
-      "Full-stack Asana MCP — 66 tools, 18 prompt workflows, and browsable workspace/project/task resources.",
+    description: asanaServerDescription(),
     status: "available",
     npmPackage: "@mcp-wormhole/asana",
     auth: "Personal Access Token",
