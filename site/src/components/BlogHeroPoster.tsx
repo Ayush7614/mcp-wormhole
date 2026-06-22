@@ -1,4 +1,5 @@
 import type { BlogPoster } from "../data/blogTypes";
+import { BlogConnectionDiagram } from "./BlogConnectionDiagram";
 
 interface BlogHeroPosterProps {
   title: string;
@@ -14,24 +15,26 @@ function asset(path: string) {
 
 export function BlogHeroPoster({ title, excerpt, poster, readTime, date }: BlogHeroPosterProps) {
   return (
-    <section className="blog-hero-poster" aria-label="Article overview">
-      <div className="blog-poster-frame">
-        <img
-          src={asset(poster.posterAsset)}
-          alt=""
-          className="blog-poster-gif-full"
-          loading="eager"
-          aria-hidden="true"
-        />
-        <div className="blog-poster-overlay" aria-hidden="true" />
-        <div className="blog-poster-text-layer">
-          {poster.badge && <span className="blog-poster-badge">{poster.badge}</span>}
-          <p className="blog-poster-headline">{poster.headline}</p>
-          <p className="blog-poster-tagline">{poster.tagline}</p>
+    <section className="blog-hero-poster blog-hero-composio" aria-label="Article overview">
+      <div className="blog-composio-layout">
+        <div className="blog-composio-copy">
+          {poster.eyebrow && <p className="blog-composio-eyebrow">{poster.eyebrow}</p>}
+          <p className="blog-composio-headline">{poster.headline}</p>
+          <p className="blog-composio-tagline">{poster.tagline}</p>
+          {poster.badge && <span className="blog-composio-badge">{poster.badge}</span>}
         </div>
-        <div className="blog-poster-live">
-          <span className="blog-poster-live-dot" aria-hidden="true" />
-          TOOLS CONNECTED
+
+        <div className="blog-composio-visual">
+          {poster.connection ? (
+            <BlogConnectionDiagram poster={poster} />
+          ) : (
+            <img
+              src={asset(poster.posterAsset)}
+              alt=""
+              className="blog-poster-gif-composio"
+              loading="eager"
+            />
+          )}
         </div>
       </div>
 

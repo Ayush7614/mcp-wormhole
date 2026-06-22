@@ -3,12 +3,28 @@ export interface BlogPosterStat {
   value: string;
 }
 
+export interface BlogPosterAuthBadge {
+  label: string;
+  variant: "pat" | "stdio" | "npx" | "live" | "zod";
+}
+
+export interface BlogPosterConnection {
+  clientLogo: string;
+  toolName: string;
+  toolLogo: string;
+  toolDesc: string;
+  authBadges: BlogPosterAuthBadge[];
+  cardStats: BlogPosterStat[];
+}
+
 export interface BlogPoster {
   posterAsset: string;
   headline: string;
   tagline: string;
+  eyebrow?: string;
   badge?: string;
   stats: BlogPosterStat[];
+  connection?: BlogPosterConnection;
 }
 
 export type BlogBlock =
