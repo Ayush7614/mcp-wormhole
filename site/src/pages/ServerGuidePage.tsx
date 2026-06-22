@@ -1,22 +1,20 @@
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import { SectionLink } from "../components/SectionLink";
-import { BrandIcon } from "../components/BrandIcon";
 import { ConfigBlock } from "../components/ConfigBlock";
-import { buildProviderGuide } from "../data/guides";
-import { getIntegration } from "../data/integrations";
-import { getServer, servers } from "../data/servers";
+import { BrandIcon } from "../components/BrandIcon";
+import { buildServerGuide } from "../data/serverGuides";
+import { integrations } from "../data/integrations";
+import { getServer } from "../data/servers";
 
-export function GuidePage() {
-  const { clientId, serverId = "asana" } = useParams();
-  const navigate = useNavigate();
-  const integration = clientId ? getIntegration(clientId) : undefined;
-  const server = getServer(serverId ?? "asana");
+export function ServerGuidePage() {
+  const { serverId } = useParams();
+  const server = serverId ? getServer(serverId) : undefined;
 
-  if (!integration || !server) {
+  if (!server) {
     return <Navigate to="/" replace />;
   }
 
-  const guide = buildProviderGuide(integration, server);
+  const guide = buildServerGuide(server);
   const disabled = server.status === "planned";
 
   return (
@@ -25,48 +23,31 @@ export function GuidePage() {
         <nav className="guide-breadcrumb">
           <Link to="/">Home</Link>
           <span>/</span>
-          <SectionLink sectionId="integrations">Integrations</SectionLink>
+          <SectionLink sectionId="servers">Servers</SectionLink>
           <span>/</span>
           <Link to={`/servers/${server.id}`}>{server.name}</Link>
           <span>/</span>
-          <span>{integration.name}</span>
+          <span>Guide</span>
         </nav>
 
         <header className="guide-header">
-          <div className="guide-header-logos">
-            <BrandIcon integrationId={integration.id} alt={integration.name} />
-            <span className="guide-plus">+</span>
-            <span className="guide-server-badge">{server.name}</span>
-          </div>
+          <span className="guide-server-badge">{server.name}</span>
           <h1>{guide.title}</h1>
           <p className="guide-subtitle">{guide.subtitle}</p>
           <div className="guide-header-actions">
             <span className={`status-pill ${server.status}`}>
               {disabled ? "Server planned" : "Ready to use"}
             </span>
-            <a href={integration.docsUrl} target="_blank" rel="noreferrer" className="button secondary">
-              {integration.name} docs ↗
-            </a>
+            <Link to={`/servers/${server.id}`} className="button secondary">
+              Back to {server.name}
+            </Link>
+            {server.docsUrl && (
+              <a href={server.docsUrl} target="_blank" rel="noreferrer" className="button secondary">
+                API docs ↗
+              </a>
+            )}
           </div>
         </header>
-
-        <div className="guide-toolbar">
-          <label htmlFor="guide-server">MCP server</label>
-          <select
-            id="guide-server"
-            value={server.id}
-            onChange={(event) => {
-              navigate(`/guides/${integration.id}/${event.target.value}`);
-            }}
-          >
-            {servers.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.name}
-                {item.status === "planned" ? " (planned)" : ""}
-              </option>
-            ))}
-          </select>
-        </div>
 
         <div className="guide-layout">
           <aside className="guide-sidebar">
@@ -111,27 +92,47 @@ export function GuidePage() {
 
           <div className="guide-main">
             <section className="guide-panel">
-              <h2>Configuration</h2>
+              <h2>Quick start</h2>
               <p className="hint">
-                Copy the config for <strong>{integration.name}</strong>, set{" "}
-                <code>{server.env.map((e) => e.key).join(", ")}</code>, then restart your client.
+                Add this to your MCP client config. Set{" "}
+                <code>{server.env.map((e) => e.key).join(", ")}</code>, then restart.
               </p>
-              <div className="config-stack">
-                {guide.configs.map((block) => (
-                  <ConfigBlock
-                    key={block.label}
-                    label={block.label}
-                    language={block.language}
-                    code={block.code}
-                  />
-                ))}
-              </div>
+              <ConfigBlock label="MCP config (stdio)" language="json" code={guide.quickStartConfig} />
+            </section>
+
+            <section className="guide-panel">
+              <h2>Run from anywhere</h2>
+              <ConfigBlock label="Terminal" language="bash" code={guide.npmInstallCommand} />
             </section>
 
             {guide.verifyCommand && (
               <section className="guide-panel">
-                <h2>Verify locally</h2>
+                <h2>Verify install</h2>
                 <ConfigBlock label="Terminal" language="bash" code={guide.verifyCommand} />
+              </section>
+            )}
+
+            {!disabled && (
+              <section className="guide-panel">
+                <h2>Per-client setup guides</h2>
+                <p className="hint">
+                  Step-by-step config for Cursor, Claude, VS Code, LangChain, and more.
+                </p>
+                <div className="client-guide-grid">
+                  {integrations.map((integration) => (
+                    <Link
+                      key={integration.id}
+                      to={`/guides/${integration.id}/${server.id}`}
+                      className="client-guide-card"
+                    >
+                      <BrandIcon integrationId={integration.id} alt={integration.name} />
+                      <span>{integration.name}</span>
+                      <span className="external-hint" aria-hidden="true">
+                        ↗
+                      </span>
+                    </Link>
+                  ))}
+                </div>
               </section>
             )}
 
@@ -159,8 +160,8 @@ export function GuidePage() {
               <section className="guide-panel guide-notice">
                 <h2>Coming soon</h2>
                 <p>
-                  The <strong>{server.name}</strong> MCP server is on the roadmap. This guide shows
-                  the config shape — swap in <strong>Asana</strong> today using the selector above.
+                  The <strong>{server.name}</strong> MCP server is on the roadmap. Check back or
+                  open an issue on GitHub to track progress.
                 </p>
               </section>
             )}

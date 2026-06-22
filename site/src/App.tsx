@@ -3,6 +3,8 @@ import { SectionRedirect } from "./components/SectionRedirect";
 import { Layout } from "./components/Layout";
 import { HomePage } from "./pages/HomePage";
 import { GuidePage } from "./pages/GuidePage";
+import { ServerPage } from "./pages/ServerPage";
+import { ServerGuidePage } from "./pages/ServerGuidePage";
 import { useTheme } from "./hooks/useTheme";
 
 export default function App() {
@@ -13,6 +15,8 @@ export default function App() {
       <Layout theme={theme} onToggleTheme={toggleTheme}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/servers/:serverId" element={<ServerPage />} />
+          <Route path="/servers/:serverId/guide" element={<ServerGuidePage />} />
           <Route path="/guides/:clientId/:serverId?" element={<GuidePage />} />
           <Route path="/servers" element={<SectionRedirect sectionId="servers" />} />
           <Route path="/integrations" element={<SectionRedirect sectionId="integrations" />} />

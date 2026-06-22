@@ -3,25 +3,26 @@ import { integrations } from "../data/integrations";
 import { BrandIcon } from "./BrandIcon";
 
 interface IntegrationGridProps {
-  defaultServerId?: string;
+  serverId?: string;
+  serverName?: string;
 }
 
-export function IntegrationGrid({ defaultServerId = "asana" }: IntegrationGridProps) {
+export function IntegrationGrid({ serverId = "asana", serverName = "Asana" }: IntegrationGridProps) {
   return (
     <section className="section integrations-section" id="integrations">
       <div className="container">
         <div className="section-head">
-          <h2>Connect your client</h2>
+          <h2>Connect {serverName} to your client</h2>
           <p>
-            Choose a client you want to connect mcp-wormhole with — each card opens a full setup
-            guide with copy-paste config for <strong>Asana</strong> and other servers.
+            Choose a client to connect <strong>{serverName}</strong> — each card opens a full setup
+            guide with copy-paste config.
           </p>
         </div>
         <div className="card-grid integration-grid">
           {integrations.map((item) => (
             <Link
               key={item.id}
-              to={`/guides/${item.id}/${defaultServerId}`}
+              to={`/guides/${item.id}/${serverId}`}
               className="card integration-card"
             >
               <div className="card-top">

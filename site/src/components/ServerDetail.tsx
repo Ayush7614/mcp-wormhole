@@ -1,12 +1,14 @@
+import { Link } from "react-router-dom";
 import type { McpServer } from "../data/servers";
 import { buildStdioConfig } from "../data/config";
 import { ConfigBlock } from "./ConfigBlock";
 
 interface ServerDetailProps {
   server: McpServer;
+  showGuideLink?: boolean;
 }
 
-export function ServerDetail({ server }: ServerDetailProps) {
+export function ServerDetail({ server, showGuideLink = false }: ServerDetailProps) {
   const disabled = server.status === "planned";
 
   return (
@@ -17,9 +19,16 @@ export function ServerDetail({ server }: ServerDetailProps) {
             <h2>{server.name}</h2>
             <p>{server.description}</p>
           </div>
-          <span className={`status-pill ${server.status}`}>
-            {disabled ? "Coming soon" : "Ready to use"}
-          </span>
+          <div className="detail-header-actions">
+            <span className={`status-pill ${server.status}`}>
+              {disabled ? "Coming soon" : "Ready to use"}
+            </span>
+            {showGuideLink && (
+              <Link to={`/servers/${server.id}/guide`} className="button secondary">
+                Full guide ↗
+              </Link>
+            )}
+          </div>
         </div>
 
         <div className="detail-columns">
