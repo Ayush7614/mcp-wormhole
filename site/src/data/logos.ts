@@ -6,7 +6,7 @@ export const integrationLogos: Record<string, string> = {
   "claude-code": "logos/anthropic.svg",
   "claude-agents-sdk": "logos/anthropic.svg",
   chatgpt: "logos/openai.svg",
-  codex: "logos/openai.svg",
+  codex: "logos/codex.svg",
   "openai-agents-sdk": "logos/openai.svg",
   windsurf: "logos/windsurf.svg",
   opencode: "logos/opencode.svg",
