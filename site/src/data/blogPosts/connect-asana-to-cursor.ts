@@ -1,5 +1,5 @@
 import type { BlogPost } from "../blogTypes";
-import { asanaCursorConnection } from "../blogPosterConnections";
+import { asanaCursorFlow } from "../blogPosterConnections";
 
 export const connectAsanaToCursor: BlogPost = {
   slug: "connect-asana-to-cursor",
@@ -17,7 +17,7 @@ export const connectAsanaToCursor: BlogPost = {
     tagline:
       "Paste one JSON block into mcp.json and ask Cursor to list tasks, create work, and search projects.",
     badge: "5 MIN SETUP",
-    connection: asanaCursorConnection,
+    connection: asanaCursorFlow,
     stats: [
       { value: "5 min", label: "Setup" },
       { value: "66", label: "Tools" },

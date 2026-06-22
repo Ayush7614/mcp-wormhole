@@ -1,5 +1,5 @@
 import type { BlogPost } from "../blogTypes";
-import { npmConnection } from "../blogPosterConnections";
+import { buildHubConnection } from "../blogPosterConnections";
 
 export const buildingAnMcpServer: BlogPost = {
   slug: "building-an-mcp-server",
@@ -17,7 +17,7 @@ export const buildingAnMcpServer: BlogPost = {
     tagline:
       "Copy the template, wrap a vendor REST API, verify against live endpoints, and ship to npm.",
     badge: "CONTRIBUTING",
-    connection: npmConnection,
+    connection: buildHubConnection,
     stats: [
       { value: "1", label: "Template" },
       { value: "Zod", label: "Validation" },

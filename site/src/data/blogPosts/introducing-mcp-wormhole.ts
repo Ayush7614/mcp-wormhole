@@ -1,5 +1,5 @@
 import type { BlogPost } from "../blogTypes";
-import { asanaConnection } from "../blogPosterConnections";
+import { wormholeHubConnection } from "../blogPosterConnections";
 
 export const introducingMcpWormhole: BlogPost = {
   slug: "introducing-mcp-wormhole",
@@ -17,11 +17,11 @@ export const introducingMcpWormhole: BlogPost = {
     tagline:
       "Connect Cursor, Claude, ChatGPT and 20+ clients to Asana, Slack, Sentry and more via stdio MCP.",
     badge: "OPEN SOURCE",
-    connection: asanaConnection,
+    connection: wormholeHubConnection,
     stats: [
-      { value: "1", label: "Live server" },
-      { value: "20+", label: "AI clients" },
-      { value: "66", label: "Asana tools" },
+      { value: "66", label: "Tools live" },
+      { value: "∞", label: "Infinite servers" },
+      { value: "30+", label: "Client integrations" },
     ],
   },
   content: [

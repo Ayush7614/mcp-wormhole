@@ -2887,6 +2887,175 @@ select {
   margin-right: 4px;
 }
 
+/* Hub layout — agents orbit the wormhole (no vendor card) */
+.blog-conn-hub {
+  position: relative;
+  width: 100%;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blog-conn-hub-ring {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 120, 64, 0.22);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.blog-conn-hub-center {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.blog-conn-hub-agent {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  z-index: 1;
+}
+
+.blog-conn-hub-left {
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.blog-conn-hub-right {
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.blog-conn-hub-top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.blog-conn-hub-bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.blog-conn-hub-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #9ca3af;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.blog-conn-hub-label-center {
+  text-transform: lowercase;
+  color: #6b7280;
+}
+
+.blog-conn-hub-line {
+  position: absolute;
+  background: #e2e4ea;
+  pointer-events: none;
+}
+
+.blog-conn-hub-line-left,
+.blog-conn-hub-line-right {
+  width: 48px;
+  height: 2px;
+  top: 32px;
+}
+
+.blog-conn-hub-line-left {
+  left: 100%;
+  margin-left: 4px;
+}
+
+.blog-conn-hub-line-right {
+  right: 100%;
+  margin-right: 4px;
+}
+
+.blog-conn-hub-line-top,
+.blog-conn-hub-line-bottom {
+  width: 2px;
+  height: 36px;
+  left: 50%;
+  margin-left: -1px;
+}
+
+.blog-conn-hub-line-top {
+  top: 100%;
+  margin-top: 4px;
+}
+
+.blog-conn-hub-line-bottom {
+  bottom: 100%;
+  margin-bottom: 4px;
+}
+
+.blog-conn-hub-line .blog-conn-pulse {
+  animation: blog-conn-travel-v 2s ease-in-out infinite;
+}
+
+.blog-conn-hub-line-left .blog-conn-pulse,
+.blog-conn-hub-line-right .blog-conn-pulse {
+  animation: blog-conn-travel 2s ease-in-out infinite;
+}
+
+.blog-conn-hub-line-top .blog-conn-pulse {
+  animation: blog-conn-travel-v 2s ease-in-out infinite;
+}
+
+.blog-conn-hub-line-bottom .blog-conn-pulse {
+  animation: blog-conn-travel-v-rev 2s ease-in-out infinite;
+}
+
+@keyframes blog-conn-travel-v {
+  0% {
+    top: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    top: calc(100% - 10px);
+    opacity: 0;
+  }
+}
+
+@keyframes blog-conn-travel-v-rev {
+  0% {
+    bottom: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    bottom: calc(100% - 10px);
+    opacity: 0;
+  }
+}
+
 /* Blog cards — full Composio GIF poster */
 .blog-card-composio {
   background: var(--surface);

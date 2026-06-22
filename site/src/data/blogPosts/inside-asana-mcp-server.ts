@@ -1,5 +1,5 @@
 import type { BlogPost } from "../blogTypes";
-import { asanaDeepConnection } from "../blogPosterConnections";
+import { asanaDeepFlow } from "../blogPosterConnections";
 
 export const insideAsanaMcpServer: BlogPost = {
   slug: "inside-asana-mcp-server",
@@ -16,7 +16,7 @@ export const insideAsanaMcpServer: BlogPost = {
     headline: "Inside Asana MCP Server",
     tagline: "66 tools, 18 prompt workflows, and browsable asana:// resources — full API coverage.",
     badge: "v0.2.0 LIVE",
-    connection: asanaDeepConnection,
+    connection: asanaDeepFlow,
     stats: [
       { value: "66", label: "Tools" },
       { value: "18", label: "Prompts" },

@@ -8,14 +8,32 @@ export interface BlogPosterAuthBadge {
   variant: "pat" | "stdio" | "npx" | "live" | "zod";
 }
 
-export interface BlogPosterConnection {
-  clientLogo: string;
+export type BlogPosterAgentPosition = "left" | "right" | "top" | "bottom";
+
+export interface BlogPosterAgent {
+  logo: string;
+  label?: string;
+  position: BlogPosterAgentPosition;
+}
+
+export interface BlogPosterFlowEnd {
   toolName: string;
   toolLogo: string;
   toolDesc: string;
   authBadges: BlogPosterAuthBadge[];
   cardStats: BlogPosterStat[];
 }
+
+export type BlogPosterConnection =
+  | {
+      layout: "hub";
+      agents: BlogPosterAgent[];
+    }
+  | {
+      layout: "flow";
+      clientLogo: string;
+      end: BlogPosterFlowEnd;
+    };
 
 export interface BlogPoster {
   posterAsset: string;
