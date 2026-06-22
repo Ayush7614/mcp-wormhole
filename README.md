@@ -4,6 +4,8 @@ A monorepo of **Model Context Protocol (MCP) servers** — one directory per int
 
 **Owner:** [@Ayush7614](https://github.com/Ayush7614)
 
+**Website:** [ayush7614.github.io/mcp-wormhole](https://ayush7614.github.io/mcp-wormhole/) — integration guides, server catalog, copy-paste configs for Cursor, Claude, VS Code, and more.
+
 ## Structure
 
 ```
@@ -13,6 +15,7 @@ mcp-wormhole/
 │   ├── slack/
 │   ├── sentry/
 │   └── ...
+├── site/               # GitHub Pages docs + integration gallery
 ├── package.json
 └── pnpm-workspace.yaml
 ```
@@ -23,7 +26,7 @@ Each package is a standalone MCP server with its own `package.json`, tools, reso
 
 | Server | Status | Auth |
 |--------|--------|------|
-| Asana | planned | PAT |
+| Asana | available | PAT |
 | Slack | planned | Bot token |
 | Sentry | planned | Auth token |
 | Vercel | planned | API token |
