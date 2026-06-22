@@ -12,8 +12,8 @@ export function IntegrationGrid({ onSelect }: IntegrationGridProps) {
         <div className="section-head">
           <h2>Connect your client</h2>
           <p>
-            Use mcp-wormhole with Cursor, VS Code, Claude, ChatGPT, LangChain, and
-            more — pick a client for setup steps and copy-paste config.
+            Choose a client you want to connect mcp-wormhole with — Cursor, VS Code,
+            Claude, ChatGPT, LangChain, and more.
           </p>
         </div>
         <div className="card-grid integration-grid">

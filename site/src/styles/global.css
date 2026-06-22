@@ -184,7 +184,8 @@ select {
 }
 
 .integration-grid {
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .card {
@@ -263,27 +264,64 @@ select {
 
 .integration-card {
   cursor: pointer;
+  padding: 20px;
+  min-height: 132px;
+  border-radius: 12px;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.integration-card .card-top {
+  min-height: 36px;
+  margin-bottom: 4px;
+}
+
+.integration-card h3 {
+  margin: 12px 0 4px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.integration-card p {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #71717a;
 }
 
 .external-hint {
-  color: #a1a1aa;
-  font-size: 14px;
+  color: #d4d4d8;
+  font-size: 13px;
+  line-height: 1;
 }
 
 .brand-icon {
   display: inline-flex;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
 .brand-icon img {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   object-fit: contain;
   display: block;
+}
+
+@media (max-width: 1024px) {
+  .integration-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .integration-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .detail-panel {
