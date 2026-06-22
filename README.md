@@ -87,9 +87,9 @@ pnpm build
 | Server | npm package | Status | Auth | Tools |
 |--------|-------------|--------|------|-------|
 | **Asana** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) | **Available** | PAT | 66 tools · 18 prompts · resources |
+| **Vercel** | `@mcp-wormhole/vercel` | **Available** | API token | 11 tools |
 | Slack | `@mcp-wormhole/slack` | Planned | Bot token | — |
 | Sentry | `@mcp-wormhole/sentry` | Planned | Auth token | — |
-| Vercel | `@mcp-wormhole/vercel` | Planned | API token | — |
 | Google Calendar | `@mcp-wormhole/google-calendar` | Planned | OAuth | — |
 | Airtable | `@mcp-wormhole/airtable` | Planned | PAT | — |
 | Stripe | `@mcp-wormhole/stripe` | Planned | Secret key | — |
@@ -124,6 +124,7 @@ Full server walkthrough: [Asana MCP server guide](https://ayush7614.github.io/mc
 mcp-wormhole/
 ├── packages/
 │   ├── asana/              # @mcp-wormhole/asana — live on npm
+│   ├── vercel/             # @mcp-wormhole/vercel
 │   ├── _template/          # Copy this to start a new server
 │   ├── slack/              # planned
 │   └── …
@@ -183,6 +184,7 @@ Packages publish under the [`@mcp-wormhole`](https://www.npmjs.com/org/mcp-wormh
 | Package | Latest | npm |
 |---------|--------|-----|
 | Asana | **0.2.0** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) |
+| Vercel | **0.1.0** | `@mcp-wormhole/vercel` |
 
 ```bash
 pnpm --filter @mcp-wormhole/asana build

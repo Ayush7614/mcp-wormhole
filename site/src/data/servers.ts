@@ -6,6 +6,7 @@ import {
   ASANA_TOOL_NAMES,
   asanaServerDescription,
 } from "./asanaCatalog";
+import { VERCEL_TOOL_NAMES, vercelServerDescription } from "./vercelCatalog";
 
 export interface EnvVar {
   key: string;
@@ -72,12 +73,23 @@ export const servers: McpServer[] = [
   {
     id: "vercel",
     name: "Vercel",
-    description: "Deployments, logs, rollbacks, and project status.",
-    status: "planned",
+    description: vercelServerDescription(),
+    status: "available",
     npmPackage: "@mcp-wormhole/vercel",
     auth: "API token",
-    env: [{ key: "VERCEL_TOKEN", description: "Vercel API token" }],
-    tools: ["vercel_list_deployments", "vercel_get_logs", "vercel_promote"],
+    env: [
+      {
+        key: "VERCEL_TOKEN",
+        description: "Vercel API token",
+        docsUrl: "https://vercel.com/account/tokens",
+      },
+      {
+        key: "VERCEL_TEAM_ID",
+        description: "Optional team ID for team-scoped requests",
+      },
+    ],
+    tools: [...VERCEL_TOOL_NAMES],
+    docsUrl: "https://vercel.com/docs/rest-api",
   },
   {
     id: "google-calendar",
