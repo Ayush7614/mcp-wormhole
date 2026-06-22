@@ -1,3 +1,15 @@
+export interface BlogPosterStat {
+  label: string;
+  value: string;
+}
+
+export interface BlogPoster {
+  demoAsset: string;
+  demoCaption: string;
+  badge?: string;
+  stats: BlogPosterStat[];
+}
+
 export type BlogBlock =
   | { type: "tldr"; items: string[] }
   | { type: "h2"; text: string }
@@ -18,5 +30,6 @@ export interface BlogPost {
   author: string;
   tags: string[];
   readTime: string;
+  poster: BlogPoster;
   content: BlogBlock[];
 }

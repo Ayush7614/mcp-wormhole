@@ -1,14 +1,26 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { BlogContent } from "../components/BlogContent";
+import { BlogHeroPoster } from "../components/BlogHeroPoster";
+import { BlogSidebar } from "../components/BlogSidebar";
+import { BlogTableOfContents } from "../components/BlogTableOfContents";
 import { getBlogPost, getBlogPostsSorted } from "../data/blogs";
+import { useActiveHeading } from "../hooks/useActiveHeading";
+import { useReadingProgress } from "../hooks/useReadingProgress";
+import { useScrollToAnchorOnMount } from "../hooks/useScrollToSection";
+import { extractBlogHeadings } from "../utils/blogHeadings";
 
 export function BlogPostPage() {
+  useScrollToAnchorOnMount();
   const { slug } = useParams();
   const post = slug ? getBlogPost(slug) : undefined;
 
   if (!post) {
     return <Navigate to="/blog" replace />;
   }
+
+  const headings = extractBlogHeadings(post.content);
+  const activeId = useActiveHeading(headings);
+  const progress = useReadingProgress(".blog-post-main");
 
   const related = getBlogPostsSorted()
     .filter((item) => item.slug !== post.slug)
@@ -25,42 +37,46 @@ export function BlogPostPage() {
           <span>{post.title}</span>
         </nav>
 
-        <header className="blog-post-header">
-          <div className="blog-card-meta blog-post-meta">
-            <time dateTime={post.date}>
-              {new Date(post.date).toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </time>
-            <span>{post.readTime}</span>
-            <span>{post.author}</span>
-          </div>
-          <h1>{post.title}</h1>
-          <p className="blog-post-excerpt">{post.excerpt}</p>
+        <BlogHeroPoster
+          title={post.title}
+          excerpt={post.excerpt}
+          poster={post.poster}
+          readTime={post.readTime}
+          date={post.date}
+        />
+
+        <div className="blog-post-meta-bar">
           <div className="blog-card-tags">
             {post.tags.map((tag) => (
               <span key={tag}>{tag}</span>
             ))}
           </div>
-        </header>
+          <span className="blog-post-author-inline">{post.author}</span>
+        </div>
 
-        <BlogContent blocks={post.content} />
+        <div className="blog-post-layout">
+          <BlogTableOfContents headings={headings} activeId={activeId} />
 
-        {related.length > 0 && (
-          <section className="blog-related">
-            <h2>More from the blog</h2>
-            <div className="blog-related-grid">
-              {related.map((item) => (
-                <Link key={item.slug} to={`/blog/${item.slug}`} className="blog-related-card">
-                  <h3>{item.title}</h3>
-                  <p>{item.excerpt}</p>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
+          <div className="blog-post-main">
+            <BlogContent blocks={post.content} />
+
+            {related.length > 0 && (
+              <section className="blog-related">
+                <h2>More from the blog</h2>
+                <div className="blog-related-grid">
+                  {related.map((item) => (
+                    <Link key={item.slug} to={`/blog/${item.slug}`} className="blog-related-card">
+                      <h3>{item.title}</h3>
+                      <p>{item.excerpt}</p>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+
+          <BlogSidebar post={post} progress={progress} />
+        </div>
       </div>
     </main>
   );
