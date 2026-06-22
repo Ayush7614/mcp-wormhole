@@ -547,8 +547,62 @@ select {
 }
 
 .server-grid-stats {
-  margin-top: 0;
-  margin-bottom: 24px;
+  margin-top: 32px;
+  margin-bottom: 36px;
+}
+
+.server-grid-stats .demo-stat {
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 96px;
+}
+
+.server-grid-stats .demo-stat strong {
+  line-height: 1;
+  font-size: 32px;
+}
+
+.server-grid-stats .demo-stat span {
+  line-height: 1.4;
+  font-size: 13px;
+}
+
+.server-section-head p {
+  margin-bottom: 0;
+  max-width: 520px;
+}
+
+.server-card .card-top {
+  margin-bottom: 4px;
+}
+
+.server-card h3 {
+  margin: 10px 0 8px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.server-card p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.server-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+}
+
+.server-icon img {
+  width: 24px;
+  height: 24px;
 }
 
 .demo-stat {
@@ -663,6 +717,7 @@ select {
 
 .server-grid {
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  margin-top: 0;
 }
 
 .integration-grid {

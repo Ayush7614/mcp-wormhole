@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ServerIcon } from "./ServerIcon";
 import { getHomepageStats } from "../data/homepageStats";
 import type { McpServer } from "../data/servers";
 import { servers } from "../data/servers";
@@ -20,7 +21,7 @@ export function ServerGrid({ selectedId }: ServerGridProps) {
   return (
     <section className="section" id="servers">
       <div className="container">
-        <div className="section-head">
+        <div className="section-head server-section-head">
           <h2>MCP servers</h2>
           <p>Select a server to view tools, config, and client integrations.</p>
         </div>
@@ -48,6 +49,7 @@ export function ServerGrid({ selectedId }: ServerGridProps) {
             >
               <Link to={`/servers/${server.id}`} className="server-card-link">
                 <div className="card-top">
+                  <ServerIcon serverId={server.id} name={server.name} />
                   <span className={`status-pill ${server.status}`}>
                     {statusLabel[server.status]}
                   </span>
