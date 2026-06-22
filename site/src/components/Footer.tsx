@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { LogoMark } from "./LogoMark";
 import { SectionLink } from "./SectionLink";
 
 export function Footer() {
@@ -10,7 +11,7 @@ export function Footer() {
       <div className="container footer-grid">
         <div className="footer-brand">
           <Link to="/" className="footer-logo">
-            <span className="brand-mark" aria-hidden="true" />
+            <LogoMark size={28} />
             <span>mcp-wormhole</span>
           </Link>
           <p className="footer-tagline">

@@ -32,23 +32,21 @@ export function BlogPage() {
             {posts.map((post) => (
               <Link key={post.slug} to={`/blog/${post.slug}`} className="blog-card">
                 <div className="blog-card-poster">
-                  <div className="terminal-window blog-card-terminal">
-                    <div className="terminal-chrome">
-                      <span className="terminal-dot red" />
-                      <span className="terminal-dot yellow" />
-                      <span className="terminal-dot green" />
-                      <span className="terminal-title">{post.poster.demoCaption}</span>
-                    </div>
-                    <img
-                      src={asset(post.poster.demoAsset)}
-                      alt=""
-                      className="demo-gif blog-card-gif"
-                      loading="lazy"
-                    />
+                  <img
+                    src={asset(post.poster.posterAsset)}
+                    alt=""
+                    className="blog-card-gif"
+                    loading="lazy"
+                    aria-hidden="true"
+                  />
+                  <div className="blog-card-poster-overlay" aria-hidden="true" />
+                  <div className="blog-card-poster-text">
+                    {post.poster.badge && (
+                      <span className="blog-card-badge">{post.poster.badge}</span>
+                    )}
+                    <p className="blog-card-headline">{post.poster.headline}</p>
+                    <p className="blog-card-tagline">{post.poster.tagline}</p>
                   </div>
-                  {post.poster.badge && (
-                    <span className="blog-card-badge">{post.poster.badge}</span>
-                  )}
                 </div>
 
                 <div className="blog-card-body">

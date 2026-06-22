@@ -4,8 +4,9 @@ export interface BlogPosterStat {
 }
 
 export interface BlogPoster {
-  demoAsset: string;
-  demoCaption: string;
+  posterAsset: string;
+  headline: string;
+  tagline: string;
   badge?: string;
   stats: BlogPosterStat[];
 }

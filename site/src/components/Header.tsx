@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { LogoMark } from "./LogoMark";
 import { ThemeToggle } from "./ThemeToggle";
 import { SectionLink } from "./SectionLink";
 import type { Theme } from "../hooks/useTheme";
@@ -13,7 +14,7 @@ export function Header({ theme, onToggleTheme }: HeaderProps) {
     <header className="header">
       <div className="container header-inner">
         <Link className="brand" to="/">
-          <span className="brand-mark" aria-hidden="true" />
+          <LogoMark size={30} />
           <span>mcp-wormhole</span>
         </Link>
         <nav className="nav">

@@ -10,8 +10,9 @@ export const insideAsanaMcpServer: BlogPost = {
   tags: ["asana", "mcp", "deep-dive"],
   readTime: "16 min",
   poster: {
-    demoAsset: "demo/asana-verify.gif",
-    demoCaption: "API verification",
+    posterAsset: "demo/posters/poster-inside-asana-mcp.gif",
+    headline: "66 Tools Live",
+    tagline: "18 prompts · 7 resources",
     badge: "Deep dive",
     stats: [
       { value: "66", label: "Tools" },

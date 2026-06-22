@@ -30,9 +30,11 @@ export function BlogSidebar({ post, progress }: BlogSidebarProps) {
     window.setTimeout(() => setCopied(false), 2000);
   };
 
+  const completed = progress >= 100;
+
   return (
     <aside className="blog-sidebar" aria-label="Article extras">
-      <div className="blog-sidebar-progress">
+      <div className={`blog-sidebar-progress ${completed ? "blog-sidebar-progress-done" : ""}`}>
         <div className="blog-sidebar-progress-ring">
           <svg viewBox="0 0 36 36" aria-hidden="true">
             <path
@@ -41,13 +43,17 @@ export function BlogSidebar({ post, progress }: BlogSidebarProps) {
             />
             <path
               className="blog-sidebar-progress-fill"
-              strokeDasharray={`${progress}, 100`}
+              strokeDasharray={`${Math.min(progress, 100)}, 100`}
               d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
             />
           </svg>
-          <span className="blog-sidebar-progress-text">{Math.round(progress)}%</span>
+          <span className="blog-sidebar-progress-text">
+            {completed ? "✓" : `${Math.round(progress)}%`}
+          </span>
         </div>
-        <p className="blog-sidebar-progress-label">Reading progress</p>
+        <p className="blog-sidebar-progress-label">
+          {completed ? "Article completed!" : "Reading progress"}
+        </p>
       </div>
 
       <div className="blog-sidebar-card blog-sidebar-author">

@@ -10,8 +10,9 @@ export const buildingAnMcpServer: BlogPost = {
   tags: ["contributing", "typescript", "architecture"],
   readTime: "14 min",
   poster: {
-    demoAsset: "demo/asana-npm-install.gif",
-    demoCaption: "npx smoke test",
+    posterAsset: "demo/posters/poster-building-mcp-server.gif",
+    headline: "Build MCP Servers",
+    tagline: "Template → npm → PR",
     badge: "Contributor",
     stats: [
       { value: "1", label: "Template" },

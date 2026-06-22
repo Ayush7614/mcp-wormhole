@@ -10,8 +10,9 @@ export const connectAsanaToCursor: BlogPost = {
   tags: ["asana", "cursor", "tutorial"],
   readTime: "10 min",
   poster: {
-    demoAsset: "demo/asana-verify.gif",
-    demoCaption: "Asana live verify",
+    posterAsset: "demo/posters/poster-connect-asana-cursor.gif",
+    headline: "Asana × Cursor",
+    tagline: "Connected in 5 minutes",
     badge: "Tutorial",
     stats: [
       { value: "5 min", label: "Setup" },

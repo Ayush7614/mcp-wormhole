@@ -10,8 +10,9 @@ export const introducingMcpWormhole: BlogPost = {
   tags: ["announcement", "mcp", "architecture"],
   readTime: "12 min",
   poster: {
-    demoAsset: "demo/mcp-wormhole-catalog.gif",
-    demoCaption: "mcp-wormhole catalog",
+    posterAsset: "demo/posters/poster-introducing-mcp-wormhole.gif",
+    headline: "MCP Wormhole",
+    tagline: "Every tool. One protocol.",
     badge: "Announcement",
     stats: [
       { value: "1", label: "Live server" },
