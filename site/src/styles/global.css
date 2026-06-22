@@ -791,6 +791,76 @@ select {
   }
 }
 
+/* ── Guide references ── */
+.guide-references {
+  margin-top: 0;
+  padding: 32px 0 64px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+
+.guide-references-head {
+  margin-bottom: 28px;
+}
+
+.guide-references-head h2 {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  letter-spacing: -0.02em;
+}
+
+.guide-references-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.guide-references-block h3 {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.guide-references-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-references-list li {
+  margin-bottom: 8px;
+}
+
+.guide-references-list a {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.guide-references-list a:hover {
+  text-decoration: underline;
+}
+
+.guide-references-clients {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 4px 16px;
+}
+
+@media (max-width: 720px) {
+  .guide-references-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-references-clients {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 720px) {
   .server-page-header {
     flex-direction: column;
