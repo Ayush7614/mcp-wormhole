@@ -145,6 +145,45 @@ export const googleCalendarDeepFlow: BlogPosterConnection = {
   },
 };
 
+/** Cursor + Linear tutorial — client flows through wormhole to Linear */
+export const linearCursorFlow: BlogPosterConnection = {
+  layout: "flow",
+  clientLogo: "logos/cursor.svg",
+  end: {
+    toolName: "Linear",
+    toolLogo: "logos/linear.svg",
+    toolDesc:
+      "Connect Cursor to @mcp-wormhole/linear — list issues, search, triage, create work, and comment via MCP.",
+    authBadges: [
+      { label: "API", variant: "pat" },
+      { label: "NPX", variant: "npx" },
+    ],
+    cardStats: [
+      { value: "14", label: "TOOLS" },
+      { value: "5 min", label: "SETUP" },
+    ],
+  },
+};
+
+/** Linear deep dive — Linear through wormhole to full Linear MCP */
+export const linearDeepFlow: BlogPosterConnection = {
+  layout: "flow",
+  clientLogo: "logos/linear.svg",
+  end: {
+    toolName: "Linear MCP",
+    toolLogo: "logos/linear.svg",
+    toolDesc: "14 tools, 6 prompts, 4 linear:// resources — teams, issues, search, comments.",
+    authBadges: [
+      { label: "API", variant: "pat" },
+      { label: "LIVE", variant: "live" },
+    ],
+    cardStats: [
+      { value: "14", label: "TOOLS" },
+      { value: "6", label: "PROMPTS" },
+    ],
+  },
+};
+
 /** Contributor hub — dev agents around wormhole */
 export const buildHubConnection: BlogPosterConnection = {
   layout: "hub",

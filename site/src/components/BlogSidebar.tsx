@@ -25,6 +25,10 @@ const WORMHOLE_TIPS: Record<string, string> = {
     "OAuth apps in Testing mode require your Google account under Audience → Test users.",
   "inside-google-calendar-mcp-server":
     "Invoke find_meeting_time or today_agenda for multi-step scheduling workflows.",
+  "connect-linear-to-cursor":
+    "Set LINEAR_TEAM_ID in mcp.json when you work across multiple Linear teams.",
+  "inside-linear-mcp-server":
+    "Invoke issue_triage or sprint_board_overview for multi-step backlog workflows.",
 };
 
 export function BlogSidebar({ post, progress }: BlogSidebarProps) {
