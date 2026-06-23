@@ -2,6 +2,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { SectionLink } from "../components/SectionLink";
 import { ServerDetail } from "../components/ServerDetail";
 import { IntegrationGrid } from "../components/IntegrationGrid";
+import { NpmPackageBadges } from "../components/NpmPackageBadges";
 import { getServer } from "../data/servers";
 
 export function ServerPage() {
@@ -29,6 +30,11 @@ export function ServerPage() {
           <div>
             <h1>{server.name} MCP</h1>
             <p className="guide-subtitle">{server.description}</p>
+            {server.status === "available" && (
+              <div className="server-page-badges">
+                <NpmPackageBadges pkg={server.npmPackage} />
+              </div>
+            )}
           </div>
           <div className="guide-header-actions">
             <span className={`status-pill ${server.status}`}>

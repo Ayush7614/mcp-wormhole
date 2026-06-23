@@ -1702,6 +1702,53 @@ select {
   color: var(--muted);
 }
 
+.npm-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.npm-badges-compact img {
+  height: 22px;
+}
+
+.npm-badge-link {
+  display: inline-flex;
+  line-height: 0;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.npm-badge-link:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+.npm-badges img {
+  display: block;
+  height: 28px;
+  width: auto;
+}
+
+.server-card-badges {
+  margin-top: 12px;
+}
+
+.server-page-badges {
+  margin-top: 14px;
+}
+
+.detail-npm-badges {
+  margin-top: 16px;
+}
+
+.footer-npm-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+
 .footer-col h3 {
   margin: 0 0 14px;
   font-size: 12px;

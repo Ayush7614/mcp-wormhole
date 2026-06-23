@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { LogoMark } from "./LogoMark";
 import { SectionLink } from "./SectionLink";
+import { NpmPackageBadges } from "./NpmPackageBadges";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -22,6 +23,10 @@ export function Footer() {
             <span className="footer-badge">stdio MCP</span>
             <span className="footer-badge">TypeScript</span>
             <span className="footer-badge">MIT</span>
+          </div>
+          <div className="footer-npm-badges">
+            <NpmPackageBadges pkg="@mcp-wormhole/asana" compact />
+            <NpmPackageBadges pkg="@mcp-wormhole/vercel" compact />
           </div>
         </div>
 
@@ -87,12 +92,27 @@ export function Footer() {
               <Link to="/guides/cursor/asana">Cursor + Asana</Link>
             </li>
             <li>
+              <Link to="/servers/vercel/guide">Vercel server guide</Link>
+            </li>
+            <li>
+              <Link to="/guides/cursor/vercel">Cursor + Vercel</Link>
+            </li>
+            <li>
               <a
                 href="https://www.npmjs.com/package/@mcp-wormhole/asana"
                 target="_blank"
                 rel="noreferrer"
               >
                 @mcp-wormhole/asana ↗
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.npmjs.com/package/@mcp-wormhole/vercel"
+                target="_blank"
+                rel="noreferrer"
+              >
+                @mcp-wormhole/vercel ↗
               </a>
             </li>
           </ul>

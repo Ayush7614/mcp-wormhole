@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { ServerIcon } from "./ServerIcon";
+import { NpmPackageBadges } from "./NpmPackageBadges";
 import { getHomepageStats } from "../data/homepageStats";
 import type { McpServer } from "../data/servers";
 import { servers } from "../data/servers";
@@ -64,6 +65,11 @@ export function ServerGrid({ selectedId }: ServerGridProps) {
                       ? vercelToolSummary()
                       : server.auth}
                 </span>
+                {server.status === "available" && (
+                  <div className="server-card-badges">
+                    <NpmPackageBadges pkg={server.npmPackage} compact />
+                  </div>
+                )}
               </Link>
               {server.status === "available" && (
                 <Link to={`/servers/${server.id}/guide`} className="server-card-guide button ghost">

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import type { McpServer } from "../data/servers";
 import { buildStdioConfig } from "../data/config";
 import { ConfigBlock } from "./ConfigBlock";
+import { NpmPackageBadges } from "./NpmPackageBadges";
 import { publicAsset } from "../lib/assets";
 
 interface ServerDetailProps {
@@ -70,6 +71,11 @@ export function ServerDetail({ server, showGuideLink = false }: ServerDetailProp
                 Install:{" "}
                 <code>npx -y {server.npmPackage}</code>
               </p>
+            )}
+            {!disabled && (
+              <div className="detail-npm-badges">
+                <NpmPackageBadges pkg={server.npmPackage} />
+              </div>
             )}
             {server.demoAsset && !disabled && (
               <figure className="demo-figure">

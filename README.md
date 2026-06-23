@@ -6,7 +6,9 @@
 
 [![Website](https://img.shields.io/badge/docs-ayush7614.github.io%2Fmcp--wormhole-8b93ff?style=for-the-badge)](https://ayush7614.github.io/mcp-wormhole/)
 [![npm @mcp-wormhole/asana](https://img.shields.io/npm/v/@mcp-wormhole/asana?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/@mcp-wormhole/asana)
+[![npm downloads @mcp-wormhole/asana](https://img.shields.io/npm/dw/@mcp-wormhole/asana?style=for-the-badge&logo=npm&label=asana+downloads)](https://www.npmjs.com/package/@mcp-wormhole/asana)
 [![npm @mcp-wormhole/vercel](https://img.shields.io/npm/v/@mcp-wormhole/vercel?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/@mcp-wormhole/vercel)
+[![npm downloads @mcp-wormhole/vercel](https://img.shields.io/npm/dw/@mcp-wormhole/vercel?style=for-the-badge&logo=npm&label=vercel+downloads)](https://www.npmjs.com/package/@mcp-wormhole/vercel)
 [![License: MIT](https://img.shields.io/badge/License-MIT-22c55e?style=for-the-badge)](LICENSE)
 [![MCP](https://img.shields.io/badge/Model_Context_Protocol-6366f1?style=for-the-badge)](https://modelcontextprotocol.io)
 
