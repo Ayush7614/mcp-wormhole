@@ -3,7 +3,7 @@ import { SectionLink } from "../components/SectionLink";
 import { ServerDetail } from "../components/ServerDetail";
 import { IntegrationGrid } from "../components/IntegrationGrid";
 import { NpmPackageBadges } from "../components/NpmPackageBadges";
-import { getServer } from "../data/servers";
+import { getServer, shouldShowNpmBadges } from "../data/servers";
 
 export function ServerPage() {
   const { serverId } = useParams();
@@ -30,7 +30,7 @@ export function ServerPage() {
           <div>
             <h1>{server.name} MCP</h1>
             <p className="guide-subtitle">{server.description}</p>
-            {server.status === "available" && (
+            {shouldShowNpmBadges(server) && (
               <div className="server-page-badges">
                 <NpmPackageBadges pkg={server.npmPackage} />
               </div>

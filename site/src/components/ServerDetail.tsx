@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import type { McpServer } from "../data/servers";
+import { shouldShowNpmBadges } from "../data/servers";
 import { buildStdioConfig } from "../data/config";
 import { ConfigBlock } from "./ConfigBlock";
 import { NpmPackageBadges } from "./NpmPackageBadges";
@@ -72,7 +73,7 @@ export function ServerDetail({ server, showGuideLink = false }: ServerDetailProp
                 <code>npx -y {server.npmPackage}</code>
               </p>
             )}
-            {!disabled && (
+            {shouldShowNpmBadges(server) && (
               <div className="detail-npm-badges">
                 <NpmPackageBadges pkg={server.npmPackage} />
               </div>

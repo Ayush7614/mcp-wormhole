@@ -1,8 +1,5 @@
 # @mcp-wormhole/google-calendar
 
-[![npm version](https://img.shields.io/npm/v/@mcp-wormhole/google-calendar?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/@mcp-wormhole/google-calendar)
-[![npm downloads](https://img.shields.io/npm/dw/@mcp-wormhole/google-calendar?style=for-the-badge&logo=npm&label=downloads)](https://www.npmjs.com/package/@mcp-wormhole/google-calendar)
-
 **Full-stack Google Calendar MCP server** — 12 tools, 6 prompt workflows, and browsable `gcal://` resources via the official Google Calendar API.
 
 ## Highlights

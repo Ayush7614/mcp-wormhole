@@ -27,7 +27,6 @@ export function Footer() {
           <div className="footer-npm-badges">
             <NpmPackageBadges pkg="@mcp-wormhole/asana" compact />
             <NpmPackageBadges pkg="@mcp-wormhole/vercel" compact />
-            <NpmPackageBadges pkg="@mcp-wormhole/google-calendar" compact />
           </div>
         </div>
 
