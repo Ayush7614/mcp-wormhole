@@ -54,8 +54,8 @@ async function main() {
   }
 
   section("Issue search probe");
-  const search = await client.searchIssues("bug", teamId, 3);
-  console.log(`  ${search.length} result(s) for "bug"`);
+  const search = await client.searchIssues("Import", teamId, 3);
+  console.log(`  ${search.length} result(s) for "Import"`);
 
   console.log("\nAll verification steps passed.");
 }
