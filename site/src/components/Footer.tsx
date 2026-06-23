@@ -180,6 +180,12 @@ export function Footer() {
             <li>
               <Link to="/guides/cursor/linear">Cursor + Linear</Link>
             </li>
+            <li>
+              <Link to="/servers/cloudflare/guide">Cloudflare server guide</Link>
+            </li>
+            <li>
+              <Link to="/guides/cursor/cloudflare">Cursor + Cloudflare</Link>
+            </li>
           </ul>
         </div>
       </div>

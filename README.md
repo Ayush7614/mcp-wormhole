@@ -84,20 +84,27 @@ Add this to your MCP client config (Cursor: `~/.cursor/mcp.json`, Claude Desktop
       "env": {
         "LINEAR_API_KEY": "lin_api_..."
       }
+    },
+    "cloudflare": {
+      "command": "npx",
+      "args": ["-y", "@mcp-wormhole/cloudflare"],
+      "env": {
+        "CLOUDFLARE_API_TOKEN": "your_token_here"
+      }
     }
   }
 }
 ```
 
-For team-scoped Vercel projects, add `"VERCEL_TEAM_ID": "team_…"` to the `vercel` env block. Optional: `"LINEAR_TEAM_ID"` for a default Linear team.
+For team-scoped Vercel projects, add `"VERCEL_TEAM_ID": "team_…"` to the `vercel` env block. Optional: `"LINEAR_TEAM_ID"` for a default Linear team; `"CLOUDFLARE_ACCOUNT_ID"` / `"CLOUDFLARE_ZONE_ID"` for Cloudflare defaults.
 
-Restart your client, then ask: *"List my open Asana tasks"*, *"List my Vercel projects"*, *"What's on my calendar today?"*, or *"What Linear issues are assigned to me?"*.
+Restart your client, then ask: *"List my open Asana tasks"*, *"List my Vercel projects"*, *"What's on my calendar today?"*, *"What Linear issues are assigned to me?"*, or *"List my Cloudflare zones"*.
 
-**Published on npm:** [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) (0.2.0 · 66 tools) · [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) (0.2.0 · 18 tools) · [`@mcp-wormhole/google-calendar`](https://www.npmjs.com/package/@mcp-wormhole/google-calendar) (0.1.0 · 12 tools) · [`@mcp-wormhole/linear`](https://www.npmjs.com/package/@mcp-wormhole/linear) (0.1.0 · 14 tools)
+**Published on npm:** [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) (0.2.0 · 66 tools) · [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) (0.2.0 · 18 tools) · [`@mcp-wormhole/google-calendar`](https://www.npmjs.com/package/@mcp-wormhole/google-calendar) (0.1.0 · 12 tools) · [`@mcp-wormhole/linear`](https://www.npmjs.com/package/@mcp-wormhole/linear) (0.1.0 · 14 tools) · [`@mcp-wormhole/cloudflare`](https://www.npmjs.com/package/@mcp-wormhole/cloudflare) (0.1.0 · 14 tools)
 
-**Get tokens:** [Asana developer console](https://app.asana.com/0/my-apps) · [Vercel account tokens](https://vercel.com/account/tokens) · [Google Calendar API auth](https://developers.google.com/calendar/api/guides/auth) · [Linear API keys](https://linear.app/settings/account/security)
+**Get tokens:** [Asana developer console](https://app.asana.com/0/my-apps) · [Vercel account tokens](https://vercel.com/account/tokens) · [Google Calendar API auth](https://developers.google.com/calendar/api/guides/auth) · [Linear API keys](https://linear.app/settings/account/security) · [Cloudflare API tokens](https://dash.cloudflare.com/profile/api-tokens)
 
-**Server guides:** [Asana MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/asana/guide) · [Vercel MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel/guide) · [Google Calendar MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/google-calendar/guide) · [Linear MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/linear/guide) · [All integrations](https://ayush7614.github.io/mcp-wormhole/#/integrations)
+**Server guides:** [Asana MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/asana/guide) · [Vercel MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel/guide) · [Google Calendar MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/google-calendar/guide) · [Linear MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/linear/guide) · [Cloudflare MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/cloudflare/guide) · [All integrations](https://ayush7614.github.io/mcp-wormhole/#/integrations)
 
 ### Clone for development
 
@@ -120,11 +127,11 @@ pnpm build
 | **Vercel** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) | **Available** | API token | 18 tools · 8 prompts · resources |
 | **Google Calendar** | [`@mcp-wormhole/google-calendar`](https://www.npmjs.com/package/@mcp-wormhole/google-calendar) | **Available** | OAuth2 | 12 tools · 6 prompts · resources |
 | **Linear** | [`@mcp-wormhole/linear`](https://www.npmjs.com/package/@mcp-wormhole/linear) | **Available** | API key | 14 tools · 6 prompts · resources |
+| **Cloudflare** | [`@mcp-wormhole/cloudflare`](https://www.npmjs.com/package/@mcp-wormhole/cloudflare) | **Available** | API token | 14 tools · 6 prompts · resources |
 | Slack | `@mcp-wormhole/slack` | Planned | Bot token | — |
 | Sentry | `@mcp-wormhole/sentry` | Planned | Auth token | — |
 | Airtable | `@mcp-wormhole/airtable` | Planned | PAT | — |
 | Stripe | `@mcp-wormhole/stripe` | Planned | Secret key | — |
-| Cloudflare | `@mcp-wormhole/cloudflare` | Planned | API token | — |
 | GitHub Actions | `@mcp-wormhole/github-actions` | Planned | PAT | — |
 | PagerDuty | `@mcp-wormhole/pagerduty` | Planned | API key | — |
 
@@ -150,6 +157,7 @@ Full server walkthroughs:
 - [Vercel MCP server guide](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel/guide)
 - [Google Calendar MCP server guide](https://ayush7614.github.io/mcp-wormhole/#/servers/google-calendar/guide)
 - [Linear MCP server guide](https://ayush7614.github.io/mcp-wormhole/#/servers/linear/guide)
+- [Cloudflare MCP server guide](https://ayush7614.github.io/mcp-wormhole/#/servers/cloudflare/guide)
 
 ---
 
@@ -162,6 +170,7 @@ mcp-wormhole/
 │   ├── vercel/             # @mcp-wormhole/vercel
 │   ├── google-calendar/    # @mcp-wormhole/google-calendar
 │   ├── linear/             # @mcp-wormhole/linear
+│   ├── cloudflare/         # @mcp-wormhole/cloudflare
 │   ├── _template/          # Copy this to start a new server
 │   ├── slack/              # planned
 │   └── …
@@ -212,6 +221,11 @@ cd ../linear
 cp .env.example .env   # add LINEAR_API_KEY
 pnpm verify
 
+# Verify Cloudflare server against real API
+cd ../cloudflare
+cp .env.example .env   # add CLOUDFLARE_API_TOKEN
+pnpm verify
+
 # Run docs site locally
 cd site && npm run dev
 # → http://localhost:5173
@@ -241,6 +255,7 @@ Packages publish under the [`@mcp-wormhole`](https://www.npmjs.com/org/mcp-wormh
 | Vercel | **0.2.0** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) |
 | Google Calendar | **0.1.0** | [`@mcp-wormhole/google-calendar`](https://www.npmjs.com/package/@mcp-wormhole/google-calendar) |
 | Linear | **0.1.0** | [`@mcp-wormhole/linear`](https://www.npmjs.com/package/@mcp-wormhole/linear) |
+| Cloudflare | **0.1.0** | [`@mcp-wormhole/cloudflare`](https://www.npmjs.com/package/@mcp-wormhole/cloudflare) |
 
 ```bash
 pnpm --filter @mcp-wormhole/asana build
