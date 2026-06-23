@@ -78,7 +78,7 @@ export function Footer() {
           </Link>
           <p className="footer-tagline">
             Open-source MCP servers that connect AI agents to the tools you already use — Asana,
-            Vercel, Google Calendar, Linear, and more.
+            Vercel, Google Calendar, Linear, Cloudflare, and more.
           </p>
           <div className="footer-badges">
             <span className="footer-badge">stdio MCP</span>

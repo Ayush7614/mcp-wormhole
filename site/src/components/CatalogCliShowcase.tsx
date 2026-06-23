@@ -16,9 +16,9 @@ export function CatalogCliShowcase() {
               Every integration, <span className="hero-gradient-text">one monorepo</span>
             </h2>
             <p>
-              Four servers are live on npm — Asana (66 tools), Vercel (18 tools), Google
-              Calendar (12 tools), and Linear (14 tools). Slack, Sentry, and six more are on
-              the roadmap — each wraps the vendor&apos;s official API.
+              Five servers are live on npm — Asana (66 tools), Vercel (18 tools), Google
+              Calendar (12 tools), Linear (14 tools), and Cloudflare (14 tools). Slack,
+              Sentry, and five more are on the roadmap — each wraps the vendor&apos;s official API.
             </p>
             <ul className="catalog-cli-highlights">
               <li>
@@ -38,8 +38,12 @@ export function CatalogCliShowcase() {
                 <strong>Linear</strong> — @mcp-wormhole/linear@0.1.0
               </li>
               <li>
+                <span className="catalog-dot available" aria-hidden="true" />
+                <strong>Cloudflare</strong> — @mcp-wormhole/cloudflare@0.1.0
+              </li>
+              <li>
                 <span className="catalog-dot planned" aria-hidden="true" />
-                <strong>7 more</strong> — coming soon
+                <strong>6 more</strong> — coming soon
               </li>
               <li>
                 <span className="catalog-dot planned" aria-hidden="true" />

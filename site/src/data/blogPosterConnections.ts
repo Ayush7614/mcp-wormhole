@@ -184,6 +184,45 @@ export const linearDeepFlow: BlogPosterConnection = {
   },
 };
 
+/** Cursor + Cloudflare tutorial — client flows through wormhole to Cloudflare */
+export const cloudflareCursorFlow: BlogPosterConnection = {
+  layout: "flow",
+  clientLogo: "logos/cursor.svg",
+  end: {
+    toolName: "Cloudflare",
+    toolLogo: "logos/cloudflare.svg",
+    toolDesc:
+      "Connect Cursor to @mcp-wormhole/cloudflare — list zones, manage DNS, purge cache, and inspect Workers via MCP.",
+    authBadges: [
+      { label: "API", variant: "pat" },
+      { label: "NPX", variant: "npx" },
+    ],
+    cardStats: [
+      { value: "14", label: "TOOLS" },
+      { value: "5 min", label: "SETUP" },
+    ],
+  },
+};
+
+/** Cloudflare deep dive — Cloudflare through wormhole to full Cloudflare MCP */
+export const cloudflareDeepFlow: BlogPosterConnection = {
+  layout: "flow",
+  clientLogo: "logos/cloudflare.svg",
+  end: {
+    toolName: "Cloudflare MCP",
+    toolLogo: "logos/cloudflare.svg",
+    toolDesc: "14 tools, 6 prompts, 4 cf:// resources — zones, DNS, cache purge, Workers, firewall.",
+    authBadges: [
+      { label: "API", variant: "pat" },
+      { label: "LIVE", variant: "live" },
+    ],
+    cardStats: [
+      { value: "14", label: "TOOLS" },
+      { value: "6", label: "PROMPTS" },
+    ],
+  },
+};
+
 /** Contributor hub — dev agents around wormhole */
 export const buildHubConnection: BlogPosterConnection = {
   layout: "hub",

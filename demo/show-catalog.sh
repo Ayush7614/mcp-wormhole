@@ -42,6 +42,10 @@ pause 0.3
 printf '%s  │%s    ● Linear      %s@mcp-wormhole/linear@0.1.0%s\n' "$ORANGE" "$NC" "$GREEN" "$NC"
 pause 0.25
 printf '%s  │%s      14 tools · 6 prompts · browsable resources\n' "$ORANGE" "$NC"
+pause 0.3
+printf '%s  │%s    ● Cloudflare  %s@mcp-wormhole/cloudflare@0.1.0%s\n' "$ORANGE" "$NC" "$GREEN" "$NC"
+pause 0.25
+printf '%s  │%s      14 tools · 6 prompts · browsable resources\n' "$ORANGE" "$NC"
 pause 0.35
 printf '%s  │%s\n' "$ORANGE" "$NC"
 pause 0.2
@@ -53,7 +57,6 @@ servers=(
   "Sentry|@mcp-wormhole/sentry"
   "Airtable|@mcp-wormhole/airtable"
   "Stripe|@mcp-wormhole/stripe"
-  "Cloudflare|@mcp-wormhole/cloudflare"
   "GitHub Actions|@mcp-wormhole/github-actions"
   "PagerDuty|@mcp-wormhole/pagerduty"
 )
@@ -74,6 +77,6 @@ pause 0.25
 printf '%s  └──────────────────────────────────────────────────────────┘%s\n' "$ORANGE" "$NC"
 pause 0.4
 printf '\n'
-printf '%s  %snpx -y @mcp-wormhole/asana%s  %s# or vercel, google-calendar, linear — connect any MCP client%s\n' "$DIM" "$ORANGE" "$NC" "$DIM" "$NC"
+printf '%s  %snpx -y @mcp-wormhole/asana%s  %s# or vercel, google-calendar, linear, cloudflare — connect any MCP client%s\n' "$DIM" "$ORANGE" "$NC" "$DIM" "$NC"
 pause 0.5
 printf '\n'

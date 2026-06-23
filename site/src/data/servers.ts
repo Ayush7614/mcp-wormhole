@@ -194,6 +194,7 @@ export const servers: McpServer[] = [
     promptCount: CLOUDFLARE_PROMPT_COUNT,
     resourceTemplateCount: CLOUDFLARE_RESOURCE_TEMPLATE_COUNT,
     docsUrl: "https://developers.cloudflare.com/api/",
+    demoAsset: "demo/cloudflare-verify.gif",
     hideNpmBadges: true,
   },
   {
