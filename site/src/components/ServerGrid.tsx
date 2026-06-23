@@ -3,7 +3,7 @@ import { ServerIcon } from "./ServerIcon";
 import { NpmPackageBadges } from "./NpmPackageBadges";
 import { getHomepageStats } from "../data/homepageStats";
 import type { McpServer } from "../data/servers";
-import { servers } from "../data/servers";
+import { servers, shouldShowNpmBadges } from "../data/servers";
 import { asanaToolSummary } from "../data/asanaCatalog";
 import { vercelToolSummary } from "../data/vercelCatalog";
 import { googleCalendarToolSummary } from "../data/googleCalendarCatalog";
@@ -68,7 +68,7 @@ export function ServerGrid({ selectedId }: ServerGridProps) {
                         ? googleCalendarToolSummary()
                         : server.auth}
                 </span>
-                {server.status === "available" && (
+                {shouldShowNpmBadges(server) && (
                   <div className="server-card-badges">
                     <NpmPackageBadges pkg={server.npmPackage} compact />
                   </div>

@@ -33,6 +33,12 @@ export interface McpServer {
   resourceTemplateCount?: number;
   docsUrl?: string;
   demoAsset?: string;
+  /** Hide npm version/download shields (e.g. while stats propagate). */
+  hideNpmBadges?: boolean;
+}
+
+export function shouldShowNpmBadges(server: McpServer): boolean {
+  return server.status === "available" && !server.hideNpmBadges;
 }
 
 export const servers: McpServer[] = [
@@ -123,6 +129,7 @@ export const servers: McpServer[] = [
     resourceTemplateCount: GCAL_RESOURCE_TEMPLATE_COUNT,
     docsUrl: "https://developers.google.com/calendar/api/v3/reference",
     demoAsset: "demo/google-calendar-verify.gif",
+    hideNpmBadges: true,
   },
   {
     id: "airtable",
