@@ -138,8 +138,27 @@ export class CloudflareClient {
     return (payload?.result ?? ({} as T)) as T;
   }
 
-  async verifyToken(): Promise<CloudflareTokenVerify> {
-    return this.request<CloudflareTokenVerify>("/user/tokens/verify");
+  isAccountOwnedToken(): boolean {
+    return this.apiToken.startsWith("cfat_");
+  }
+
+  /** User tokens verify at /user/tokens/verify; account-owned (cfat_) tokens probe zones instead. */
+  async verifyToken(): Promise<CloudflareTokenVerify & { token_type?: "user" | "account" }> {
+    if (this.isAccountOwnedToken()) {
+      await this.listZones({ perPage: 1 });
+      return { id: "account-owned", status: "active", token_type: "account" };
+    }
+
+    try {
+      const result = await this.request<CloudflareTokenVerify>("/user/tokens/verify");
+      return { ...result, token_type: "user" };
+    } catch (error) {
+      if (error instanceof CloudflareError && error.status === 401) {
+        await this.listZones({ perPage: 1 });
+        return { id: "unknown", status: "active", token_type: "account" };
+      }
+      throw error;
+    }
   }
 
   async getUser(): Promise<CloudflareUser> {

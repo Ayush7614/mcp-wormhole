@@ -29,6 +29,10 @@ const WORMHOLE_TIPS: Record<string, string> = {
     "Set LINEAR_TEAM_ID in mcp.json when you work across multiple Linear teams.",
   "inside-linear-mcp-server":
     "Invoke issue_triage or sprint_board_overview for multi-step backlog workflows.",
+  "connect-cloudflare-to-cursor":
+    "Use My Profile → API Tokens with Edit zone DNS + Zone Read — not Manage Account tokens.",
+  "inside-cloudflare-mcp-server":
+    "Invoke dns_audit or cache_purge_plan for multi-step infrastructure workflows.",
 };
 
 export function BlogSidebar({ post, progress }: BlogSidebarProps) {

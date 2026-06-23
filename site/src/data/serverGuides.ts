@@ -841,6 +841,10 @@ npx -y ${server.npmPackage}`,
 npm i ${server.npmPackage}`,
         },
       ],
+      demo: {
+        title: "Build + verify against live API",
+        asset: "demo/cloudflare-verify.gif",
+      },
     },
     {
       id: "configure",
@@ -965,7 +969,7 @@ function buildCloudflareIntro(server: McpServer): GuideIntro {
       `${server.tools.length} MCP tools — zones, DNS, cache purge, Workers, firewall`,
       `${server.promptCount ?? 6} MCP prompt workflows (DNS audit, cache purge plan, incident check, …)`,
       `${server.resourceTemplateCount ?? 4} browsable resource templates (cf:// URIs)`,
-      `Package: ${server.npmPackage}@0.1.0`,
+      `Published on npm as ${server.npmPackage}@0.1.0`,
     ],
   };
 }

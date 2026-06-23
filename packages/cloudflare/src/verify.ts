@@ -10,27 +10,43 @@ async function main() {
   section("Token verification");
   const token = await client.verifyToken();
   console.log(`  status: ${token.status}`);
-  console.log(`  id: ${token.id}`);
+  console.log(`  type: ${token.token_type ?? "user"}`);
+  if (token.id !== "account-owned") console.log(`  id: ${token.id}`);
 
   section("Authenticated user");
-  const user = await client.getUser();
-  console.log(`  ${user.email ?? user.username ?? user.id}`);
-  console.log(`  id: ${user.id}`);
+  if (token.token_type === "account") {
+    console.log("  (skipped — account-owned token)");
+  } else {
+    try {
+      const user = await client.getUser();
+      console.log(`  ${user.email ?? user.username ?? user.id}`);
+      console.log(`  id: ${user.id}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.log(`  (unavailable — ${message})`);
+    }
+  }
 
   section("Accounts");
-  const accounts = await client.listAccounts(1, 5);
-  if (accounts.length === 0) {
-    console.log("  (none — token may lack Account read permission)");
-  } else {
+  let accounts: Awaited<ReturnType<typeof client.listAccounts>> = [];
+  try {
+    accounts = await client.listAccounts(1, 5);
+  } catch {
+    console.log("  (skipped — token lacks Account read permission)");
+  }
+  if (accounts.length > 0) {
     for (const account of accounts) {
       console.log(`  - ${account.name} id=${account.id}`);
     }
+  } else if (process.env.CLOUDFLARE_ACCOUNT_ID) {
+    console.log(`  (using CLOUDFLARE_ACCOUNT_ID=${process.env.CLOUDFLARE_ACCOUNT_ID})`);
   }
 
   section("Zones");
   const zones = await client.listZones({ perPage: 5 });
   if (zones.length === 0) {
-    console.log("  (none — token may lack Zone read permission)");
+    console.log("  (none — no domains on this Cloudflare account yet)");
+    console.log("  Add a site at dash.cloudflare.com, then re-run pnpm verify");
   } else {
     for (const zone of zones) {
       const plan = zone.plan?.name ?? "unknown";

@@ -1,4 +1,6 @@
 import type { BlogPost } from "./blogTypes";
+import { insideCloudflareMcpServer } from "./blogPosts/inside-cloudflare-mcp-server";
+import { connectCloudflareToCursor } from "./blogPosts/connect-cloudflare-to-cursor";
 import { insideLinearMcpServer } from "./blogPosts/inside-linear-mcp-server";
 import { connectLinearToCursor } from "./blogPosts/connect-linear-to-cursor";
 import { connectGoogleCalendarToCursor } from "./blogPosts/connect-google-calendar-to-cursor";
@@ -13,6 +15,8 @@ import { insideAsanaMcpServer } from "./blogPosts/inside-asana-mcp-server";
 export type { BlogBlock, BlogPost } from "./blogTypes";
 
 export const blogPosts: BlogPost[] = [
+  insideCloudflareMcpServer,
+  connectCloudflareToCursor,
   insideLinearMcpServer,
   connectLinearToCursor,
   insideGoogleCalendarMcpServer,
