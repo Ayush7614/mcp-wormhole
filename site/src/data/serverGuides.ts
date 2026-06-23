@@ -606,6 +606,185 @@ function buildGoogleCalendarIntro(server: McpServer): GuideIntro {
   };
 }
 
+function buildLinearSteps(server: McpServer): GuideStep[] {
+  const apiKey = server.env[0]?.key ?? "LINEAR_API_KEY";
+  const keyDocs = server.env[0]?.docsUrl ?? "https://linear.app/settings/account/security";
+
+  return [
+    {
+      id: "prerequisites",
+      number: 1,
+      title: "Check prerequisites",
+      description:
+        "Before you start, make sure you have everything needed to run the Linear MCP server.",
+      bullets: [
+        "Node.js 18 or newer (`node -v` to check)",
+        "An MCP-capable AI client — Cursor, Claude Desktop, VS Code, Windsurf, etc.",
+        "A Linear workspace with API access",
+      ],
+    },
+    {
+      id: "api-key",
+      number: 2,
+      title: "Create a Linear API key",
+      description:
+        "The server authenticates with Linear using a personal API key from your account settings.",
+      bullets: [
+        `Open ${keyDocs}`,
+        "Create a new personal API key (e.g. mcp-wormhole)",
+        `Copy the key — paste it into your MCP config as ${apiKey}`,
+        "Optional: set LINEAR_TEAM_ID for a default team when team_id is omitted",
+      ],
+      notice: "Never commit your API key to git or share it publicly.",
+    },
+    {
+      id: "install",
+      number: 3,
+      title: "Install from npm",
+      description:
+        "The package is published on npm as @mcp-wormhole/linear. You do not need to clone the repo — npx downloads and runs it automatically.",
+      code: [
+        {
+          label: "Run directly (stdio MCP server)",
+          language: "bash",
+          code: `# Run directly (stdio MCP server)
+export ${apiKey}=lin_api_your_key_here
+npx -y ${server.npmPackage}`,
+        },
+        {
+          label: "Or install in a project",
+          language: "bash",
+          code: `npm init -y
+npm i ${server.npmPackage}`,
+        },
+      ],
+    },
+    {
+      id: "configure",
+      number: 4,
+      title: "Add to your MCP client config",
+      description:
+        "Paste the JSON below into your client's MCP settings file. Replace the API key placeholder with your real key, then save.",
+      code: [
+        {
+          label: "MCP config (stdio)",
+          language: "json",
+          code: buildStdioConfig(server),
+        },
+      ],
+      bullets: [
+        "Cursor: ~/.cursor/mcp.json or .cursor/mcp.json in your project",
+        "Claude Desktop: ~/Library/Application Support/Claude/claude_desktop_config.json",
+        "VS Code: .vscode/mcp.json in your workspace",
+      ],
+    },
+    {
+      id: "restart",
+      number: 5,
+      title: "Restart your client",
+      description:
+        "MCP servers load at startup. Fully quit and reopen your AI client so it picks up the new Linear server.",
+      bullets: [
+        "In Cursor: Cmd+Q then reopen, or use MCP settings → refresh",
+        "In Claude Desktop: quit from the menu bar, then reopen",
+        "You should see linear listed under MCP tools after restart",
+      ],
+    },
+    {
+      id: "prompts",
+      number: 6,
+      title: "Try it — example prompts",
+      description:
+        "Once connected, ask your agent naturally. It will call Linear tools on your behalf.",
+      prompts: [
+        "What issues are assigned to me?",
+        "Search Linear for open bugs in the ENG team",
+        "Create an issue called Fix login timeout on team ENG",
+        "Add a comment to ENG-123 with the root cause analysis",
+        "Show workflow states for my default team",
+      ],
+    },
+    {
+      id: "mcp-prompts",
+      number: 7,
+      title: "MCP prompt workflows",
+      description: `The server ships ${server.promptCount ?? 6} built-in MCP prompt templates for issue tracking:`,
+      bullets: [
+        "`my_assigned_issues` — issues assigned to the authenticated viewer",
+        "`sprint_board_overview` — issues grouped by workflow state",
+        "`issue_triage` — suggest assignee, labels, and priority",
+        "`blocked_issues_scan` — find blocked work via search + comments",
+        "`create_bug_report` — structured bug issue creation",
+        "`release_readiness_issues` — high-priority open issues before release",
+      ],
+    },
+    {
+      id: "tools",
+      number: 8,
+      title: "Available tools",
+      description: `The Linear MCP server exposes ${server.tools.length} tools for teams, issues, and comments:`,
+      bullets: [
+        "**Account** — linear_get_viewer, linear_list_users",
+        "**Teams** — list/get teams, projects, workflow states, labels",
+        "**Issues** — list, get, search, create, update",
+        "**Comments** — linear_add_comment, linear_list_comments",
+      ],
+    },
+    {
+      id: "resources",
+      number: 9,
+      title: "Browsable resources",
+      description:
+        "Browse Linear data without guessing IDs. Resources use the linear:// URI scheme:",
+      bullets: [
+        "`linear://catalog` — tool, prompt, and resource index",
+        "`linear://teams` — all teams",
+        "`linear://team/{team_id}/issues` — team issue list",
+        "`linear://issue/{issue_id}` — full issue record",
+      ],
+    },
+    {
+      id: "verify",
+      number: 10,
+      title: "Verify the integration",
+      description:
+        "Run the verification script locally to confirm your API key works and GraphQL calls succeed.",
+      code: [
+        {
+          label: "From the monorepo (developers)",
+          language: "bash",
+          code: `git clone https://github.com/Ayush7614/mcp-wormhole.git
+cd mcp-wormhole/packages/linear
+cp .env.example .env   # add LINEAR_API_KEY
+pnpm install && pnpm build && pnpm verify`,
+        },
+        {
+          label: "Run published package",
+          language: "bash",
+          code: `export ${apiKey}=lin_api_your_key_here
+npx -y ${server.npmPackage}   # Ctrl+C to exit`,
+        },
+      ],
+    },
+  ];
+}
+
+function buildLinearIntro(server: McpServer): GuideIntro {
+  return {
+    title: "What you'll set up",
+    paragraphs: [
+      `The ${server.name} MCP server wraps Linear's official GraphQL API as MCP tools your AI client can call. Install from npm, add one JSON block to your MCP config, and your agent can list issues, search, triage, create work, and comment — no custom integration code.`,
+      "This guide walks through prerequisites, API key setup, npm install, client configuration, and verification. When you're finished, use Connect your client below to wire up Cursor, Claude Desktop, VS Code, and 17 other frameworks.",
+    ],
+    highlights: [
+      `${server.tools.length} MCP tools — teams, issues, search, comments, labels`,
+      `${server.promptCount ?? 6} MCP prompt workflows (triage, sprint board, release readiness, …)`,
+      `${server.resourceTemplateCount ?? 4} browsable resource templates (linear:// URIs)`,
+      `Published on npm as ${server.npmPackage}@0.1.0`,
+    ],
+  };
+}
+
 function buildPlannedIntro(server: McpServer): GuideIntro {
   return {
     title: "What's coming",
@@ -687,7 +866,9 @@ export function buildServerGuide(server: McpServer): ServerGuide {
         ? buildVercelSteps(server)
         : server.id === "google-calendar"
           ? buildGoogleCalendarSteps(server)
-          : buildPlannedSteps(server)
+          : server.id === "linear"
+            ? buildLinearSteps(server)
+            : buildPlannedSteps(server)
     : buildPlannedSteps(server);
 
   const intro = !disabled
@@ -697,7 +878,9 @@ export function buildServerGuide(server: McpServer): ServerGuide {
         ? buildVercelIntro(server)
         : server.id === "google-calendar"
           ? buildGoogleCalendarIntro(server)
-          : buildPlannedIntro(server)
+          : server.id === "linear"
+            ? buildLinearIntro(server)
+            : buildPlannedIntro(server)
     : buildPlannedIntro(server);
 
   return {

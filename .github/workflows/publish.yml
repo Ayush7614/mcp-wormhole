@@ -14,6 +14,7 @@ on:
           - asana
           - vercel
           - google-calendar
+          - linear
 
 permissions:
   contents: read

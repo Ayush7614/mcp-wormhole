@@ -166,6 +166,9 @@ export function Footer() {
               <Link to="/servers/google-calendar/guide">Google Calendar guide</Link>
             </li>
             <li>
+              <Link to="/servers/linear/guide">Linear server guide</Link>
+            </li>
+            <li>
               <Link to="/guides/cursor/asana">Cursor + Asana</Link>
             </li>
             <li>
@@ -173,6 +176,9 @@ export function Footer() {
             </li>
             <li>
               <Link to="/guides/cursor/google-calendar">Cursor + Calendar</Link>
+            </li>
+            <li>
+              <Link to="/guides/cursor/linear">Cursor + Linear</Link>
             </li>
           </ul>
         </div>

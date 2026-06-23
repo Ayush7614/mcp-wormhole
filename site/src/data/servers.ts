@@ -13,6 +13,12 @@ import {
   GCAL_RESOURCE_TEMPLATE_COUNT,
   googleCalendarServerDescription,
 } from "./googleCalendarCatalog";
+import {
+  LINEAR_TOOL_NAMES,
+  LINEAR_PROMPT_COUNT,
+  LINEAR_RESOURCE_TEMPLATE_COUNT,
+  linearServerDescription,
+} from "./linearCatalog";
 
 export interface EnvVar {
   key: string;
@@ -132,6 +138,30 @@ export const servers: McpServer[] = [
     hideNpmBadges: true,
   },
   {
+    id: "linear",
+    name: "Linear",
+    description: linearServerDescription(),
+    status: "available",
+    npmPackage: "@mcp-wormhole/linear",
+    auth: "API key",
+    env: [
+      {
+        key: "LINEAR_API_KEY",
+        description: "Linear personal API key",
+        docsUrl: "https://linear.app/settings/account/security",
+      },
+      {
+        key: "LINEAR_TEAM_ID",
+        description: "Optional default team ID",
+      },
+    ],
+    tools: [...LINEAR_TOOL_NAMES],
+    promptCount: LINEAR_PROMPT_COUNT,
+    resourceTemplateCount: LINEAR_RESOURCE_TEMPLATE_COUNT,
+    docsUrl: "https://developers.linear.app/docs/graphql/working-with-the-graphql-api",
+    hideNpmBadges: true,
+  },
+  {
     id: "airtable",
     name: "Airtable",
     description: "Query bases, list records, create and update rows.",
@@ -180,16 +210,6 @@ export const servers: McpServer[] = [
     auth: "API key",
     env: [{ key: "PAGERDUTY_API_KEY", description: "PagerDuty REST API key" }],
     tools: ["pd_list_incidents", "pd_acknowledge", "pd_resolve"],
-  },
-  {
-    id: "linear",
-    name: "Linear",
-    description: "Issues, teams, and comments. (Official Linear MCP also available.)",
-    status: "planned",
-    npmPackage: "@mcp-wormhole/linear",
-    auth: "API key",
-    env: [{ key: "LINEAR_API_KEY", description: "Linear API key" }],
-    tools: ["linear_create_issue", "linear_search_issues", "linear_add_comment"],
   },
 ];
 
