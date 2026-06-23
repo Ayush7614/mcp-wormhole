@@ -1,5 +1,8 @@
 # @mcp-wormhole/vercel
 
+[![npm version](https://img.shields.io/npm/v/@mcp-wormhole/vercel?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/@mcp-wormhole/vercel)
+[![npm downloads](https://img.shields.io/npm/dw/@mcp-wormhole/vercel?style=for-the-badge&logo=npm&label=downloads)](https://www.npmjs.com/package/@mcp-wormhole/vercel)
+
 **Full-stack Vercel MCP server** — 18 tools, 8 prompt workflows, and browsable `vercel://` resources via the official REST API.
 
 ## Highlights

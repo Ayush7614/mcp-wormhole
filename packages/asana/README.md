@@ -1,5 +1,8 @@
 # @mcp-wormhole/asana
 
+[![npm version](https://img.shields.io/npm/v/@mcp-wormhole/asana?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/@mcp-wormhole/asana)
+[![npm downloads](https://img.shields.io/npm/dw/@mcp-wormhole/asana?style=for-the-badge&logo=npm&label=downloads)](https://www.npmjs.com/package/@mcp-wormhole/asana)
+
 **Full-stack Asana MCP server** — 66 tools, 18 prompt workflows, and browsable `asana://` resources via the official REST API.
 
 ## Highlights
