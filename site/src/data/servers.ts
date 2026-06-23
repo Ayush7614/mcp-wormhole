@@ -159,6 +159,7 @@ export const servers: McpServer[] = [
     promptCount: LINEAR_PROMPT_COUNT,
     resourceTemplateCount: LINEAR_RESOURCE_TEMPLATE_COUNT,
     docsUrl: "https://developers.linear.app/docs/graphql/working-with-the-graphql-api",
+    demoAsset: "demo/linear-verify.gif",
     hideNpmBadges: true,
   },
   {
