@@ -21,8 +21,8 @@ Sleep 600ms
 
 Type "bash demo/show-catalog.sh"
 Enter
-Sleep 16s
+Sleep 19s
 
-Type "echo '# Asana, Vercel & Google Calendar live on npm — Slack, Sentry, Linear, and more coming soon'"
+Type "echo '# Asana, Vercel, Google Calendar & Linear live on npm — Slack, Sentry, and more coming soon'"
 Enter
 Sleep 2s
