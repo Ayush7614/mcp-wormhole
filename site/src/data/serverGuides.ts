@@ -658,6 +658,10 @@ npx -y ${server.npmPackage}`,
 npm i ${server.npmPackage}`,
         },
       ],
+      demo: {
+        title: "Build + verify against live API",
+        asset: "demo/linear-verify.gif",
+      },
     },
     {
       id: "configure",

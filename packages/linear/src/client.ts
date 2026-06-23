@@ -273,7 +273,7 @@ export class LinearClient {
 
     const data = await this.gql<{ issues: { nodes: LinearIssueSummary[] } }>(`
       query Issues($filter: IssueFilter, $first: Int!) {
-        issues(filter: $filter, first: $first, orderBy: updatedAt) {
+        issues(filter: $filter, first: $first) {
           nodes {
             id
             identifier
@@ -317,10 +317,9 @@ export class LinearClient {
   }
 
   async searchIssues(query: string, teamId?: string, first = 25): Promise<LinearIssueSummary[]> {
-    const filter = teamId ? { team: { id: { eq: teamId } } } : undefined;
-    const data = await this.gql<{ issueSearch: { nodes: LinearIssueSummary[] } }>(`
-      query SearchIssues($query: String!, $filter: IssueFilter, $first: Int!) {
-        issueSearch(query: $query, filter: $filter, first: $first) {
+    const data = await this.gql<{ searchIssues: { nodes: LinearIssueSummary[] } }>(`
+      query SearchIssues($term: String!, $teamId: String, $first: Int!) {
+        searchIssues(term: $term, teamId: $teamId, first: $first) {
           nodes {
             id
             identifier
@@ -333,8 +332,8 @@ export class LinearClient {
           }
         }
       }
-    `, { query, filter, first });
-    return data.issueSearch.nodes;
+    `, { term: query, teamId, first });
+    return data.searchIssues.nodes;
   }
 
   async createIssue(input: {
