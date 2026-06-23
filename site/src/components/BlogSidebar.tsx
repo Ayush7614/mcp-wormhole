@@ -21,6 +21,10 @@ const WORMHOLE_TIPS: Record<string, string> = {
     "Invoke daily_focus_plan or project_health_scan for multi-step agent workflows.",
   "inside-vercel-mcp-server":
     "Use failed_deploy_triage or production_rollback_plan before touching production.",
+  "connect-google-calendar-to-cursor":
+    "OAuth apps in Testing mode require your Google account under Audience → Test users.",
+  "inside-google-calendar-mcp-server":
+    "Invoke find_meeting_time or today_agenda for multi-step scheduling workflows.",
 };
 
 export function BlogSidebar({ post, progress }: BlogSidebarProps) {

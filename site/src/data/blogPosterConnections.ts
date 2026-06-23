@@ -106,6 +106,45 @@ export const vercelDeepFlow: BlogPosterConnection = {
   },
 };
 
+/** Cursor + Google Calendar tutorial — client flows through wormhole to Google Calendar */
+export const googleCalendarCursorFlow: BlogPosterConnection = {
+  layout: "flow",
+  clientLogo: "logos/cursor.svg",
+  end: {
+    toolName: "Google Calendar",
+    toolLogo: "logos/google.svg",
+    toolDesc:
+      "Connect Cursor to @mcp-wormhole/google-calendar — list events, find free slots, create meetings via MCP.",
+    authBadges: [
+      { label: "OAuth", variant: "pat" },
+      { label: "NPX", variant: "npx" },
+    ],
+    cardStats: [
+      { value: "12", label: "TOOLS" },
+      { value: "5 min", label: "SETUP" },
+    ],
+  },
+};
+
+/** Google Calendar deep dive — Google through wormhole to full Calendar MCP */
+export const googleCalendarDeepFlow: BlogPosterConnection = {
+  layout: "flow",
+  clientLogo: "logos/google.svg",
+  end: {
+    toolName: "Google Calendar MCP",
+    toolLogo: "logos/google.svg",
+    toolDesc: "12 tools, 6 prompts, 4 gcal:// resources — events, free/busy, search, RSVP.",
+    authBadges: [
+      { label: "OAuth", variant: "pat" },
+      { label: "LIVE", variant: "live" },
+    ],
+    cardStats: [
+      { value: "12", label: "TOOLS" },
+      { value: "6", label: "PROMPTS" },
+    ],
+  },
+};
+
 /** Contributor hub — dev agents around wormhole */
 export const buildHubConnection: BlogPosterConnection = {
   layout: "hub",
