@@ -1,0 +1,59 @@
+{
+  "name": "@mcp-wormhole/google-calendar",
+  "version": "0.1.0",
+  "description": "MCP server for Google Calendar — 12 tools, 6 prompt workflows, and browsable gcal:// resources via the Google Calendar API.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": {
+    "mcp-wormhole-google-calendar": "./dist/index.js"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/index.js.map",
+    "dist/chunk-*.js",
+    "dist/chunk-*.js.map",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/index.js",
+    "verify": "node --env-file=.env dist/verify.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "google-calendar",
+    "calendar",
+    "scheduling",
+    "model-context-protocol"
+  ],
+  "license": "MIT",
+  "author": "Ayush Kumar <ayushknj3@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ayush7614/mcp-wormhole.git",
+    "directory": "packages/google-calendar"
+  },
+  "homepage": "https://github.com/Ayush7614/mcp-wormhole/tree/master/packages/google-calendar#readme",
+  "bugs": {
+    "url": "https://github.com/Ayush7614/mcp-wormhole/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "google-auth-library": "^9.15.1",
+    "googleapis": "^144.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}

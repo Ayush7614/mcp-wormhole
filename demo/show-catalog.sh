@@ -34,6 +34,10 @@ pause 0.3
 printf '%s  │%s    ● Vercel      %s@mcp-wormhole/vercel@0.2.0%s\n' "$ORANGE" "$NC" "$GREEN" "$NC"
 pause 0.25
 printf '%s  │%s      18 tools · 8 prompts · browsable resources\n' "$ORANGE" "$NC"
+pause 0.3
+printf '%s  │%s    ● Google Cal  %s@mcp-wormhole/google-calendar@0.1.0%s\n' "$ORANGE" "$NC" "$GREEN" "$NC"
+pause 0.25
+printf '%s  │%s      12 tools · 6 prompts · browsable resources\n' "$ORANGE" "$NC"
 pause 0.35
 printf '%s  │%s\n' "$ORANGE" "$NC"
 pause 0.2
@@ -43,7 +47,6 @@ pause 0.3
 servers=(
   "Slack|@mcp-wormhole/slack"
   "Sentry|@mcp-wormhole/sentry"
-  "Google Calendar|@mcp-wormhole/google-calendar"
   "Airtable|@mcp-wormhole/airtable"
   "Stripe|@mcp-wormhole/stripe"
   "Cloudflare|@mcp-wormhole/cloudflare"

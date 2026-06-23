@@ -7,6 +7,12 @@ import {
   asanaServerDescription,
 } from "./asanaCatalog";
 import { VERCEL_TOOL_NAMES, VERCEL_PROMPT_COUNT, VERCEL_RESOURCE_TEMPLATE_COUNT, vercelServerDescription } from "./vercelCatalog";
+import {
+  GCAL_TOOL_NAMES,
+  GCAL_PROMPT_COUNT,
+  GCAL_RESOURCE_TEMPLATE_COUNT,
+  googleCalendarServerDescription,
+} from "./googleCalendarCatalog";
 
 export interface EnvVar {
   key: string;
@@ -97,12 +103,25 @@ export const servers: McpServer[] = [
   {
     id: "google-calendar",
     name: "Google Calendar",
-    description: "List events, find free slots, create and update meetings.",
-    status: "planned",
+    description: googleCalendarServerDescription(),
+    status: "available",
     npmPackage: "@mcp-wormhole/google-calendar",
-    auth: "OAuth",
-    env: [{ key: "GOOGLE_CALENDAR_CREDENTIALS", description: "OAuth credentials JSON" }],
-    tools: ["gcal_list_events", "gcal_create_event", "gcal_find_free_slots"],
+    auth: "OAuth2 / service account",
+    env: [
+      {
+        key: "GOOGLE_CALENDAR_CREDENTIALS",
+        description: "OAuth2 credentials JSON (refresh_token) or service account JSON",
+        docsUrl: "https://developers.google.com/calendar/api/guides/auth",
+      },
+      {
+        key: "GOOGLE_CALENDAR_ID",
+        description: "Optional default calendar ID (default: primary)",
+      },
+    ],
+    tools: [...GCAL_TOOL_NAMES],
+    promptCount: GCAL_PROMPT_COUNT,
+    resourceTemplateCount: GCAL_RESOURCE_TEMPLATE_COUNT,
+    docsUrl: "https://developers.google.com/calendar/api/v3/reference",
   },
   {
     id: "airtable",

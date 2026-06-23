@@ -421,6 +421,187 @@ function buildAsanaIntro(server: McpServer): GuideIntro {
   };
 }
 
+function buildGoogleCalendarSteps(server: McpServer): GuideStep[] {
+  const credKey = server.env[0]?.key ?? "GOOGLE_CALENDAR_CREDENTIALS";
+  const authDocs = server.env[0]?.docsUrl ?? "https://developers.google.com/calendar/api/guides/auth";
+
+  return [
+    {
+      id: "prerequisites",
+      number: 1,
+      title: "Check prerequisites",
+      description:
+        "Before you start, make sure you have everything needed to run the Google Calendar MCP server.",
+      bullets: [
+        "Node.js 18 or newer (`node -v` to check)",
+        "An MCP-capable AI client — Cursor, Claude Desktop, VS Code, Windsurf, etc.",
+        "A Google Cloud project with the Calendar API enabled",
+      ],
+    },
+    {
+      id: "credentials",
+      number: 2,
+      title: "Set up Google Calendar credentials",
+      description:
+        "The server authenticates with Google using OAuth2 refresh credentials or a service account JSON.",
+      bullets: [
+        `Follow ${authDocs}`,
+        "Enable the Google Calendar API in Google Cloud Console",
+        "Create OAuth Desktop credentials and obtain a refresh token with calendar scope",
+        `Paste the JSON into your MCP config as ${credKey}`,
+        "Optional: set GOOGLE_CALENDAR_ID (defaults to primary)",
+      ],
+      notice: "Never commit credentials to git or share them publicly.",
+    },
+    {
+      id: "install",
+      number: 3,
+      title: "Install from npm",
+      description:
+        "The package is published on npm as @mcp-wormhole/google-calendar. You do not need to clone the repo — npx downloads and runs it automatically.",
+      code: [
+        {
+          label: "Run directly (stdio MCP server)",
+          language: "bash",
+          code: `# Run directly (stdio MCP server)
+export ${credKey}='{"client_id":"...","client_secret":"...","refresh_token":"..."}'
+npx -y ${server.npmPackage}`,
+        },
+        {
+          label: "Or install in a project",
+          language: "bash",
+          code: `npm init -y
+npm i ${server.npmPackage}`,
+        },
+      ],
+    },
+    {
+      id: "configure",
+      number: 4,
+      title: "Add to your MCP client config",
+      description:
+        "Paste the JSON below into your client's MCP settings file. Replace the credentials placeholder with your real JSON, then save.",
+      code: [
+        {
+          label: "MCP config (stdio)",
+          language: "json",
+          code: buildStdioConfig(server),
+        },
+      ],
+      bullets: [
+        "Cursor: ~/.cursor/mcp.json or .cursor/mcp.json in your project",
+        "Claude Desktop: ~/Library/Application Support/Claude/claude_desktop_config.json",
+        "VS Code: .vscode/mcp.json in your workspace",
+      ],
+    },
+    {
+      id: "restart",
+      number: 5,
+      title: "Restart your client",
+      description:
+        "MCP servers load at startup. Fully quit and reopen your AI client so it picks up the new Google Calendar server.",
+      bullets: [
+        "In Cursor: Cmd+Q then reopen, or use MCP settings → refresh",
+        "In Claude Desktop: quit from the menu bar, then reopen",
+        "You should see google-calendar listed under MCP tools after restart",
+      ],
+    },
+    {
+      id: "prompts",
+      number: 6,
+      title: "Try it — example prompts",
+      description:
+        "Once connected, ask your agent naturally. It will call Google Calendar tools on your behalf.",
+      prompts: [
+        "What's on my calendar today?",
+        "Find a 30-minute slot tomorrow afternoon for a sync",
+        "Create a meeting called Standup tomorrow at 9am",
+        "Show my upcoming events this week",
+        "Accept the invite for event abc123",
+      ],
+    },
+    {
+      id: "mcp-prompts",
+      number: 7,
+      title: "MCP prompt workflows",
+      description: `The server ships ${server.promptCount ?? 6} built-in MCP prompt templates for scheduling:`,
+      bullets: [
+        "`today_agenda` — chronological summary of today's events",
+        "`week_ahead_overview` — next 7 days with conflicts and gaps",
+        "`meeting_prep_brief` — prep brief for a specific event",
+        "`find_meeting_time` — mutual free slots across calendars",
+        "`scheduling_conflict_scan` — overlaps and tight turnarounds",
+        "`focus_time_planner` — suggest deep-work blocks",
+      ],
+    },
+    {
+      id: "tools",
+      number: 8,
+      title: "Available tools",
+      description: `The Google Calendar MCP server exposes ${server.tools.length} tools for calendars, events, search, and scheduling:`,
+      bullets: [
+        "**Calendars** — gcal_list_calendars, gcal_get_calendar",
+        "**Events** — list, get, create, update, delete, search, upcoming, quick-add",
+        "**Scheduling** — gcal_find_free_slots, gcal_rsvp_event",
+      ],
+    },
+    {
+      id: "resources",
+      number: 9,
+      title: "Browsable resources",
+      description:
+        "Browse calendar data without guessing IDs. Resources use the gcal:// URI scheme:",
+      bullets: [
+        "`gcal://catalog` — tool, prompt, and resource index",
+        "`gcal://calendars` — all calendars",
+        "`gcal://calendar/{calendar_id}` — calendar detail",
+        "`gcal://calendar/{calendar_id}/events` — upcoming events",
+      ],
+    },
+    {
+      id: "verify",
+      number: 10,
+      title: "Verify the integration",
+      description:
+        "Run the verification script locally to confirm your credentials work and API calls succeed.",
+      code: [
+        {
+          label: "From the monorepo (developers)",
+          language: "bash",
+          code: `git clone https://github.com/Ayush7614/mcp-wormhole.git
+cd mcp-wormhole/packages/google-calendar
+cp .env.example .env   # add your credentials JSON
+pnpm install && pnpm build && pnpm verify`,
+        },
+        {
+          label: "Smoke test published package",
+          language: "bash",
+          code: `mkdir /tmp/mcp-gcal-test && cd /tmp/mcp-gcal-test
+npm init -y && npm i ${server.npmPackage} @modelcontextprotocol/sdk
+export ${credKey}='{"client_id":"...","client_secret":"...","refresh_token":"..."}'
+npx -y ${server.npmPackage}   # Ctrl+C to exit`,
+        },
+      ],
+    },
+  ];
+}
+
+function buildGoogleCalendarIntro(server: McpServer): GuideIntro {
+  return {
+    title: "What you'll set up",
+    paragraphs: [
+      `The ${server.name} MCP server wraps Google's official Calendar API as MCP tools your AI client can call. Install from npm, add one JSON block to your MCP config, and your agent can list events, find free slots, create meetings, and RSVP — no custom integration code.`,
+      "This guide walks through prerequisites, OAuth setup, npm install, client configuration, and verification. When you're finished, use Connect your client below to wire up Cursor, Claude Desktop, VS Code, and 17 other frameworks.",
+    ],
+    highlights: [
+      `${server.tools.length} MCP tools — calendars, events, search, free/busy, RSVP`,
+      `${server.promptCount ?? 6} MCP prompt workflows (today agenda, find meeting time, …)`,
+      `${server.resourceTemplateCount ?? 4} browsable resource templates (gcal:// URIs)`,
+      `Published on npm as ${server.npmPackage}@0.1.0`,
+    ],
+  };
+}
+
 function buildPlannedIntro(server: McpServer): GuideIntro {
   return {
     title: "What's coming",
@@ -500,7 +681,9 @@ export function buildServerGuide(server: McpServer): ServerGuide {
       ? buildAsanaSteps(server)
       : server.id === "vercel"
         ? buildVercelSteps(server)
-        : buildPlannedSteps(server)
+        : server.id === "google-calendar"
+          ? buildGoogleCalendarSteps(server)
+          : buildPlannedSteps(server)
     : buildPlannedSteps(server);
 
   const intro = !disabled
@@ -508,7 +691,9 @@ export function buildServerGuide(server: McpServer): ServerGuide {
       ? buildAsanaIntro(server)
       : server.id === "vercel"
         ? buildVercelIntro(server)
-        : buildPlannedIntro(server)
+        : server.id === "google-calendar"
+          ? buildGoogleCalendarIntro(server)
+          : buildPlannedIntro(server)
     : buildPlannedIntro(server);
 
   return {
