@@ -1,5 +1,5 @@
 /** Bump when demo GIF binaries change so browsers fetch fresh assets. */
-export const DEMO_ASSETS_VERSION = "3";
+export const DEMO_ASSETS_VERSION = "4";
 
 export function publicAsset(path: string): string {
   const normalized = path.replace(/^\//, "");
