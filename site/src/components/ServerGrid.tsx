@@ -6,6 +6,7 @@ import type { McpServer } from "../data/servers";
 import { servers } from "../data/servers";
 import { asanaToolSummary } from "../data/asanaCatalog";
 import { vercelToolSummary } from "../data/vercelCatalog";
+import { googleCalendarToolSummary } from "../data/googleCalendarCatalog";
 
 const statusLabel = {
   available: "Available",
@@ -63,7 +64,9 @@ export function ServerGrid({ selectedId }: ServerGridProps) {
                     ? asanaToolSummary()
                     : server.status === "available" && server.id === "vercel"
                       ? vercelToolSummary()
-                      : server.auth}
+                      : server.status === "available" && server.id === "google-calendar"
+                        ? googleCalendarToolSummary()
+                        : server.auth}
                 </span>
                 {server.status === "available" && (
                   <div className="server-card-badges">

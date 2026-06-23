@@ -70,6 +70,13 @@ Add this to your MCP client config (Cursor: `~/.cursor/mcp.json`, Claude Desktop
       "env": {
         "VERCEL_TOKEN": "your_token_here"
       }
+    },
+    "google-calendar": {
+      "command": "npx",
+      "args": ["-y", "@mcp-wormhole/google-calendar"],
+      "env": {
+        "GOOGLE_CALENDAR_CREDENTIALS": "{\"client_id\":\"...\",\"client_secret\":\"...\",\"refresh_token\":\"...\"}"
+      }
     }
   }
 }
@@ -77,13 +84,13 @@ Add this to your MCP client config (Cursor: `~/.cursor/mcp.json`, Claude Desktop
 
 For team-scoped Vercel projects, add `"VERCEL_TEAM_ID": "team_…"` to the `vercel` env block.
 
-Restart your client, then ask: *"List my open Asana tasks"* or *"List my Vercel projects"*.
+Restart your client, then ask: *"List my open Asana tasks"*, *"List my Vercel projects"*, or *"What's on my calendar today?"*.
 
-**Published on npm:** [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) (0.2.0 · 66 tools · 18 prompts) · [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) (0.2.0 · 18 tools · 8 prompts)
+**Published on npm:** [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) (0.2.0 · 66 tools) · [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) (0.2.0 · 18 tools) · [`@mcp-wormhole/google-calendar`](https://www.npmjs.com/package/@mcp-wormhole/google-calendar) (0.1.0 · 12 tools)
 
-**Get tokens:** [Asana developer console](https://app.asana.com/0/my-apps) · [Vercel account tokens](https://vercel.com/account/tokens)
+**Get tokens:** [Asana developer console](https://app.asana.com/0/my-apps) · [Vercel account tokens](https://vercel.com/account/tokens) · [Google Calendar API auth](https://developers.google.com/calendar/api/guides/auth)
 
-**Server guides:** [Asana MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/asana/guide) · [Vercel MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel/guide) · [All integrations](https://ayush7614.github.io/mcp-wormhole/#/integrations)
+**Server guides:** [Asana MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/asana/guide) · [Vercel MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel/guide) · [Google Calendar MCP](https://ayush7614.github.io/mcp-wormhole/#/servers/google-calendar/guide) · [All integrations](https://ayush7614.github.io/mcp-wormhole/#/integrations)
 
 ### Clone for development
 
@@ -104,9 +111,9 @@ pnpm build
 |--------|-------------|--------|------|-------|
 | **Asana** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) | **Available** | PAT | 66 tools · 18 prompts · resources |
 | **Vercel** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) | **Available** | API token | 18 tools · 8 prompts · resources |
+| **Google Calendar** | [`@mcp-wormhole/google-calendar`](https://www.npmjs.com/package/@mcp-wormhole/google-calendar) | **Available** | OAuth2 | 12 tools · 6 prompts · resources |
 | Slack | `@mcp-wormhole/slack` | Planned | Bot token | — |
 | Sentry | `@mcp-wormhole/sentry` | Planned | Auth token | — |
-| Google Calendar | `@mcp-wormhole/google-calendar` | Planned | OAuth | — |
 | Airtable | `@mcp-wormhole/airtable` | Planned | PAT | — |
 | Stripe | `@mcp-wormhole/stripe` | Planned | Secret key | — |
 | Cloudflare | `@mcp-wormhole/cloudflare` | Planned | API token | — |
@@ -122,18 +129,19 @@ pnpm build
 
 Step-by-step guides with copy-paste configs for **20 AI clients**:
 
-| Client | Asana | Vercel |
-|--------|-------|--------|
-| Cursor | [Cursor + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/cursor/asana) | [Cursor + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/cursor/vercel) |
-| VS Code | [VS Code + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/vscode/asana) | [VS Code + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/vscode/vercel) |
-| Claude Desktop | [Claude + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-desktop/asana) | [Claude + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-desktop/vercel) |
-| Claude Code | [Claude Code + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-code/asana) | [Claude Code + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-code/vercel) |
-| …and 16 more | [All integrations](https://ayush7614.github.io/mcp-wormhole/#/integrations) | same page — pick Vercel server |
+| Client | Asana | Vercel | Google Calendar |
+|--------|-------|--------|-----------------|
+| Cursor | [Cursor + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/cursor/asana) | [Cursor + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/cursor/vercel) | [Cursor + Calendar](https://ayush7614.github.io/mcp-wormhole/#/guides/cursor/google-calendar) |
+| VS Code | [VS Code + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/vscode/asana) | [VS Code + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/vscode/vercel) | [VS Code + Calendar](https://ayush7614.github.io/mcp-wormhole/#/guides/vscode/google-calendar) |
+| Claude Desktop | [Claude + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-desktop/asana) | [Claude + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-desktop/vercel) | [Claude + Calendar](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-desktop/google-calendar) |
+| Claude Code | [Claude Code + Asana](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-code/asana) | [Claude Code + Vercel](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-code/vercel) | [Claude Code + Calendar](https://ayush7614.github.io/mcp-wormhole/#/guides/claude-code/google-calendar) |
+| …and 16 more | [All integrations](https://ayush7614.github.io/mcp-wormhole/#/integrations) | same page | same page |
 
 Full server walkthroughs:
 
 - [Asana MCP server guide](https://ayush7614.github.io/mcp-wormhole/#/servers/asana/guide)
 - [Vercel MCP server guide](https://ayush7614.github.io/mcp-wormhole/#/servers/vercel/guide)
+- [Google Calendar MCP server guide](https://ayush7614.github.io/mcp-wormhole/#/servers/google-calendar/guide)
 
 ---
 
@@ -144,6 +152,7 @@ mcp-wormhole/
 ├── packages/
 │   ├── asana/              # @mcp-wormhole/asana — live on npm
 │   ├── vercel/             # @mcp-wormhole/vercel
+│   ├── google-calendar/    # @mcp-wormhole/google-calendar
 │   ├── _template/          # Copy this to start a new server
 │   ├── slack/              # planned
 │   └── …
@@ -172,6 +181,7 @@ pnpm build
 # Build one package
 pnpm --filter @mcp-wormhole/asana build
 pnpm --filter @mcp-wormhole/vercel build
+pnpm --filter @mcp-wormhole/google-calendar build
 
 # Verify Asana server against real API
 cd packages/asana
@@ -181,6 +191,11 @@ pnpm verify
 # Verify Vercel server against real API
 cd ../vercel
 cp .env.example .env   # add VERCEL_TOKEN
+pnpm verify
+
+# Verify Google Calendar server against real API
+cd ../google-calendar
+cp .env.example .env   # add GOOGLE_CALENDAR_CREDENTIALS
 pnpm verify
 
 # Run docs site locally
@@ -210,6 +225,7 @@ Packages publish under the [`@mcp-wormhole`](https://www.npmjs.com/org/mcp-wormh
 |---------|--------|-----|
 | Asana | **0.2.0** | [`@mcp-wormhole/asana`](https://www.npmjs.com/package/@mcp-wormhole/asana) |
 | Vercel | **0.2.0** | [`@mcp-wormhole/vercel`](https://www.npmjs.com/package/@mcp-wormhole/vercel) |
+| Google Calendar | **0.1.0** | [`@mcp-wormhole/google-calendar`](https://www.npmjs.com/package/@mcp-wormhole/google-calendar) |
 
 ```bash
 pnpm --filter @mcp-wormhole/asana build
