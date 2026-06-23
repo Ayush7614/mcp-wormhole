@@ -71,6 +71,6 @@ pause 0.25
 printf '%s  └──────────────────────────────────────────────────────────┘%s\n' "$ORANGE" "$NC"
 pause 0.4
 printf '\n'
-printf '%s  %snpx -y @mcp-wormhole/asana%s  %s# or @mcp-wormhole/vercel — connect any MCP client%s\n' "$DIM" "$ORANGE" "$NC" "$DIM" "$NC"
+printf '%s  %snpx -y @mcp-wormhole/asana%s  %s# or vercel, google-calendar — connect any MCP client%s\n' "$DIM" "$ORANGE" "$NC" "$DIM" "$NC"
 pause 0.5
 printf '\n'

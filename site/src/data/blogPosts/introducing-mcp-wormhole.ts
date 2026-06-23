@@ -92,7 +92,7 @@ export const introducingMcpWormhole: BlogPost = {
       type: "image",
       src: "demo/mcp-wormhole-catalog.gif",
       alt: "Orange CLI demo listing all mcp-wormhole servers",
-      caption: "The server catalog — Asana live, ten more integrations coming soon.",
+      caption: "The server catalog — Asana, Vercel, and Google Calendar live; eight more coming soon.",
     },
     { type: "h2", text: "Design principles" },
     {
