@@ -19,6 +19,12 @@ import {
   LINEAR_RESOURCE_TEMPLATE_COUNT,
   linearServerDescription,
 } from "./linearCatalog";
+import {
+  CLOUDFLARE_TOOL_NAMES,
+  CLOUDFLARE_PROMPT_COUNT,
+  CLOUDFLARE_RESOURCE_TEMPLATE_COUNT,
+  cloudflareServerDescription,
+} from "./cloudflareCatalog";
 
 export interface EnvVar {
   key: string;
@@ -163,6 +169,34 @@ export const servers: McpServer[] = [
     hideNpmBadges: true,
   },
   {
+    id: "cloudflare",
+    name: "Cloudflare",
+    description: cloudflareServerDescription(),
+    status: "available",
+    npmPackage: "@mcp-wormhole/cloudflare",
+    auth: "API token",
+    env: [
+      {
+        key: "CLOUDFLARE_API_TOKEN",
+        description: "Cloudflare API token",
+        docsUrl: "https://dash.cloudflare.com/profile/api-tokens",
+      },
+      {
+        key: "CLOUDFLARE_ACCOUNT_ID",
+        description: "Optional default account ID for Workers",
+      },
+      {
+        key: "CLOUDFLARE_ZONE_ID",
+        description: "Optional default zone ID for DNS/cache/firewall",
+      },
+    ],
+    tools: [...CLOUDFLARE_TOOL_NAMES],
+    promptCount: CLOUDFLARE_PROMPT_COUNT,
+    resourceTemplateCount: CLOUDFLARE_RESOURCE_TEMPLATE_COUNT,
+    docsUrl: "https://developers.cloudflare.com/api/",
+    hideNpmBadges: true,
+  },
+  {
     id: "airtable",
     name: "Airtable",
     description: "Query bases, list records, create and update rows.",
@@ -181,16 +215,6 @@ export const servers: McpServer[] = [
     auth: "Secret key",
     env: [{ key: "STRIPE_SECRET_KEY", description: "Stripe secret API key" }],
     tools: ["stripe_search_customers", "stripe_get_subscription", "stripe_list_invoices"],
-  },
-  {
-    id: "cloudflare",
-    name: "Cloudflare",
-    description: "DNS records, cache purge, Workers, and firewall rules.",
-    status: "planned",
-    npmPackage: "@mcp-wormhole/cloudflare",
-    auth: "API token",
-    env: [{ key: "CLOUDFLARE_API_TOKEN", description: "Cloudflare API token" }],
-    tools: ["cf_list_dns", "cf_purge_cache", "cf_list_workers"],
   },
   {
     id: "github-actions",

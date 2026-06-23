@@ -15,6 +15,7 @@ on:
           - vercel
           - google-calendar
           - linear
+          - cloudflare
 
 permissions:
   contents: read

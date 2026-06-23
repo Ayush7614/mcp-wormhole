@@ -8,6 +8,7 @@ import { asanaToolSummary } from "../data/asanaCatalog";
 import { vercelToolSummary } from "../data/vercelCatalog";
 import { googleCalendarToolSummary } from "../data/googleCalendarCatalog";
 import { linearToolSummary } from "../data/linearCatalog";
+import { cloudflareToolSummary } from "../data/cloudflareCatalog";
 
 const statusLabel = {
   available: "Available",
@@ -69,7 +70,9 @@ export function ServerGrid({ selectedId }: ServerGridProps) {
                         ? googleCalendarToolSummary()
                         : server.status === "available" && server.id === "linear"
                           ? linearToolSummary()
-                          : server.auth}
+                          : server.status === "available" && server.id === "cloudflare"
+                            ? cloudflareToolSummary()
+                            : server.auth}
                 </span>
                 {shouldShowNpmBadges(server) && (
                   <div className="server-card-badges">

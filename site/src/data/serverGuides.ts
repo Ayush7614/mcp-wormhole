@@ -789,6 +789,187 @@ function buildLinearIntro(server: McpServer): GuideIntro {
   };
 }
 
+function buildCloudflareSteps(server: McpServer): GuideStep[] {
+  const apiToken = server.env[0]?.key ?? "CLOUDFLARE_API_TOKEN";
+  const tokenDocs = server.env[0]?.docsUrl ?? "https://dash.cloudflare.com/profile/api-tokens";
+
+  return [
+    {
+      id: "prerequisites",
+      number: 1,
+      title: "Check prerequisites",
+      description:
+        "Before you start, make sure you have everything needed to run the Cloudflare MCP server.",
+      bullets: [
+        "Node.js 18 or newer (`node -v` to check)",
+        "An MCP-capable AI client — Cursor, Claude Desktop, VS Code, Windsurf, etc.",
+        "A Cloudflare account with zones and/or Workers access",
+      ],
+    },
+    {
+      id: "api-token",
+      number: 2,
+      title: "Create a Cloudflare API token",
+      description:
+        "The server authenticates with Cloudflare using a scoped API token from your dashboard.",
+      bullets: [
+        `Open ${tokenDocs}`,
+        "Create Custom Token or use a template (Edit zone DNS, Workers, Cache Purge, …)",
+        `Copy the token — paste it into your MCP config as ${apiToken}`,
+        "Optional: set CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_ZONE_ID for defaults",
+      ],
+      notice: "Never commit your API token to git or share it publicly.",
+    },
+    {
+      id: "install",
+      number: 3,
+      title: "Install from npm",
+      description:
+        "The package is published on npm as @mcp-wormhole/cloudflare. You do not need to clone the repo — npx downloads and runs it automatically.",
+      code: [
+        {
+          label: "Run directly (stdio MCP server)",
+          language: "bash",
+          code: `# Run directly (stdio MCP server)
+export ${apiToken}=your_token_here
+npx -y ${server.npmPackage}`,
+        },
+        {
+          label: "Or install in a project",
+          language: "bash",
+          code: `npm init -y
+npm i ${server.npmPackage}`,
+        },
+      ],
+    },
+    {
+      id: "configure",
+      number: 4,
+      title: "Add to your MCP client config",
+      description:
+        "Paste the JSON below into your client's MCP settings file. Replace the token placeholder with your real token, then save.",
+      code: [
+        {
+          label: "MCP config (stdio)",
+          language: "json",
+          code: buildStdioConfig(server),
+        },
+      ],
+      bullets: [
+        "Cursor: ~/.cursor/mcp.json or .cursor/mcp.json in your project",
+        "Claude Desktop: ~/Library/Application Support/Claude/claude_desktop_config.json",
+        "VS Code: .vscode/mcp.json in your workspace",
+      ],
+    },
+    {
+      id: "restart",
+      number: 5,
+      title: "Restart your client",
+      description:
+        "MCP servers load at startup. Fully quit and reopen your AI client so it picks up the new Cloudflare server.",
+      bullets: [
+        "In Cursor: Cmd+Q then reopen, or use MCP settings → refresh",
+        "In Claude Desktop: quit from the menu bar, then reopen",
+        "You should see cloudflare listed under MCP tools after restart",
+      ],
+    },
+    {
+      id: "prompts",
+      number: 6,
+      title: "Try it — example prompts",
+      description:
+        "Once connected, ask your agent naturally. It will call Cloudflare tools on your behalf.",
+      prompts: [
+        "List my Cloudflare zones",
+        "Show DNS records for my default zone",
+        "Purge cache for zone example.com — everything",
+        "List Workers scripts in my account",
+        "Review firewall rules for my production zone",
+      ],
+    },
+    {
+      id: "mcp-prompts",
+      number: 7,
+      title: "MCP prompt workflows",
+      description: `The server ships ${server.promptCount ?? 6} built-in MCP prompt templates for Cloudflare ops:`,
+      bullets: [
+        "`dns_audit` — review DNS records, duplicates, apex coverage",
+        "`cache_purge_plan` — recommend safe cache purge strategy",
+        "`workers_inventory` — list Workers scripts in an account",
+        "`zone_health_snapshot` — zone status, DNS count, firewall rules",
+        "`firewall_rules_review` — review legacy firewall rules",
+        "`incident_dns_check` — DNS verification during an outage",
+      ],
+    },
+    {
+      id: "tools",
+      number: 8,
+      title: "Available tools",
+      description: `The Cloudflare MCP server exposes ${server.tools.length} tools for zones, DNS, cache, Workers, and firewall:`,
+      bullets: [
+        "**Account** — cf_verify_token, cf_get_user, cf_list_accounts",
+        "**Zones** — cf_list_zones, cf_get_zone",
+        "**DNS** — list, get, create, update, delete records",
+        "**Cache** — cf_purge_cache",
+        "**Workers** — cf_list_workers, cf_get_worker",
+        "**Firewall** — cf_list_firewall_rules",
+      ],
+    },
+    {
+      id: "resources",
+      number: 9,
+      title: "Browsable resources",
+      description:
+        "Browse Cloudflare data without guessing IDs. Resources use the cf:// URI scheme:",
+      bullets: [
+        "`cf://catalog` — tool, prompt, and resource index",
+        "`cf://zones` — all zones",
+        "`cf://zone/{zone_id}` — zone details",
+        "`cf://zone/{zone_id}/dns` — DNS records for a zone",
+      ],
+    },
+    {
+      id: "verify",
+      number: 10,
+      title: "Verify the integration",
+      description:
+        "Run the verification script locally to confirm your API token works and API calls succeed.",
+      code: [
+        {
+          label: "From the monorepo (developers)",
+          language: "bash",
+          code: `git clone https://github.com/Ayush7614/mcp-wormhole.git
+cd mcp-wormhole/packages/cloudflare
+cp .env.example .env   # add CLOUDFLARE_API_TOKEN
+pnpm install && pnpm build && pnpm verify`,
+        },
+        {
+          label: "Run published package",
+          language: "bash",
+          code: `export ${apiToken}=your_token_here
+npx -y ${server.npmPackage}   # Ctrl+C to exit`,
+        },
+      ],
+    },
+  ];
+}
+
+function buildCloudflareIntro(server: McpServer): GuideIntro {
+  return {
+    title: "What you'll set up",
+    paragraphs: [
+      `The ${server.name} MCP server wraps Cloudflare's official API v4 as MCP tools your AI client can call. Install from npm, add one JSON block to your MCP config, and your agent can manage DNS, purge cache, inspect Workers, and review firewall rules — no custom integration code.`,
+      "This guide walks through prerequisites, API token setup, npm install, client configuration, and verification. When you're finished, use Connect your client below to wire up Cursor, Claude Desktop, VS Code, and 17 other frameworks.",
+    ],
+    highlights: [
+      `${server.tools.length} MCP tools — zones, DNS, cache purge, Workers, firewall`,
+      `${server.promptCount ?? 6} MCP prompt workflows (DNS audit, cache purge plan, incident check, …)`,
+      `${server.resourceTemplateCount ?? 4} browsable resource templates (cf:// URIs)`,
+      `Package: ${server.npmPackage}@0.1.0`,
+    ],
+  };
+}
+
 function buildPlannedIntro(server: McpServer): GuideIntro {
   return {
     title: "What's coming",
@@ -872,7 +1053,9 @@ export function buildServerGuide(server: McpServer): ServerGuide {
           ? buildGoogleCalendarSteps(server)
           : server.id === "linear"
             ? buildLinearSteps(server)
-            : buildPlannedSteps(server)
+            : server.id === "cloudflare"
+              ? buildCloudflareSteps(server)
+              : buildPlannedSteps(server)
     : buildPlannedSteps(server);
 
   const intro = !disabled
@@ -884,7 +1067,9 @@ export function buildServerGuide(server: McpServer): ServerGuide {
           ? buildGoogleCalendarIntro(server)
           : server.id === "linear"
             ? buildLinearIntro(server)
-            : buildPlannedIntro(server)
+            : server.id === "cloudflare"
+              ? buildCloudflareIntro(server)
+              : buildPlannedIntro(server)
     : buildPlannedIntro(server);
 
   return {
